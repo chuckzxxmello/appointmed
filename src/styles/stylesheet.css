@@ -1,0 +1,501 @@
+/*
+
+CSS stylesheet for appointment-scheduling-system
+
+Created By:
+    
+    Elijah Mariano
+
+Modified By:
+    
+    Elijah Mariano
+    Chuckie A. Española
+    
+*/
+
+/*-------------------------- MAIN HTML -------------------------- */
+
+* {
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+    box-sizing: border-box; /* Include padding and border in element's total width/height */
+}
+
+body {
+    background-image: url('../assets/images/bg-home.jpg'); /* Background image */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repeating */
+    background-attachment: fixed; /* Fixed background */
+    font-family: 'Roboto', sans-serif; /* Font style */
+    font-weight: 100; /* Light font weight */
+    z-index: -1; /* Layering */
+}
+
+h1, h2, h3 {
+    color: rgb(15, 20, 46); /* Header text color */
+    margin: 20px; /* Margin around headers */
+    font-weight: 100; /* Light font weight */
+    word-spacing: 0px; /* Space between words */
+}
+
+/*-------------------------- HEADER -------------------------- */
+
+.header {
+    width: 100%; /* Full width */
+    height: 10hv; /* Header height */
+    padding: 0 10px; /* Padding */
+    background: rgb(255, 255, 255); /* White background */
+    text-align: center; /* Center text */
+}
+
+.header img {
+    margin-right: 10px; /* Space between image and text */
+    width: 3%; /* Image width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/*-------------------------- FOOTER -------------------------- */
+
+.footer {
+    background-color: rgb(231, 236, 255); /* Light background */
+    color: rgb(9, 17, 51); /* Dark text color */
+    text-align: center; /* Center align text */
+    padding: 30px; /* Padding */
+    position: relative; /* Positioning */
+    bottom: 0; /* Stick to bottom */
+    width: 100%; /* Full width */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.contact-info {
+    font-size: 20px; /* Font size for contact info */
+    margin: 5px 0; /* Spacing */
+}
+
+.footer-style-button {
+    background-color: rgb(15, 20, 46); /* Dark button background */
+    color: white; /* Button text color */
+    padding: 12px 20px; /* Padding for button */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* No underline */
+    transition: background-color 0.3s; /* Smooth transition */
+    margin: 5px; /* Margin between buttons */
+    display: inline-block; /* Ensure buttons are inline */
+}
+
+.footer-style-button:hover {
+    background-color: rgb(10, 15, 36); /* Darker on hover */
+}
+
+.social-links {
+    margin-top: 15px; /* Space above buttons */
+}
+
+/*-------------------------- NAV -------------------------- */
+
+nav {
+    width: 100%; /* Full width */
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Center vertically */
+    justify-content: space-between; /* Space between items */
+    padding: 5px 0; /* Padding */
+}
+
+nav img {
+    max-width: 5%; /* Limit image size */
+}
+
+nav ul {
+    position: relative; /* For dropdown positioning */
+    list-style: none; /* No bullet points */
+    padding: 0; /* Reset padding */
+}
+
+nav ul li {
+    display: inline; /* Horizontal list */
+    margin: 0 20px; /* Margin between items */
+    position: relative; /* For dropdown positioning */
+}
+
+nav ul li a {
+    text-decoration: none; /* No underline */
+    color: rgb(15, 20, 46); /* Link color */
+    font-size: 18px; /* Font size */
+    transition: color 0.3s; /* Smooth transition */
+}
+
+nav ul li a:hover {
+    color: #000; /* Change color on hover */
+    text-decoration: underline; /* Underline on hover */
+}
+
+.dropdown li {
+    display: block; /* Stack dropdown items */
+    margin: 0; /* Reset margin */
+}
+
+.dropdown li a {
+    color: rgb(165, 158, 158); /* Dropdown link color */
+    padding: 10px; /* Padding for dropdown items */
+    text-decoration: none; /* No underline */
+    display: block; /* Make entire area clickable */
+    font-size: 18px; /* Font size for dropdown links */
+}
+
+.dropdown li a:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Background on hover */
+    color: #000; /* Change color on hover */
+}
+
+/*-------------------------- LOGIN AND CONTACT CONTAINER -------------------------- */
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    padding: 40px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    max-width: 400px; /* Max width */
+    margin: 400px auto; /* Center the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    text-align: center; /* Center text */
+}
+
+.login-container h2 {
+    font-size: 28px; /* Header size */
+    margin-bottom: 20px; /* Space below header */
+    color: rgb(15, 20, 46); /* Header color */
+}
+
+.contact-btn {
+    background-color: rgb(255, 255, 255); /* White background */
+    color: white; /* Button text color */
+    padding: 10px 15px; /* Button padding */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* No underline */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.contact-btn:hover {
+    background-color: rgb(0, 42, 228); /* Change on hover */
+}
+
+/*-------------------------- ADMIN CONTAINER -------------------------- */
+
+.admin-dashboard {
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    padding: 100px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    max-width: 1100px; /* Max width */
+    margin: 40px; /* Margin */
+    margin-top: 130px; /* Margin above */
+    margin-bottom: 400px; /* Margin below */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+/*-------------------------- FORM GROUP -------------------------- */
+
+.form-group {
+    margin-bottom: 15px; /* Space below each group */
+}
+
+label {
+    display: block; /* Block display */
+    margin-bottom: 5px; /* Space below label */
+    color: rgb(15, 20, 46); /* Label color */
+}
+
+input {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    transition: border-color 0.3s; /* Smooth border color transition */
+}
+
+input:focus {
+    border-color: rgb(0, 42, 228); /* Highlight border on focus */
+    outline: none; /* Remove default outline */
+}
+
+button {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    background-color: rgb(15, 20, 46); /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+button:hover {
+    background-color: rgb(0, 42, 228); /* Change on hover */
+}
+
+button:focus {
+    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
+}
+
+/*-------------------------- MESSAGE STYLES -------------------------- */
+
+#message {
+    margin-top: 15px; /* Space above message */
+    color: rgb(255, 0, 0); /* Red for error messages */
+}
+
+.success {
+    color: rgb(0, 128, 0); /* Green for success messages */
+}
+
+/*-------------------------- RESPONSIVENESS -------------------------- */
+
+@media (max-width: 480px) {
+    .login-container {
+        margin: 20px; /* Reduce margin on smaller screens */
+        padding: 20px; /* Adjust padding */
+    }
+
+    .login-container h2 {
+        font-size: 24px; /* Smaller header size for mobile */
+    }
+
+    input, button {
+        padding: 8px; /* Adjust padding for smaller devices */
+    }
+}
+
+/*-------------------------- EDIT CONTAINER -------------------------- */
+
+.edit-container {
+    max-width: 400px; /* Max width */
+    margin: 227px auto; /* Center the box */
+    padding: 20px; /* Padding */
+    background-color: white; /* Background color */
+    border: 1px solid #ddd; /* Border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+.edit-container h2 {
+    text-align: center; /* Center header text */
+    color: #333; /* Header color */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Space below each group */
+}
+
+.form-group label {
+    display: block; /* Block display */
+    margin-bottom: 5px; /* Space below label */
+    font-weight: bold; /* Bold label */
+}
+
+.form-group input {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+#confirmEdit {
+    background-color: #4CAF50; /* Confirm button color */
+}
+
+#confirmEdit:hover {
+    background-color: #45a049; /* Darker on hover */
+}
+
+#goBack {
+    background-color: #f44336; /* Go Back button color (red) */
+}
+
+#goBack:hover {
+    background-color: #e53935; /* Darker red on hover */
+}
+
+/*-------------------------- BACKGROUND INFO -------------------------- */
+
+.background-info {
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    padding: 100px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    max-width: 1100px; /* Max width */
+    margin: 40px; /* Margin */
+    margin-top: 130px; /* Margin above */
+    margin-bottom: 400px; /* Margin below */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+.background-info h1 {
+    font-size: 45px; /* Header size */
+    margin-bottom: 40px; /* Space below header */
+    color: rgb(15, 20, 46); /* Header color */
+}
+
+.background-info a {
+    display: inline-block; /* Inline block display */
+    text-decoration: none; /* No underline */
+    color: rgb(255, 255, 255); /* Link color */
+    background-color: rgb(15, 20, 46); /* Button background */
+    padding: 10px 30px; /* Button padding */
+    font-size: 18px; /* Font size */
+    margin-top: 40px; /* Space above */
+    border-radius: 6px; /* Rounded corners */
+}
+
+/*-------------------------- MANAGE USERS -------------------------- */
+
+.manage-users-container {
+    max-width: 800px; /* Max width */
+    margin: 430px auto; /* Center the box */
+    padding: 20px; /* Padding */
+    background-color: white; /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Table cell border */
+    padding: 2px; /* Cell padding */
+    text-align: left; /* Left-align text */
+}
+
+th {
+    background-color: #4CAF50; /* Header background color */
+    color: white; /* Header text color */
+}
+
+/******** DISCARDED SYNTAXES *******/
+
+/*-------------------------- ABOUT -------------------------- */
+.abouttext {
+    padding: 20px;
+    text-align: justify; /* Justify text alignment */
+    max-width: 1500px;
+    margin: 20px auto;
+    background-color: white; /* White background for content area */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.abouttext h2, .abouttext p {
+    color: rgb(15, 20, 46);
+    margin-bottom: 15px; /* Spacing between paragraphs */
+}
+
+.background-info h1 {
+    font-size: 45px;
+    margin-bottom: 40px;
+    color: rgb(15, 20, 46);
+}
+
+.about-image, .team-image {
+    display: block; /* Ensures the images are treated as block elements */
+    margin: 20px auto; /* Center the images */
+    width: 50%; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.contact-details {
+    padding: 50px;
+    text-align: center; /* Center align for location */
+    max-width: 800px;
+    margin: 242px auto;
+    background-color: white; /* White background for content area */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/*-------------------------- NEWS AND ANNOUNCEMENT -------------------------- */
+.news-announcements {
+    padding: 20px;
+    max-width: 1500px;
+    margin: 20px auto;
+    background-color: white; /* White background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.news-announcements h1 {
+    color: rgb(15, 20, 46);
+}
+
+.announcement {
+    margin-bottom: 20px; /* Space between announcements */
+}
+
+.announcement h2 {
+    color: rgb(15, 20, 46); /* Darker color for headers */
+}
+
+.announcement p {
+    color: rgb(50, 50, 50); /* Darker gray for text */
+    text-align: justify; /* Justify text alignment */
+}
+
+/*-------------------------- DROPDOWN -------------------------- */
+
+.dropbox {
+display:inline-block;
+text-align: center;
+justify-content: center;
+align-items: center; 
+padding: 10px;
+
+
+}
+
+.dropbox select {
+    height: 25px;
+    width: 100px;
+    
+}
+
+
+
+.dropbtn {
+    background: inherit;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown content (hidden by default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: inherit;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {background-color: white;}

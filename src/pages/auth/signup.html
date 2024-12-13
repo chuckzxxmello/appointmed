@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign-up</title>
+
+  <link rel="stylesheet" href="../../styles/stylesheet.css">
+
+  <script type="module">
+    // Import necessary Firebase modules from CDN
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+    import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+
+    // Firebase configuration 
+    const firebaseConfig = {
+      apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+      authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+      databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "appointment-scheduling-s-57d01",
+      storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+      messagingSenderId: "1069885306589",
+      appId: "1:1069885306589:web:b31768194add4087754d34",
+      measurementId: "G-KQ4PQZZZBM"
+    };
+
+    // Initialize Firebase app
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app); // Initialize Firebase Authentication
+
+    // Handle form submission for signup
+    const handleSignup = (event) => {
+      console.log("Form submitted"); // Debugging log
+      event.preventDefault();  // Prevent default form submission
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      console.log(`Email: ${email}, Password: ${password}`); 
+      createAccount(email, password); 
+    };
+
+    // Create user account with email and password
+    const createAccount = (email, password) => {
+      console.log("Creating account..."); 
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("Account created:", user); 
+          window.location.href = 'userprofile.html'; 
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          console.error(`Error Code: ${errorCode}, Message: ${errorMessage}`); 
+          errorHandler(errorMessage); 
+        });
+    };
+
+    // Handle errors by displaying them on the page
+    const errorHandler = (errorMessage) => {
+      document.getElementById('message').textContent = `Error: ${errorMessage}`;
+    };
+
+    // Attach the event listener to the form 
+    document.getElementById('createAccountForm').addEventListener('submit', handleSignup);
+
+  </script>
+</head>
+
+<body>
+  <div class="header">
+    <nav>
+      <h2>ELAD School of Potentials Therapy Center</h2>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="login-container">
+    <h2>Create an Account</h2>
+    <form id="createAccountForm">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password" required>
+      </div>
+
+      <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
+
+      <button type="submit">Create Account</button>
+      <label>or</label>
+      <a href="login.html">Log-in Instead</a>
+    </form>
+
+    <div id="message" style="color: red;"></div>
+  </div>
+
+  <div class="footer">
+    <div class="social-links">
+      <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+    </div>
+    <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+  </div>
+</body>
+
+</html>

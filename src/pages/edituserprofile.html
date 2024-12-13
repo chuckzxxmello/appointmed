@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+
+    <link rel="stylesheet" href="../styles/nobgstylesheet.css">
+
+    <!-- Link Firebase SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+
+    <!-- Link Custom JavaScript files -->
+    <script type="module" src="../scripts/profile.js"></script>
+
+</head>
+
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <nav>
+            <h2>ELAD School of Potentials Therapy Center</h2>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
+                <li><a href="contact.html">Contact Us</a></li>         
+                
+                <div class="dropdown">
+                  <button class="dropbtn">Benrick</button>
+                  <div class="dropdown-content">
+                    <a href="userprofile.html">View Profile</a>
+                    <a href="#">Help & Support</a>
+                    <a href="#">Give Feedback</a>
+                    <a href="#">Logout</a>
+                    
+                  </div>
+                </div>
+            
+            </ul>
+    
+        </nav>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <div class="login-container">
+        <h1>Edit Profile</h1>
+        <form id="editProfileForm">
+            <h4>Name</h4>
+            <input type="text" id="first-name" name="first-name" placeholder="First Name" required><br>
+            <input type="text" id="middle-name" name="middle-name" placeholder="Middle Name" required><br>
+            <input type="text" id="surname" name="surname" placeholder="Surname" required><br>
+
+            <br>
+            <h4>Contact</h4>
+            <input type="email" id="email" name="email" placeholder="Email Address" required><br>
+            <input type="text" id="phonenumber" name="phonenumber" placeholder="Phone Number (e.g., 63+)" required><br>
+
+            <br>
+            <h4>Address</h4>
+            <input type="text" id="city" name="city" placeholder="City Province" required><br>
+            <input type="text" id="street" name="street" placeholder="Street Municipality" required><br>
+            <input type="text" id="zipcode" name="zipcode" placeholder="Zip Code" required><br>
+
+            <button class="return" type="button" onclick="history.back()">Back</button>
+            <button class="save" type="submit">Save Changes</button>
+            <button id="delete" class="delete" type="button" onclick="deleteProfile()">Delete Account</button>
+        </form>
+    </div>
+
+    <div id="message"></div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <div class="social-links">
+            <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+        </div>
+        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+    </div>
+
+    <script type="module">
+        import { getUserProfile, updateUserProfile, deleteUserProfile } from './profile.js';
+
+        // Pre-fill form with user data on page load
+        window.onload = async () => {
+            try {
+                await getUserProfile();
+            } catch (error) {
+                document.getElementById('message').innerText = error.message;
+            }
+        };
+
+        // Handle form submission to update profile
+        document.getElementById('editProfileForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const profileData = {
+                firstName: document.getElementById('first-name').value,
+                middleName: document.getElementById('middle-name').value,
+                surname: document.getElementById('surname').value,
+                email: document.getElementById('email').value,
+                phoneNumber: document.getElementById('phonenumber').value,
+                city: document.getElementById('city').value,
+                street: document.getElementById('street').value,
+                zipCode: document.getElementById('zipcode').value
+            };
+            try {
+                await updateUserProfile(profileData);
+                document.getElementById('message').innerText = "Profile updated successfully!";
+            } catch (error) {
+                document.getElementById('message').innerText = "Error updating profile: " + error.message;
+            }
+        });
+
+        // Handle account deletion
+        async function deleteProfile() {
+            if (confirm("Are you sure you want to delete your profile?")) {
+                try {
+                    await deleteUserProfile();
+                    window.location.href = 'login.html'; // Redirect to login page after account deletion
+                } catch (error) {
+                    document.getElementById('message').innerText = "Error deleting profile: " + error.message;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

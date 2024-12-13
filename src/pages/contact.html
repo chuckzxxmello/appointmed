@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/stylesheet.css">
+  <title>Contact Us</title>
+
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+</head>
+<body>
+
+  <div class="header">
+    <nav>
+      <h2>ELAD School of Potentials Therapy Center</h2>
+      <ul>
+        <li><a href="../pages/index.html">Home</a></li>
+        <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
+        <li><a href="../pages/contact.html">Contact Us</a></li>
+        <li> 
+          <div class="dropdown">
+            <button id="emailBtn"></button>
+            <div class="dropdown-content" id="userDropdown"> 
+              <a href="auth/userprofile.html">View Profile</a>
+              <a href="#">Help & Support</a>
+              <a href="#">Give Feedback</a>
+              <a href="#" id="verifyBtn">Verify E-mail</a>
+              <a href="#" id="logoutBtn">Logout</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="contact-details">
+    <h1>Contact Us</h1>
+    <h2>ELAD School of Potentials Therapy Center</h2>
+    <h2>Camerino St. Brgy. Luciano</h2>
+    <h2>Trece Martires, Philippines, 4109</h2>
+    <h2>Email: eladschoolofpotentials@yahoo.com</h2>
+    <h2>Mobile Contact Number: +63 947 429 5648</h2>
+  </div>
+
+  <div class="footer"> 
+    <div class="social-links">
+      <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+    </div>
+    <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+      authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+      databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "appointment-scheduling-s-57d01",
+      storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+      messagingSenderId: "1069885306589",
+      appId: "1:1069885306589:web:b31768194add4087754d34",
+      measurementId: "G-KQ4PQZZZBM"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    function updateDropdownEmail(user) {
+      const emailButton = document.getElementById('emailBtn');
+      const userDropdown = document.getElementById('userDropdown');
+      if (user) {
+        emailButton.textContent = user.email;
+        // Add an onclick event to the button to toggle the dropdown
+        emailButton.onclick = () => {
+          if (userDropdown.style.display === 'block') {
+            userDropdown.style.display = 'none';
+          } else {
+            userDropdown.style.display = 'block';
+          }
+        };
+      } else {
+        emailButton.textContent = "Login";
+        emailButton.onclick = () => {
+          window.location.href = 'auth/login.html';
+        };
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        updateDropdownEmail(user);
+
+        user.reload()
+          .then(() => {
+            const verifyBtn = document.getElementById('verifyBtn');
+            if (user.emailVerified) {
+              verifyBtn.textContent = "Email Verified";
+              verifyBtn.removeAttribute('href');
+            } else {
+              verifyBtn.textContent = "Verify E-mail";
+              verifyBtn.href = "#";
+            }
+
+            console.log("Logged in:", user.email);
+            console.log("Verified:", user.emailVerified);
+          })
+          .catch((error) => {
+            console.log("Error reloading user:", error);
+          });
+
+      } else {
+        updateDropdownEmail(null); 
+      }
+    });
+
+    const signOutUser = () => {
+      signOut(auth)
+        .then(() => {
+          console.log('Signed out successfully');
+          window.location.href = 'auth/login.html'; 
+        })
+        .catch((error) => {
+          console.log('Error signing out:', error);
+          alert("Error: " + error.message);
+        });
+    };
+
+    const verifyEmail = () => {
+      const user = auth.currentUser;
+      if (user) {
+        sendEmailVerification(user)
+          .then(() => {
+            alert("Verification email sent!");
+          })
+          .catch((error) => {
+            console.log('Error sending verification email:', error);
+            alert("Error: " + error.message); 
+          });
+      }
+    };
+
+    document.getElementById('logoutBtn').addEventListener('click', signOutUser);
+    document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
+  </script>
+</body>
+</html>

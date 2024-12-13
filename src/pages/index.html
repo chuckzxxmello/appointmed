@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - ELAD School of Potentials Therapy Center</title>
+  <link rel="stylesheet" href="../styles/stylesheet.css">
+
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script> 
+</head>
+
+<body>
+
+  <div class="header">
+    <nav>
+      <h2>ELAD School of Potentials Therapy Center</h2>
+      <ul>
+        <li><a href="../pages/index.html">Home</a></li>
+        <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
+        <li><a href="../pages/contact.html">Contact Us</a></li>
+        <li> 
+          <div class="dropdown">
+            <button id="emailBtn"></button>
+            <div class="dropdown-content" id="userDropdown">
+              <a href="auth/userprofile.html">View Profile</a>
+              <a href="#">Help & Support</a>
+              <a href="#">Give Feedback</a>
+              <a href="#" id="verifyBtn">Verify E-mail</a>
+              <a href="#" id="logoutBtn">Logout</a>
+            </div>
+          </div>
+
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="background-info">
+    <img src="../assets/images/elad_logo.png" alt="ELAD School Logo">
+    <h1 id="text">Welcome to ELAD School of Potentials Therapy Center - Trece Martires City</h1>
+    <h2 id="text">
+      At ELAD, we wholeheartedly believe in the strength and potential of every young individual facing mental challenges. 
+      Our compassionate team is committed to providing personalized therapy and unwavering support, creating a safe and 
+      nurturing environment where growth and resilience can flourish. We understand that each journey is unique, and we are 
+      here to walk alongside our clients, encouraging their rehabilitation and integration into society. Together, let’s 
+      embark on a journey of healing and empowerment, unlocking potentials and building brighter futures filled with hope and possibility.
+    </h2>
+
+    <h2 id="text">If you already have an account</h2>
+    <a href="#" id="loginBtn" class="emailBtn">Proceed to Log-in</a> 
+
+    <h2 id="text">Or if you're new and want to set-up an appointment</h2>
+    <a href="contact.html" class="button">Contact Us</a>
+  </div>
+
+  <div class="footer">
+    <div class="social-links">
+      <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+    </div>
+    <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+      authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+      databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "appointment-scheduling-s-57d01",
+      storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+      messagingSenderId: "1069885306589",
+      appId: "1:1069885306589:web:b31768194add4087754d34",
+      measurementId: "G-KQ4PQZZZBM"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    function updateDropdownEmail(user) {
+      const emailButton = document.getElementById('emailBtn');
+      const userDropdown = document.getElementById('userDropdown');
+      if (user) {
+        emailButton.textContent = user.email;
+        emailButton.onclick = () => { 
+          if (userDropdown.style.display === 'block') {
+            userDropdown.style.display = 'none';
+          } else {
+            userDropdown.style.display = 'block';
+          }
+        };
+      } else {
+        emailButton.textContent = "Login";
+        emailButton.onclick = () => {
+          window.location.href = 'auth/login.html';
+        };
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        updateDropdownEmail(user);
+
+        user.reload()
+          .then(() => {
+            const verifyBtn = document.getElementById('verifyBtn');
+            if (user.emailVerified) {
+              verifyBtn.textContent = "Email Verified";
+              verifyBtn.removeAttribute('href');
+            } else {
+              verifyBtn.textContent = "Verify E-mail";
+              verifyBtn.href = "#";
+            }
+
+            console.log("Logged in:", user.email);
+            console.log("Verified:", user.emailVerified);
+          })
+          .catch((error) => {
+            console.log("Error reloading user:", error);
+          });
+
+      } else {
+        updateDropdownEmail(null); 
+      }
+    });
+
+    const signOutUser = () => {
+      signOut(auth)
+        .then(() => {
+          console.log('Signed out successfully');
+          window.location.href = 'auth/login.html'; 
+        })
+        .catch((error) => {
+          console.log('Error signing out:', error);
+          alert("Error: " + error.message);
+        });
+    };
+
+    const verifyEmail = () => {
+      const user = auth.currentUser;
+      if (user) {
+        sendEmailVerification(user)
+          .then(() => {
+            alert("Verification email sent!");
+          })
+          .catch((error) => {
+            console.log('Error sending verification email:', error);
+            alert("Error: " + error.message); 
+          });
+      }
+    };
+
+    document.getElementById('logoutBtn').addEventListener('click', signOutUser);
+    document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
+
+    const loginBtn = document.getElementById('loginBtn');
+    loginBtn.onclick = () => {
+      const user = auth.currentUser; 
+      if (user) {
+        window.location.href = 'auth/userprofile.html'; 
+      } else {
+        window.location.href = 'auth/login.html'; 
+      }
+    };
+  </script>
+</body>
+
+</html>
