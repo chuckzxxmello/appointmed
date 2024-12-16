@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - ELAD School of Potentials Therapy Center</title>
-  <link rel="stylesheet" href="../styles/stylesheet.css">
+  <link rel="stylesheet" href="src/styles/stylesheet.css">
 
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script> 
@@ -17,14 +17,14 @@
     <nav>
       <h2>ELAD School of Potentials Therapy Center</h2>
       <ul>
-        <li><a href="../pages/index.html">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
-        <li><a href="../pages/contact.html">Contact Us</a></li>
+        <li><a href="src/pages/contact.html">Contact Us</a></li>
         <li> 
           <div class="dropdown">
             <button id="emailBtn"></button>
             <div class="dropdown-content" id="userDropdown">
-              <a href="auth/userprofile.html">View Profile</a>
+              <a href="src/pages/auth/userprofile.html">View Profile</a>
               <a href="#">Help & Support</a>
               <a href="#">Give Feedback</a>
               <a href="#" id="verifyBtn">Verify E-mail</a>
@@ -38,7 +38,6 @@
   </div>
 
   <div class="background-info">
-    <img src="../assets/images/elad_logo.png" alt="ELAD School Logo">
     <h1 id="text">Welcome to ELAD School of Potentials Therapy Center - Trece Martires City</h1>
     <h2 id="text">
       At ELAD, we wholeheartedly believe in the strength and potential of every young individual facing mental challenges. 
@@ -51,8 +50,8 @@
     <h2 id="text">If you already have an account</h2>
     <a href="#" id="loginBtn" class="emailBtn">Proceed to Log-in</a> 
 
-    <h2 id="text">Or if you're new and want to set-up an appointment</h2>
-    <a href="contact.html" class="button">Contact Us</a>
+    <h2 id="text">Set-up an appointment</h2>
+    <a href="src/pages/contact.html" class="button">Contact Us</a>
   </div>
 
   <div class="footer">
@@ -95,7 +94,7 @@
       } else {
         emailButton.textContent = "Login";
         emailButton.onclick = () => {
-          window.location.href = 'auth/login.html';
+          window.location.href = 'src/pages/auth/login.html';
         };
       }
     }
@@ -131,7 +130,7 @@
       signOut(auth)
         .then(() => {
           console.log('Signed out successfully');
-          window.location.href = 'auth/login.html'; 
+          window.location.href = 'src/pages/auth/login.html'; 
         })
         .catch((error) => {
           console.log('Error signing out:', error);
@@ -160,9 +159,9 @@
     loginBtn.onclick = () => {
       const user = auth.currentUser; 
       if (user) {
-        window.location.href = 'auth/userprofile.html'; 
+        window.location.href = 'src/pages/auth/userprofile.html'; 
       } else {
-        window.location.href = 'auth/login.html'; 
+        window.location.href = 'src/pages/auth/login.html'; 
       }
     };
   </script>

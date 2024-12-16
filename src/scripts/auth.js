@@ -97,7 +97,7 @@ formSubmitBtn.addEventListener("click", (e) => {
             .then(user => {
                 console.log("User logged in:", user);
                 // Redirect or perform other actions after successful login
-                window.location.href = '/pages/auth/userprofile.html'; 
+                window.location.href = '/src/pages/auth/userprofile.html'; 
             })
             .catch(error => {
                 errorHandler(error); 
@@ -135,7 +135,7 @@ const signUpUser = (email, password) => {
         .then((userCredential) => {
             const user = userCredential.user;
             console.log('Signed up:', user);
-            window.location.href = '/pages/auth/userprofile.html'; 
+            window.location.href = '/src/pages/auth/userprofile.html'; 
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -153,7 +153,7 @@ const handleLogin = (email, password) => {
             console.log("User logged in: ", user);
 
             // Redirect to user profile page after successful login
-            window.location.href = '/pages/auth/userprofile.html'; 
+            window.location.href = '/src/pages/auth/userprofile.html'; 
 
             return user; 
         })
@@ -215,7 +215,7 @@ const signInUserWithGoogle = () => {
         .then((result) => {
             const user = result.user;
             console.log('Google Sign-In Success:', user);
-            window.location.href = '/pages/auth/userprofile.html';
+            window.location.href = '/src/pages/auth/userprofile.html';
         })
         .catch((error) => {
             console.log('Google Sign-In Error:', error.message);

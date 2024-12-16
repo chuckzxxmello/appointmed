@@ -1,0 +1,228 @@
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- title -->    <title>Login</title>
+
+    <link rel="stylesheet" href="nobgstylesheet.css">
+
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script> 
+</head>
+
+<body>
+
+<!-- header -->
+<div class="header">
+    <nav>
+      <h2>ELAD School of Potentials Therapy Center</h2>
+      <ul>
+        <li><a href="../../../pages/index.html">Home</a></li>
+        <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
+        <li><a href="../../../pages/contact.html">Contact Us</a></li>
+        <li> 
+          <div class="dropdown">
+            <button id="emailBtn"></button>
+            <div class="dropdown-content" id="userDropdown">
+              <a href="auth/userprofile.html">View Profile</a>
+              <a href="#">Help & Support</a>
+              <a href="#">Give Feedback</a>
+              <a href="#" id="verifyBtn">Verify E-mail</a>
+              <a href="#" id="logoutBtn">Logout</a>
+            </div>
+          </div>
+
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+<h1>Manage Users</h1>
+
+<div class="margin">
+<form class ="add">
+    <div class="forname">
+        <h2>Name of Client</h2>
+    <label for="firstName">First Name</label>
+        <input type="text" name="firstName" required>
+    
+
+    <label for="middleName">Middle Name (If Any)</label>
+        <input type="text" name="middleName" >
+    
+    </div>  
+    <label for="surname">Last Name</label>
+        <input type="text" name="surname" required>
+        <br>
+
+   <h2>Contact Info of Client</h2>
+    <label for="email">Email</label>
+        <input type="text" name="email" required>
+        <br>
+    <label for="phoneNumber">Phone Number</label>
+        <input type="text" name="phoneNumber" required>
+
+    <h2>Other</h2>
+    <label for="professional">Requested Professional (Optional) </label>
+        <input type="text" name="professional" >
+        <br><br>
+
+
+        <button class="roundedbutton">Add user to database</button>
+          
+
+</form>
+
+
+
+<form class="delete">
+    <h2>Delete User from database</h2>
+    <label for="id">User ID</label>
+        <input type="text" name="id" required>
+        <br>
+        <button class="deletes">Delete from database</button>
+
+        <button class=""></button><a href="../adminhome.html">Go Back to Admin Dashboard</a></button>
+    
+
+</form>
+
+<br>
+<br>
+
+    <table class="table" id="myTable" border="3"></table>
+
+
+
+
+<!-- footer -->
+
+    <div class="footer"> 
+        <div class="social-links">
+            <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+        </div>
+        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
+    
+        const firebaseConfig = {
+          apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+          authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+          databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "appointment-scheduling-s-57d01",
+          storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+          messagingSenderId: "1069885306589",
+          appId: "1:1069885306589:web:b31768194add4087754d34",
+          measurementId: "G-KQ4PQZZZBM"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+    
+        function updateDropdownEmail(user) {
+          const emailButton = document.getElementById('emailBtn');
+          const userDropdown = document.getElementById('userDropdown');
+          if (user) {
+            emailButton.textContent = user.email;
+            emailButton.onclick = () => { 
+              if (userDropdown.style.display === 'block') {
+                userDropdown.style.display = 'none';
+              } else {
+                userDropdown.style.display = 'block';
+              }
+            };
+          } else {
+            emailButton.textContent = "Login";
+            emailButton.onclick = () => {
+              window.location.href = '../login.html';
+            };
+          }
+        }
+    
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            updateDropdownEmail(user);
+    
+            user.reload()
+              .then(() => {
+                const verifyBtn = document.getElementById('verifyBtn');
+                if (user.emailVerified) {
+                  verifyBtn.textContent = "Email Verified";
+                  verifyBtn.removeAttribute('href');
+                } else {
+                  verifyBtn.textContent = "Verify E-mail";
+                  verifyBtn.href = "#";
+                }
+    
+                console.log("Logged in:", user.email);
+                console.log("Verified:", user.emailVerified);
+              })
+              .catch((error) => {
+                console.log("Error reloading user:", error);
+              });
+    
+          } else {
+            updateDropdownEmail(null); 
+          }
+        });
+    
+        const signOutUser = () => {
+          signOut(auth)
+            .then(() => {
+              console.log('Signed out successfully');
+              window.location.href = 'auth/login.html'; 
+            })
+            .catch((error) => {
+              console.log('Error signing out:', error);
+              alert("Error: " + error.message);
+            });
+        };
+    
+        const verifyEmail = () => {
+          const user = auth.currentUser;
+          if (user) {
+            sendEmailVerification(user)
+              .then(() => {
+                alert("Verification email sent!");
+              })
+              .catch((error) => {
+                console.log('Error sending verification email:', error);
+                alert("Error: " + error.message); 
+              });
+          }
+        };
+    
+        document.getElementById('logoutBtn').addEventListener('click', signOutUser);
+        document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
+    
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.onclick = () => {
+          const user = auth.currentUser; 
+          if (user) {
+            window.location.href = 'auth/userprofile.html'; 
+          } else {
+            window.location.href = 'auth/login.html'; 
+          }
+        };
+      </script>
+
+<script src="bundle.js"></script>
+</body>
+</html>
