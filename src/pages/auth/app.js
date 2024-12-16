@@ -115,7 +115,7 @@ const signUpUser = (email, password) => {
         .then((userCredential) => {
             const user = userCredential.user;
             console.log('Signed up:', user);
-            window.location.href = '/pages/auth/userprofile.html';  // Redirect to user profile page
+            window.location.href = 'userprofile.html';  // Redirect to user profile page
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -131,7 +131,7 @@ const signInUser = (email, password) => {
         .then((userCredential) => {
             const user = userCredential.user;
             console.log('Signed in:', user);
-            window.location.href = '/pages/auth/userprofile.html';  // Redirect to user profile page
+            window.location.href = 'userprofile.html';  // Redirect to user profile page
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -191,7 +191,7 @@ const signInUserWithGoogle = () => {
         .then((result) => {
             const user = result.user;
             console.log('Google Sign-In Success:', user);
-            window.location.href = '/pages/auth/userprofile.html';  // Redirect to user profile page
+            window.location.href = 'userprofile.html';  // Redirect to user profile page
         })
         .catch((error) => {
             console.log('Google Sign-In Error:', error.message);
