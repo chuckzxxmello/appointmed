@@ -1,5 +1,3 @@
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +15,7 @@
 
 <!-- title -->    <title>Login</title>
 
-  <link rel="stylesheet" href="../../../styles/nobgstylesheet.css">
+<link rel="stylesheet" href="../../../styles/nobgstylesheet.css">
 
     <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script> 
@@ -51,76 +49,105 @@
   </div>
 
 <a href="../adminhome.html">Go Back to Admin Dashboard</a>
-<a href="setappoint.html">Manage Appointment</a>
+<a href="editusers.html">Manage Users</a>
+<br>
+<a href="../../calendar/calendaredit.html">Manage Calendar and Schedules</a>
 
-<h1>Manage Users</h1>
+<h1>Set an Appointment</h1>
 
 <div class="margin">
-<form class ="add">
+<form class ="set">
     <div class="forname">
-        <h2>Name of Client</h2>
-        <input type="text" name="firstName" placeholder="Given Name" required>
-        <input type="text" name="middleName"placeholder="Middle" >
-        <input type="text" name="surname" placeholder="Surname" required>
+        <h2>Appointment Schedule</h2>
+        <label for="appointmentDate">Full Name of Client:</label>
+        <input type="text" id="firstName" name="firstName" placeholder="First Name">>
+        <input type="text" id="middleName" name="middleName" placeholder="Middle Name(IF any)" >>
+        <input type="text" id="surname" name="surname" placeholder="Last Name" required>>
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" required>
+        <label for="contact">Phone Number</label>
+        <input type="text" id="contact" name="contact" required>
+        <label for="appointType">Type of appointment</label>
+        <input type="text" name="appointmentType" >
+
+        <label for="appointmentDate">Select Date:</label>
+        <input type="date" id="appointmentDate" name="appointmentDate" required>>
+        <label for="appointmentTime">Select Time: Start to End</label>
+        <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
+        <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
+      <label for="doctor">Doctor</label>
+        <input type="text" name="doctor" >    
+    </div>  
+    <br>
+
         <br>
-
-   <h2>Contact Info of Client</h2>
-        <input type="text" name="email" placeholder="Email (@gmail.com)"required>
-        <input type="text" name="phoneNumber"placeholder="Phone Number" required>
-
-    <h2>Other</h2>
-    <label for="professional">Requested Professional (Optional) </label>
-        <input type="text" name="professional" >
-        <br><br>
-
-
-        <button class="roundedbutton">Add user to database</button>
-          
-
+        <label for="doctor">Payment Method</label>
+        <input type="text" name="paymentType" >
+        <label for="doctor">Cost of Appointment</label>
+        <input type="number" name="payment" >
+        <label for="doctor">Payment Status</label>
+        <input type="text" name="paymentStatus" >
+        <label for="doctor">Appointment Status</label>
+        <input type="text" name="appointmentStatus" >
+        <br>
+        <button class="roundedbutton">Add appointment</button>
 </form>
 
+<h2>Update</h2>
 <form class="update-form">
-  <label for="id">User ID</label>
-  <input type="text" id="id" name="id"  required><br><br>
-
-  <label for="firstName">First Name</label>
-  <input type="text" id="firstName" name="firstName"><br><br>
-
-  <label for="middleName">Middle Name (If any)</label>
-  <input type="text" id="middleName" name="middleName" ><br><br>
-
-  <label for="surname">Surname</label>
-  <input type="text" id="surname" name="surname"><br><br>
-
+  <h2>Appointment Schedule</h2>
+  <label for="appointmentDate">Full Name of Client:</label>
+  <input type="text" name="id" required placeholder="Appointment Id">
+  <input type="text" id="firstName" name="firstName" placeholder="First Name">>
+  <input type="text" id="middleName" name="middleName" placeholder="Middle Name(IF any)" >>
+  <input type="text" id="surname" name="surname" placeholder="Last Name" required>>
   <label for="email">Email</label>
-  <input type="email" id="email" name="email"><br><br>
+  <input type="text" id="email" name="email" required>
+  <label for="contact">Phone Number</label>
+  <input type="text" id="contact" name="contact" required>
+  <label for="appointType">Type of appointment</label>
+  <input type="text" name="appointmentType" >
 
-  <label for="professional">Requested Professional (Optional)</label>
-  <input type="text" id="professional" name="professional"><br><br>
+  <label for="appointmentDate">Select Date:</label>
+  <input type="date" id="appointmentDate" name="appointmentDate" required>>
+  <label for="appointmentTime">Select Time: Start to End</label>
+  <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
+  <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
+<label for="doctor">Doctor</label>
+  <input type="text" name="doctor" >    
+  <br>
+  <br>
+  <label for="doctor">Payment Method</label>
+  <input type="text" name="paymentType" >
+  <label for="doctor">Cost of Appointment</label>
+  <input type="number" name="payment" >
+  <label for="doctor">Payment Status</label>
+  <input type="text" name="paymentStatus" >
+  <label for="doctor">Appointment Status</label>
+  <input type="text" name="appointmentStatus" >
+  <br>
+ 
+  <button class="roundedbutton">Update</button>
+ 
 
-  <label for="phoneNumber">Phone Number</label>
-  <input type="text" id="phoneNumber" name="phoneNumber"><br><br>
 
-  <button class="roundedbutton">Update User</button>
 </form>
 
-<form class="delete">
-    <h2>Delete User from database</h2>
-    <label for="id">User ID</label>
+
+<form class="deleteappoint">
+    <h2>Delete listed appointment from database</h2>
+    <label for="id">Appointment ID</label>
         <input type="text" name="id" required>
         <br>
         <button class="deletes">Delete from database</button>
-
-        <button class=""></button><a href="../adminhome.html">Go Back to Admin Dashboard</a></button>
-    
-
 </form>
 
+<table class="table" id="appointmentTable" border="3"></table>
+
+</div> 
+
 <br>
 <br>
-
-    <table class="table" id="myTable" border="3"></table>
-
 
 
 
@@ -239,6 +266,7 @@
         };
       </script>
 
-<script type="module" src="index.js"></script>
+<script type="module" src="appoint.js"></script>
+
 </body>
 </html>

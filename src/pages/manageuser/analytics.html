@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics - ELAD School of Potentials Therapy Center</title>
+  <link rel="stylesheet" href="../../styles/nobgstylesheet.css">
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Style adjustments to make the analytics section smaller */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .user-stats {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .user-stats p {
+      margin: 5px 0;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    /* Adjusting the chart to be smaller */
+    canvas {
+      max-width: 100%;
+      height: 150px; /* Smaller height for the chart */
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 40px;
+    }
+
+    .footer-style-button {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <nav>
+    <h2>ELAD School of Potentials Therapy Center</h2>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
+      <li><a href="../contact.html">Contact Us</a></li>
+      <div class="dropdown">
+        <div id="emailBtn"></div> 
+        <div class="dropdown-content">
+          <a href="userprofile.html">View Profile</a>
+          <a href="#">Help & Support</a>
+          <a href="#">Give Feedback</a>
+          <a href="#" id="verifyBtn">Verify E-mail</a> 
+          <a href="#" id="logoutBtn">Logout</a> 
+        </div>
+      </div>
+    </ul>
+  </nav>
+</div>
+
+<a href="adminhome.html">Go Back to Admin Dashboard</a>
+<div class="container">
+  <h2>User Analytics</h2>
+
+  <div class="user-stats">
+    <p><strong>Total Users:</strong> 2</p>
+    <p><strong>Active Users:</strong> 0</p>
+    <p><strong>Appointments Made:</strong> 2</p>
+  </div>
+
+  <h3>Appointments Chart</h3>
+  <canvas id="analyticsChart"></canvas>
+
+  <h3>Firebase Console Access</h3>
+  <p>For detailed Firebase Analytics, visit the <a href="https://console.firebase.google.com/u/0/project/appointment-scheduling-s-57d01/overview" target="_blank">Firebase Console</a>.</p>
+</div>
+
+<div class="footer">
+  <div class="social-links">
+    <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+  </div>
+  <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+    authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+    databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "appointment-scheduling-s-57d01",
+    storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+    messagingSenderId: "1069885306589",
+    appId: "1:1069885306589:web:b31768194add4087754d34",
+    measurementId: "G-KQ4PQZZZBM"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore();
+  const auth = getAuth(app);
+
+  // Example data for the chart (replace with actual Firestore data if needed)
+  function createChart() {
+    const ctx = document.getElementById('analyticsChart').getContext('2d');
+    const data = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [{
+        label: 'Appointments Made Over Time',
+        data: [1, 0, 1, 0, 0, 0, 0], // Example data, replace with actual data
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: true,
+      }]
+    };
+
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            beginAtZero: true
+          },
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    const analyticsChart = new Chart(ctx, config);
+  }
+
+  // Create the chart when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    createChart(); // Create the chart with the example data
+  });
+
+  // Update dropdown with user email when logged in
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const emailButton = document.getElementById('emailBtn');
+      emailButton.textContent = user.email;
+    }
+  });
+</script>
+
+</body>
+</html>

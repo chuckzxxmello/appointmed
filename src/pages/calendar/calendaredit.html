@@ -1,117 +1,154 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../../styles/stylesheet.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-
     <title>View Calendar</title>
 
     <!-- vkurko links -->
     <link rel="stylesheet" href="event-calendar.css">
     <script src="event-calendar.js"></script>
 
+    <!-- Firebase SDK (with ES Modules) -->
+    <script type="module">
+        // Import Firebase SDK modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+        import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+            authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+            databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "appointment-scheduling-s-57d01",
+            storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+            messagingSenderId: "1069885306589",
+            appId: "1:1069885306589:web:b31768194add4087754d34",
+            measurementId: "G-KQ4PQZZZBM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function getAppointments() {
+        const querySnapshot = await getDocs(collection(db, 'appointments'));
+        let events = [];
+        
+        // Define a map to store doctor names and their associated colors
+        let doctorColorMap = {};
+
+        // Define a list of colors to use (you can expand this list if needed)
+        const availableColors = ["#FF5733", "#FFC107", "#28A745", "#007BFF", "#DC3545", "#6F42C1"];
+        let colorIndex = 0; // Start with the first color in the list
+
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const doctorName = data.doctor;  // Assuming the doctor field is named 'doctor'
+
+            // Check if the doctor already has a color assigned, if not, assign a new one
+            let eventColor;
+            if (doctorColorMap[doctorName]) {
+                eventColor = doctorColorMap[doctorName];  // Use the existing color
+            } else {
+                eventColor = availableColors[colorIndex];  // Assign a new color
+                doctorColorMap[doctorName] = eventColor;  // Store the color for future use
+                colorIndex = (colorIndex + 1) % availableColors.length;  // Cycle through the colors
+            }
+
+            // Push the event to the array with the assigned color
+            events.push({
+                start: data.appointmentDate + " " + data.appointmentTimeStart,
+                end: data.appointmentDate + " " + data.appointmentTimeEnd,
+                title: `${data.firstName} ${data.surname} - ${doctorName}`,
+                resourceId: 1,
+                color: eventColor
+            });
+        });
+
+        return events;
+        }
+
+        const ec = new EventCalendar(document.getElementById('ec'), {
+            view: 'timeGridWeek',
+            headerToolbar: {
+                start: 'prev,next',
+                center: 'title',
+                end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            },
+            resources: [
+                {id: 1, title: 'Resource A'},
+                {id: 2, title: 'Resource B'}
+            ],
+            scrollTime: '09:00:00',
+            events: [],
+            views: {
+                timeGridWeek: {pointer: true}
+            },
+            dayMaxEvents: true,
+            nowIndicator: true,
+            selectable: true
+        });
+
+        async function loadAppointments() {
+        try {
+            const events = await getAppointments();
+            // Add events one by one if `setEvents` isn't available
+            events.forEach(event => {
+                ec.addEvent(event);
+            });
+        } catch (error) {
+            console.error("Error loading appointments: ", error);
+        }
+    }
+
+
+        // Load appointments when the page is ready
+        window.onload = loadAppointments;
+    </script>
 </head>
 
 <body>
     <div class="header">
         <nav>
-          <h2>ELAD School of Potentials Therapy Center</h2>
-          <ul>
-            <li><a href="../pages/index.html">Home</a></li>
-            <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
-            <li><a href="../pages/contact.html">Contact Us</a></li>
-            <li> 
-              <div class="dropdown">
-                <button id="emailBtn"></button>
-                <div class="dropdown-content" id="userDropdown">
-                  <a href="auth/userprofile.html">View Profile</a>
-                  <a href="#">Help & Support</a>
-                  <a href="#">Give Feedback</a>
-                  <a href="#" id="verifyBtn">Verify E-mail</a>
-                  <a href="#" id="logoutBtn">Logout</a>
-                </div>
-              </div>
-    
-            </li>
-          </ul>
+            <h2>ELAD School of Potentials Therapy Center</h2>
+            <ul>
+                <li><a href="../pages/index.html">Home</a></li>
+                <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
+                <li><a href="../pages/contact.html">Contact Us</a></li>
+                <li>
+                    <div class="dropdown">
+                        <button id="emailBtn"></button>
+                        <div class="dropdown-content" id="userDropdown">
+                            <a href="auth/userprofile.html">View Profile</a>
+                            <a href="#">Help & Support</a>
+                            <a href="#">Give Feedback</a>
+                            <a href="#" id="verifyBtn">Verify E-mail</a>
+                            <a href="#" id="logoutBtn">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </nav>
-      </div>
-
-    <!-- vkurko calendar -->
-<header class="row">
-    <h1 align="center">Edit Calendar</h1>
-    <!-- <h4 class="col"><a href="https://github.com/vkurko/calendar">Event Calendar by vkurko</a></h4> -->
-   <!-- <button class="toggle-dark-button" title="Toggle dark mode" onclick="document.body.classList.toggle('ec-dark')">Go Back</button> -->
-</header>
-
-<main class="row">
-    <div id="ec" class="col"></div>
-</main>
-
-<script type="text/javascript">
-    const ec = new EventCalendar(document.getElementById('ec'), {
-        view: 'timeGridWeek',
-        headerToolbar: {
-            start: 'prev,next',
-            center: 'title',
-            end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        },
-        resources: [
-            {id: 1, title: 'Resource A'},
-            {id: 2, title: 'Resource B'}
-        ],
-        scrollTime: '09:00:00',
-        events: createEvents(),
-        views: {
-            timeGridWeek: {pointer: true}
-        },
-        dayMaxEvents: true,
-        nowIndicator: true,
-        selectable: true
-    });
-    
-    function createEvents() {
-        let days = [];
-        for (let i = 0; i < 7; ++i) {
-            let day = new Date();
-            let diff = i - day.getDay();
-            day.setDate(day.getDate() + diff);
-            days[i] = day.getFullYear() + "-" + _pad(day.getMonth()+1) + "-" + _pad(day.getDate());
-        }
-    
-        return [
-            {start: days[0] + " 00:00", end: days[0] + " 09:00", resourceId: 1, display: "background"},
-            {start: days[1] + " 12:00", end: days[1] + " 14:00", resourceId: 2, display: "background"},
-            {start: days[2] + " 17:00", end: days[2] + " 24:00", resourceId: 1, display: "background"},
-            {start: days[0] + " 10:00", end: days[0] + " 14:00", resourceId: 1, title: "The calendar can display background and regular events", color: "#FE6B64"},
-            {start: days[1] + " 16:00", end: days[2] + " 08:00", resourceId: 2, title: "An event may span to another day", color: "#B29DD9"},
-            {start: days[2] + " 09:00", end: days[2] + " 13:00", resourceId: 2, title: "Events can be assigned to resources and the calendar has the resources view built-in", color: "#779ECB"},
-            {start: days[3] + " 14:00", end: days[3] + " 20:00", resourceId: 1, title: "", color: "#FE6B64"},
-            {start: days[3] + " 15:00", end: days[3] + " 18:00", resourceId: 1, title: "Overlapping events are positioned properly", color: "#779ECB"},
-            {start: days[5] + " 10:00", end: days[5] + " 16:00", resourceId: 2, title: {html: "You have complete control over the <i><b>display</b></i> of events…"}, color: "#779ECB"},
-            {start: days[5] + " 14:00", end: days[5] + " 19:00", resourceId: 2, title: "…and you can drag and drop the events!", color: "#FE6B64"},
-            {start: days[5] + " 18:00", end: days[5] + " 21:00", resourceId: 2, title: "", color: "#B29DD9"},
-            {start: days[1], end: days[3], resourceId: 1, title: "All-day events can be displayed at the top", color: "#B29DD9", allDay: true}
-        ];
-    }
-    
-    function _pad(num) {
-        let norm = Math.floor(Math.abs(num));
-        return (norm < 10 ? '0' : '') + norm;
-    }
-    </script>
-
-
-
-<div class="footer"> 
-    <div class="social-links">
-        <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
     </div>
-    <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
-</div>
 
+    <a href="../manageuser/adminhome.html">Go Back to Admin Dashboard</a>
+    <a href="../manageuser/dist/setappoint.html">Go Back to Set Appointment</a>
+    <!-- vkurko calendar -->
+    <header class="row">
+        <h1 align="center">Edit Calendar</h1>
+    </header>
+
+    <main class="row">
+        <div id="ec" class="col"></div>
+    </main>
+
+    <div class="footer">
+        <div class="social-links">
+            <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+        </div>
+        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+    </div>
 
 </body>
 </html>

@@ -29,23 +29,29 @@
   </nav>
 </div>
 
-<div class="img">
-  <div class="user-info">
-    <img src='../../assets/images/login_profile.png' class="profile" style="float: right">
+  <div class="edit">
     <h2>Personal Info</h2>
     <p id="email"></p>
-    <p id="id"></p>
-    <p id="name"></p>
+    <p id="id">Loading </p>
+    <p id="name">Loading</p>
 
     <h2>Appointment Status</h2>
-    <p id="appointmentType"></p>
-    <p id="appointmentDate"></p>
-    <p id="appointmentTime"></p>
-    <p id="appointmentStatus"></p>
-    <p id="paymentStatus"></p>
-  </div>
+    <p id="appointmentType">Loading</p>
+    <p id="appointmentDate">Loading</p>
+    <p id="appointmentTime">Loading</p>
+    <p id="appointmentStatus">Loading</p>
+    <p id="paymentStatus">Loading</p>
+    <button class="return" type="submit" onclick="">Back</button>
 
-  <a href="../calendar/calendar.html">View Calendar and Schedules</a>
+    <form class="deleteappoint">
+    <h2>Delete listed appointment from database</h2>
+    <label for="id">Appointment ID</label>
+        <input type="text" name="id" required>
+        <br>
+        <button class="deletes">Cancel Appointment</button>
+</form>
+    <a href="">View Appoinment Status</a> 
+  </div>
 </div>
 
 
@@ -148,7 +154,21 @@ async function getUserDataByEmail(email) {
 
 
 }
+const deleteappointForm = document.querySelector('.deleteappoint')
 
+deleteappointForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const docRef = doc(db, 'appointments', 
+        deleteappointForm.id.value,
+    )
+    deleteDoc(docRef)
+    .then(() => {
+        deleteappointForm.reset()
+        alert("Refresh the page to confirm deletetion")
+    })
+
+})
         const signOutUser = () => {
             signOut(auth)
                 .then(() => {

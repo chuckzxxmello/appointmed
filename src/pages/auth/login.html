@@ -28,27 +28,32 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app); 
-
         const handleLogin = (email, password) => {
-            console.log("handleLogin called with:", email, password);
+    console.log("handleLogin called with:", email, password);
 
-            return signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    console.log("User logged in: ", user);
+    // Check for admin credentials
+    if (email === 'admin.control@mail.com' && password === 'adminXCZ457!@#') {
+        window.location.href = '../manageuser/adminhome.html';
+        return Promise.resolve(); // Resolve to prevent further execution
+    }
 
-                    window.location.href = 'userprofile.html'; 
+    return signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("User logged in: ", user);
 
-                    return user; 
-                })
-                .catch((error) => {
-                    const errorMessage = error.message;
-                    console.error("Login error:", errorMessage);
-                    const messageDiv = document.getElementById("message");
-                    messageDiv.innerText = `Error: ${errorMessage}`; 
-                    throw error;  
-                });
-        };
+            window.location.href = 'userprofile.html'; 
+
+            return user; 
+        })
+        .catch((error) => {
+            const errorMessage = error.message;
+            console.error("Login error:", errorMessage);
+            const messageDiv = document.getElementById("message");
+            messageDiv.innerText = `Error: ${errorMessage}`; 
+            throw error;  
+        });
+};
 
         window.signInWithGoogle = function () {
             const provider = new GoogleAuthProvider();
