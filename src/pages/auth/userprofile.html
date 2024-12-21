@@ -12,7 +12,7 @@
   <nav>
     <h2>ELAD School of Potentials Therapy Center</h2>
     <ul>
-      <li><a href="../index.html">Home</a></li>
+      <li><a href="../../../index.html">Home</a></li>
       <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
       <li><a href="../contact.html">Contact Us</a></li>
       <div class="dropdown">
@@ -31,18 +31,24 @@
 
 <div class="img">
   <div class="user-info">
-    <img src='../../assets/images/login_profile.png' class="profile" style="float: right">
+    <img src='../../assets/images/login_profile.png' class="profile">
+
     <h2>Personal Info</h2>
+    <strong>
     <p id="email"></p>
     <p id="id"></p>
     <p id="name"></p>
+    </strong>
 
     <h2>Appointment Status</h2>
+    <strong>
     <p id="appointmentType"></p>
     <p id="appointmentDate"></p>
     <p id="appointmentTime"></p>
     <p id="appointmentStatus"></p>
     <p id="paymentStatus"></p>
+    <p id="appointmentNotif"></p>
+    </strong>
   </div>
 
   <a href="../calendar/calendar.html">View Calendar and Schedules</a>
@@ -116,38 +122,65 @@
                 }
             });
         }); 
-   
+  
 
-async function getUserDataByEmail(email) {
+        async function getUserDataByEmail(email) {
     try {
-        const usersRef = collection(db, 'appointments');
-        const q = query(usersRef, where("email", "==", email));
-        const querySnapshot = await getDocs(q); 
-
-
-        if (!querySnapshot.empty) {
-          const userID = querySnapshot.docs[0].id;
-            const userData = querySnapshot.docs[0].data(); 
-            console.log("User Data from Firestore:", userData);
-
-            // Update the user's details on the page
-            document.getElementById('name').textContent = `Name: ${userData.firstName + " " + userData.middleName + " " + userData.surname  || 'N/A'}`; 
-            document.getElementById('appointmentType').textContent = `Appointment Type: ${userData.appointmentType || 'N/A'}`;
-            document.getElementById('appointmentDate').textContent = `Date of Appointment: ${userData.appointmentDate || 'N/A'}`;
-            document.getElementById('appointmentTime').textContent = `Time of Appointment: ${userData.appointmentTimeStart + "-" + userData.appointmentTimeEnd  || 'N/A'}`;
-            document.getElementById('paymentStatus').textContent = `Payment Status: ${userData.paymentStatus || 'N/A'}`;  
-            document.getElementById('appointmentStatus').textContent = `Appointment Status: ${userData.appointmentStatus || 'N/A'}`;  
-            document.getElementById('id').textContent = `User ID: ${userID}`;
-        } else {
-            
+      const usersRef = collection(db, 'appointments');
+      const q = query(usersRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q); 
+  
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data(); 
+        console.log("User Data from Firestore:", userData);
+  
+        // Update the user's details on the page
+        document.getElementById('name').textContent = `Name: ${userData.firstName + " " + userData.middleName + " " + userData.surname || 'N/A'}`; 
+        document.getElementById('appointmentType').textContent = `Appointment Type: ${userData.appointmentType || 'N/A'}`;
+        document.getElementById('appointmentDate').textContent = `Date of Appointment: ${userData.appointmentDate || 'N/A'}`;
+        document.getElementById('appointmentTime').textContent = `Time of Appointment: ${userData.appointmentTimeStart + "-" + userData.appointmentTimeEnd || 'N/A'}`;
+        document.getElementById('paymentStatus').textContent = `Payment Status: ${userData.paymentStatus || 'N/A'}`;  
+        document.getElementById('appointmentStatus').textContent = `Appointment Status: ${userData.appointmentStatus || 'N/A'}`;  
+        
+        // Add logic to check appointment date and display reminders
+        const appointmentDate = new Date(userData.appointmentDate);
+        const currentDate = new Date();
+        const threeDaysBefore = new Date(appointmentDate);
+        threeDaysBefore.setDate(appointmentDate.getDate() - 3);
+  
+        const twentyFourHoursBefore = new Date(appointmentDate);
+        twentyFourHoursBefore.setDate(appointmentDate.getDate() - 1);
+  
+        // Normalize dates to ignore time components for comparison
+        const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0));  // Reset time to 00:00
+        const normalizedThreeDaysBefore = new Date(threeDaysBefore.setHours(0, 0, 0, 0)); 
+        const normalizedTwentyFourHoursBefore = new Date(twentyFourHoursBefore.setHours(0, 0, 0, 0)); 
+  
+        let notification = '';
+        
+        // Debug log to see the date comparison
+        console.log("Current Date: ", normalizedCurrentDate);
+        console.log("Three Days Before: ", normalizedThreeDaysBefore);
+        console.log("24 Hours Before: ", normalizedTwentyFourHoursBefore);
+        
+        // Check for the 3-day and 24-hour reminders
+        if (normalizedCurrentDate.getTime() === normalizedThreeDaysBefore.getTime()) {
+          notification = 'Reminder: Your appointment is in 3 days!';
+        } else if (normalizedCurrentDate.getTime() === normalizedTwentyFourHoursBefore.getTime()) {
+          notification = 'Reminder: Your appointment is in 24 hours!';
         }
+  
+        // Update the notification area on the profile page
+        document.getElementById('appointmentNotif').textContent = notification;
+  
+      } else {
+        console.log("No user found with this email.");
+      }
     } catch (error) {
-        console.log("Error getting Firestore data:", error);
-        alert("Error getting user data: " + error.message); 
+      console.log("Error getting Firestore data:", error);
+      alert("Error getting user data: " + error.message); 
     }
-
-
-}
+  }
 
         const signOutUser = () => {
             signOut(auth)
@@ -180,3 +213,7 @@ async function getUserDataByEmail(email) {
     </script>
 </body>
 </html>
+
+
+
+  

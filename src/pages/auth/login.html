@@ -34,7 +34,7 @@
     // Check for admin credentials
     if (email === 'admin.control@mail.com' && password === 'adminXCZ457!@#') {
         window.location.href = '../manageuser/adminhome.html';
-        return Promise.resolve(); // Resolve to prevent further execution
+        return Promise.resolve();
     }
 
     return signInWithEmailAndPassword(auth, email, password)
@@ -68,7 +68,7 @@
                 });
         };
 
-        const loginForm = document.getElementById('auth'); // Now this will find the form
+        const loginForm = document.getElementById('auth');
 
         loginForm.addEventListener('submit', (event) => {
             event.preventDefault();
