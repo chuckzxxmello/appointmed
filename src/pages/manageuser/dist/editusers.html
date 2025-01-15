@@ -154,71 +154,44 @@
           }
         }
     
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            updateDropdownEmail(user);
-    
-            user.reload()
+      // Use browserLocalPersistence for more persistent logins
+      setPersistence(auth, browserLocalPersistence)
               .then(() => {
-                const verifyBtn = document.getElementById('verifyBtn');
-                if (user.emailVerified) {
-                  verifyBtn.textContent = "Email Verified";
-                  verifyBtn.removeAttribute('href');
-                } else {
-                  verifyBtn.textContent = "Verify E-mail";
-                  verifyBtn.href = "#";
-                }
-    
-                console.log("Logged in:", user.email);
-                console.log("Verified:", user.emailVerified);
+                  console.log('Persistence set to local.');
               })
               .catch((error) => {
-                console.log("Error reloading user:", error);
+                  console.error('Error setting persistence:', error);
               });
-    
-          } else {
-            updateDropdownEmail(null); 
-          }
-        });
-    
-        const signOutUser = () => {
-          signOut(auth)
-            .then(() => {
-              console.log('Signed out successfully');
-              window.location.href = 'auth/login.html'; 
-            })
-            .catch((error) => {
-              console.log('Error signing out:', error);
-              alert("Error: " + error.message);
-            });
-        };
-    
-        const verifyEmail = () => {
-          const user = auth.currentUser;
-          if (user) {
-            sendEmailVerification(user)
-              .then(() => {
-                alert("Verification email sent!");
-              })
-              .catch((error) => {
-                console.log('Error sending verification email:', error);
-                alert("Error: " + error.message); 
+
+          document.addEventListener('DOMContentLoaded', (event) => {
+              onAuthStateChanged(auth, (user) => {
+                  console.log('Auth state changed triggered.');
+                  setTimeout(() => {
+                      if (user) {
+                          console.log("User logged in:", user.email);
+                          localStorage.setItem('userEmail', user.email);
+                          if (user.email === 'admin.control@mail.com') {
+                              console.log("Admin is logged in:", user.email);
+                              if (window.location.pathname !== '/path/to/admin/dashboard') {
+                                  window.location.href = '/path/to/admin/dashboard';
+                              }
+                          } else {
+                              console.log("User is logged in:", user.email);
+                              if (window.location.pathname !== '/path/to/user/homepage') {
+                                  window.location.href = '/path/to/user/homepage';
+                              }
+                          }
+                      } else {
+                          console.log("User is not logged in.");
+                          localStorage.removeItem('userEmail');
+                          window.location.href = '../auth/login.html';
+                      }
+                  }, 10800000); // timeout ms
               });
-          }
-        };
+          });
     
         document.getElementById('logoutBtn').addEventListener('click', signOutUser);
-        document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
     
-        const loginBtn = document.getElementById('loginBtn');
-        loginBtn.onclick = () => {
-          const user = auth.currentUser; 
-          if (user) {
-            window.location.href = 'auth/userprofile.html'; 
-          } else {
-            window.location.href = 'auth/login.html'; 
-          }
-        };
       </script>
 
 <script type="module" src="index.js"></script>

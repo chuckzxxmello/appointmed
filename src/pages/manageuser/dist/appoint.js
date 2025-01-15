@@ -1,4 +1,3 @@
-// appoint.js
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
 import {
     collection,
@@ -41,7 +40,6 @@ onSnapshot(colRef, (snapshot) => {
 
 
 //adding documents
-
 const addappointForm = document.querySelector('.set')
 addappointForm.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -64,13 +62,18 @@ addappointForm.addEventListener('submit', (e) => {
     })
         .then(() => {
             addappointForm.reset()
+            // Added notification for successful addition
+            alert('Appointment Saved.'); 
         })
+        .catch(error => {
+            console.error('Error adding appointment: ', error);
+            alert('Failed to add appointment. Please check the console for more details.');
+        });
 })
 
+
+
 //delete documents
-
-
-
 const deleteappointForm = document.querySelector('.deleteappoint')
 
 deleteappointForm.addEventListener('submit', (e) => {
@@ -82,13 +85,20 @@ deleteappointForm.addEventListener('submit', (e) => {
     deleteDoc(docRef)
         .then(() => {
             deleteappointForm.reset()
+            // Added notification for successful deletion
+            alert('Deleted Successfully.'); 
         })
+        .catch(error => {
+            console.error('Error deleting appointment: ', error);
+            alert('Failed to delete appointment. Please check the console for more details.');
+        });
 
 })
 
 
-const updateForm = document.querySelector('.update-form');
 
+//update documents
+const updateForm = document.querySelector('.update-form');
 updateForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -131,7 +141,7 @@ updateForm.addEventListener('submit', async (e) => {
         // Update only the fields that have new values
         await updateDoc(docRef, updatedData);
 
-        alert('User updated successfully!');
+        alert('Successfully Updated.');
 
         // Clear the form after update
         updateForm.reset();
@@ -143,7 +153,7 @@ updateForm.addEventListener('submit', async (e) => {
 
 
 
-// Function to fetch appointments from Firestore (this may be useful if you want an initial load)
+// fetch appointments from Firestore
 async function getUsersFromFirestore() {
     const usersCollection = collection(db, 'appointments');
     const snapshot = await getDocs(usersCollection);
@@ -151,7 +161,7 @@ async function getUsersFromFirestore() {
     return appointments;
 }
 
-// Function to print the appointments into the table
+// print the appointments into the table
 function printTable(appointments) {
     const table = document.getElementById('appointmentTable');
 
