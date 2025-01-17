@@ -70,7 +70,7 @@
         }
 
         const ec = new EventCalendar(document.getElementById('ec'), {
-            view: 'timeGridWeek',
+            view: 'dayGridMonth',
             headerToolbar: {
                 start: 'prev,next',
                 center: 'title',
@@ -109,17 +109,21 @@
 </head>
 
 <body>
+
     <div class="header">
         <nav>
-            <h2>ELAD School of Potentials Therapy Center</h2>
+          <h2>ELAD School of Potentials Therapy Center</h2>
+          <ul>  
+            <li><a href="../manageuser/adminhome.html">Admin Dashboard</a></li>
+            <li><a href="../manageuser/dist/setappoint.html">Manage Users</a></li>
+          </ul>
         </nav>
-    </div>
+      </div>
 
-    <a href="../manageuser/adminhome.html">Admin Dashboard</a>
-    <a href="../manageuser/dist/setappoint.html">Set Appointment</a>
+
     <!-- vkurko calendar -->
     <header class="row">
-        <h1 align="center">Edit Calendar</h1>
+        <h1 align="center">Calendar Schedule</h1>
     </header>
 
     <main class="row">

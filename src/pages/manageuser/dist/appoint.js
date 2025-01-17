@@ -104,11 +104,15 @@ updateForm.addEventListener('submit', async (e) => {
 
     // Get values from the form
     const id = updateForm.id.value; // User ID (Document ID)
-    const name = updateForm.name.value;
+    const firstName = updateForm.firstName.value;
+    const middleName = updateForm.middleName.value;
+    const surname = updateForm.surname.value;
     const email = updateForm.email.value;
+    const contact = updateForm.contact.value;
     const appointmentDate = updateForm.appointmentDate.value;
     const appointmentTimeStart = updateForm.appointmentTimeStart.value;
     const appointmentTimeEnd = updateForm.appointmentTimeEnd.value;
+    const appointmentType = updateForm.appointmentType.value;
     const doctor = updateForm.doctor.value; // Make sure this matches your form field name
     const paymentType = updateForm.paymentType.value;
     const appointmentStatus = updateForm.appointmentStatus.value;
@@ -123,11 +127,15 @@ updateForm.addEventListener('submit', async (e) => {
 
     // Create an object with only the fields that have values
     const updatedData = {};
-    if (name) updatedData.name = name;
+    if (firstName) updatedData.firstName = firstName;
+    if (middleName) updatedData.middleName = middleName;
+    if (surname) updatedData.surname = surname;
     if (appointmentDate) updatedData.appointmentDate = appointmentDate;
     if (email) updatedData.email = email;
+    if (contact) updatedData.contact = contact;
     if (appointmentTimeStart) updatedData.appointmentTimeStart = appointmentTimeStart;
     if (appointmentTimeEnd) updatedData.appointmentTimeEnd = appointmentTimeEnd;
+    if (appointmentType) updatedData.appointmentType = appointmentType;
     if (doctor) updatedData.doctor = doctor;
     if (paymentType) updatedData.paymentType = paymentType;
     if (appointmentStatus) updatedData.appointmentStatus = appointmentStatus;
@@ -184,9 +192,10 @@ function printTable(appointments) {
                 <th>Date</th>
                 <th>TimeStart</th>
                 <th>TimeEnd</th>
+                <th>Type of Appointment</th>
                 <th>Type of Payment</th>
-                <th>AppointStatus</th>
-                <th>PaymentStatus</th>
+                <th>Appointment Status</th>
+                <th>Payment Status</th>
                 <th>Cost</th>
                 <th>Doctor</th>
             </tr>`;
@@ -220,6 +229,7 @@ function printTable(appointments) {
                 <td>${data.appointmentDate}</td>
                 <td>${data.appointmentTimeStart}</td>
                 <td>${data.appointmentTimeEnd}</td>
+                <td>${data.appointmentType}</td>
                 <td>${data.paymentType}</td>
                 <td>${data.appointmentStatus}</td>
                 <td>${data.paymentStatus}</td>

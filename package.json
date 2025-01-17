@@ -4,6 +4,26 @@
     "firebase": "^11.0.2"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.16"
-  }
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
+  },
+  "name": "appointment-scheduling-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chuckzxxmello/appointment-scheduling-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chuckzxxmello/appointment-scheduling-system/issues"
+  },
+  "homepage": "https://github.com/chuckzxxmello/appointment-scheduling-system#readme",
+  "description": ""
 }

@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
-  <link rel="stylesheet" href="../../styles/nobgstylesheet.css">
+  
+  <link rel="stylesheet" href="../../styles/stylesheet.css" media="screen and (min-width: 1024px)">
+  
+  <link rel="stylesheet" href="../../styles/mobileview.css" media="screen and (max-width: 480px)">
+
 </head>
 <body>
-
+  <div class="bg-image"></div>
 <div class="header">
   <nav>
     <h2>ELAD School of Potentials Therapy Center</h2>
@@ -19,6 +23,7 @@
         <div id="emailBtn"></div> 
         <div class="dropdown-content">
           <a href="userprofile.html">View Profile</a>
+          <a href="../calendar/calendaruser.html">View Calendar</a>
           <a href="#" id="verifyBtn">Verify E-mail</a> 
           <a href="#" id="logoutBtn">Logout</a> 
         </div>
@@ -27,12 +32,9 @@
   </nav>
 </div>
 
-<a href="../calendar/calendaruser.html">View Calendar and Schedules</a>
-
-<div class="img">
   <div class="user-info">
-    <img src='../../assets/images/login_profile.png' class="profile">
 
+    <div class="img"><img src='../../assets/images/login_profile.png' class="profile">  </div>
     <h2>Personal Info</h2>
     <strong>
     <p id="email"></p>
@@ -49,10 +51,8 @@
     <p id="paymentStatus"></p>
     <p id="appointmentNotif"></p>
     </strong>
-  </div>
-
-  <p>If you want to set up a new Appointment, please <a href="../contact.html">Contact Us</a>.</p>
-
+    <br><br>
+    <p>If you want to set up a new Appointment, please <a href="../contact.html">Contact Us</a>.</p>
 
 </div>
 

@@ -1,17 +1,6 @@
-/*
-
-CSS stylesheet for appointment-scheduling-system
-
-Created By:
-    
-    Elijah Mariano
-
-Modified By:
-    
-    Elijah Mariano
-    Chuckie A. Española
-    
-*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /*-------------------------- MAIN HTML -------------------------- */
 
@@ -21,15 +10,23 @@ Modified By:
     box-sizing: border-box; /* Include padding and border in element's total width/height */
 }
 
-body {
-    background-image: url('../assets/images/bg-home.jpg'); /* Background image */
-    background-size: cover; /* Cover the entire viewport */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent repeating */
-    background-attachment: fixed; /* Fixed background */
-    font-family: 'Roboto', sans-serif; /* Font style */
-    font-weight: 100; /* Light font weight */
-    z-index: -1; /* Layering */
+.bg-image {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    background-image: url('../assets/images/bg-home.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    opacity: 0.5; 
+    z-index: -1; 
+}
+  
+  body {
+    font-family: 'Roboto', sans-serif; 
+    font-weight: 100;
 }
 
 h1, h2, h3 {
@@ -45,22 +42,20 @@ h1, h2, h3 {
     width: 100%; /* Full width */
     height: 10hv; /* Header height */
     padding: 0 10px; /* Padding */
-    background: rgb(255, 255, 255); /* White background */
+    background: #FED053;
     text-align: center; /* Center text */
 }
-
-.header img {
-    margin-right: 10px; /* Space between image and text */
-    width: 3%; /* Image width */
-    height: auto; /* Maintain aspect ratio */
+.header a {
+    font-size: 18px;
 }
 
 /*-------------------------- FOOTER -------------------------- */
 
 .footer {
-    background-color: rgb(231, 236, 255); /* Light background */
+    background-color: #FED053;
     color: rgb(9, 17, 51); /* Dark text color */
     text-align: center; /* Center align text */
+    font-weight: bold; 
     padding: 30px; /* Padding */
     position: relative; /* Positioning */
     bottom: 0; /* Stick to bottom */
@@ -74,9 +69,9 @@ h1, h2, h3 {
 }
 
 .footer-style-button {
-    background-color: rgb(15, 20, 46); /* Dark button background */
-    color: white; /* Button text color */
-    padding: 12px 20px; /* Padding for button */
+    background-color: rgb(0, 42, 228);
+    color: #000000 ;
+    padding: 10px 20px; /* Padding for button */
     border-radius: 5px; /* Rounded corners */
     text-decoration: none; /* No underline */
     transition: background-color 0.3s; /* Smooth transition */
@@ -85,7 +80,8 @@ h1, h2, h3 {
 }
 
 .footer-style-button:hover {
-    background-color: rgb(10, 15, 36); /* Darker on hover */
+    background-color: rgb(9, 17, 51); /* Darker on hover */
+    color: #FFFFFF ;
 }
 
 .social-links {
@@ -100,10 +96,7 @@ nav {
     align-items: center; /* Center vertically */
     justify-content: space-between; /* Space between items */
     padding: 5px 0; /* Padding */
-}
-
-nav img {
-    max-width: 5%; /* Limit image size */
+    text-decoration: none;
 }
 
 nav ul {
@@ -126,26 +119,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #000; /* Change color on hover */
-    text-decoration: underline; /* Underline on hover */
-}
-
-.dropdown li {
-    display: block; /* Stack dropdown items */
-    margin: 0; /* Reset margin */
-}
-
-.dropdown li a {
-    color: rgb(165, 158, 158); /* Dropdown link color */
-    padding: 10px; /* Padding for dropdown items */
-    text-decoration: none; /* No underline */
-    display: block; /* Make entire area clickable */
-    font-size: 18px; /* Font size for dropdown links */
-}
-
-.dropdown li a:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Background on hover */
-    color: #000; /* Change color on hover */
+    color: #FFFFFF;
 }
 
 /*-------------------------- LOGIN AND CONTACT CONTAINER -------------------------- */
@@ -155,7 +129,7 @@ nav ul li a:hover {
     padding: 40px; /* Padding */
     border-radius: 20px; /* Rounded corners */
     max-width: 400px; /* Max width */
-    margin: 400px auto; /* Center the box */
+    margin: 164.5px auto; /* Center the box */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
     text-align: center; /* Center text */
 }
@@ -164,6 +138,44 @@ nav ul li a:hover {
     font-size: 28px; /* Header size */
     margin-bottom: 20px; /* Space below header */
     color: rgb(15, 20, 46); /* Header color */
+}
+
+.login-container button {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    background-color: rgb(15, 20, 46); /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+.login-container button:hover {
+    background-color: rgb(0, 42, 228); /* Change on hover */
+}
+.login-container button:focus {
+    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
+}
+.login-container a {
+    text-decoration: none;
+    width: 100%; /* Full width */
+    padding: 10px 128px; /* Padding */
+    background-color: rgb(15, 20, 46); /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+    font-size: 18px; /* Header size */
+    margin-bottom: 20px; /* Space below header */
+    
+}
+.login-container a:hover {
+    background-color: rgb(0, 42, 228); /* Change on hover */
+}
+
+.login-container a:focus {
+    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
 }
 
 .contact-btn {
@@ -228,6 +240,8 @@ button {
     transition: background-color 0.3s; /* Smooth transition */
 }
 
+
+/* might delete */
 button:hover {
     background-color: rgb(0, 42, 228); /* Change on hover */
 }
@@ -317,31 +331,56 @@ button:focus {
 /*-------------------------- BACKGROUND INFO -------------------------- */
 
 .background-info {
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-    padding: 100px; /* Padding */
-    border-radius: 20px; /* Rounded corners */
-    max-width: 1100px; /* Max width */
-    margin: 40px; /* Margin */
-    margin-top: 130px; /* Margin above */
-    margin-bottom: 400px; /* Margin below */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+  padding: 48px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.background-info h1 {
-    font-size: 45px; /* Header size */
-    margin-bottom: 40px; /* Space below header */
-    color: rgb(15, 20, 46); /* Header color */
+/* gawing invisible yung text sa index.html*/
+.background-info h2 {
+    opacity: 0;
 }
 
+/* index.html proceed to log-in and contact us */
 .background-info a {
-    display: inline-block; /* Inline block display */
-    text-decoration: none; /* No underline */
+    display: inline-block;
+    text-decoration: none;
     color: rgb(255, 255, 255); /* Link color */
-    background-color: rgb(15, 20, 46); /* Button background */
-    padding: 10px 30px; /* Button padding */
-    font-size: 18px; /* Font size */
-    margin-top: 40px; /* Space above */
+    background-color: rgb(15, 20, 46);
+    padding: 10px 20px;
+    font-size: 18px;
     border-radius: 6px; /* Rounded corners */
+}
+.background-info a:hover {
+    background-color: rgb(0, 42, 228);
+    transition: background-color 0.3s;
+}
+button {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    background-color: #FED053;
+    font-size: 18px;
+    color: rgb(15, 20, 46);
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+button:hover {
+    background-color: #FED053;
+    color: #FFFFFF;
+}
+
+.background-info button:focus {
+    outline: #FED053;
+}
+
+a:focus {
+    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
 }
 
 /*-------------------------- MANAGE USERS -------------------------- */
@@ -404,13 +443,18 @@ th {
 }
 
 .contact-details {
-    padding: 50px;
+    padding: 20px;
     text-align: center; /* Center align for location */
     max-width: 800px;
-    margin: 242px auto;
+    margin: 215px auto;
     background-color: white; /* White background for content area */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* gawing invisible yung text sa contact.html*/
+.contact-details h2 {
+    opacity: 0;
 }
 
 /*-------------------------- NEWS AND ANNOUNCEMENT -------------------------- */
@@ -445,6 +489,7 @@ th {
 .dropbox {
 display:inline-block;
 text-align: center;
+font-size: 100px;
 justify-content: center;
 align-items: center; 
 padding: 10px;
@@ -463,17 +508,21 @@ padding: 10px;
 .dropbtn {
     background: inherit;
     padding: 16px;
-    font-size: 16px;
     border: none;
   }
   
   
-  .dropdown {
+.dropdown {
     position: relative;
     display: inline-block;
-  }
-  
-  /* Dropdown content (hidden by default) */
+    font-size: 18px;
+    transition: background-color 0.3s;
+    
+}
+.dropdown:hover {
+    color: #FFFFFF;
+}
+
   .dropdown-content {
     display: none;
     position: absolute;
@@ -481,21 +530,365 @@ padding: 10px;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    font-size: 16px;
   }
   
-  /* Links inside the dropdown */
   .dropdown-content a {
+    font-weight: bold;
     color: black;
-    padding: 12px 16px;
+    padding: 10px 40px;
     text-decoration: none;
     display: block;
+    background-color: #FFFFFF;
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
+  .dropdown-content a:hover {background-color: #FED053;;}
   
-  /* Show the dropdown menu on hover */
+  /* Show the dropdown menu on hover  please fix this in js if not logged in*/
   .dropdown:hover .dropdown-content {display: block;}
   
   /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: white;}
+  .dropdown:hover .dropbtn {background-color: #FED053;;}
+
+.user-info {
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    padding: 100px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    max-width:600px; /* Max width */
+    margin: 42px auto; /* Center the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    text-align: center; /* Center text */
+    font-size: 17px;
+    
+}
+
+img {
+    margin: 10px; 
+    width: 100px; /* Example width */
+    height: auto;
+}
+
+.top-button a {
+    text-decoration: none;
+    width: 100%; /* Full width */
+    padding: 10px 10px; /* Padding */
+    background-color: rgb(15, 20, 46); /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+    font-size: 14px; /* Header size */
+    margin-bottom: 20px; /* Space below header */
+}
+.top-button a:hover {
+    background-color: rgb(0, 42, 228); /* Change on hover */
+}
+
+.admin-info {
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    padding: 40px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    max-width: 600px; /* Max width */
+    margin: 153.5px auto; /* Center the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    text-align: center; /* Center text */
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Arrange buttons vertically */
+    align-items: center; /* Center buttons horizontally */ 
+  }
+  
+  .admin-info h2 {
+    font-size: 28px; /* Header size */
+    margin-bottom: 20px; /* Space below header */
+    color: rgb(15, 20, 46); /* Header color */
+  }
+  
+  .admin-info button {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    background-color: rgb(15, 20, 46); /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+    margin-bottom: 10px; /* Add spacing between buttons */ 
+  }
+  
+  .admin-info button:hover {
+    background-color: rgb(0, 42, 228); /* Change on hover */
+  }
+  
+  .admin-info button:focus {
+    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
+  }
+  
+  .admin-info a {
+    text-decoration: none;
+    width: 100%; /* Full width */
+    padding: 10px 40px; /* Padding */
+    background-color: rgb(15, 20, 46); /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+    font-size: 18px; /* Header size */
+    margin-bottom: 20px; /* Space below header */
+  }
+  
+  .admin-info a:hover {
+    background-color: rgb(0, 42, 228); /* Change on hover */
+  }
+  
+  .admin-info a:focus {
+    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
+  }
+  
+
+
+  .manage-user .set, .manage-user .update-form {
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    padding: 20px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    max-width: 1000px; /* Max width */
+    margin: 40px auto; /* Center the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    text-align: left; /* Center text */
+  }
+
+  .manage-user .table {
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    padding: 20px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    max-width: 1000px; /* Max width */
+    margin: 40px auto; /* Center the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    text-align: left; /* Center text */
+  }
+
+  .manage-user .deleteappoint{
+    width: 100%;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    padding: 20px; /* Padding */
+    border-radius: 20px; /* Rounded corners */
+    max-width: 600px; /* Max width */
+    margin: 40px right; /* Center the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    text-align: left; /* Center text */
+  }
+  
+  .manage-user h1 {
+    text-align: center;
+    color: #2c3e50;
+  }
+  
+  .manage-user .margin {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  
+  .manage-user h2 {
+    color: rgb(15, 20, 46);
+    border-bottom: 2px solid rgb(15, 20, 46);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .manage-user label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .manage-user input[type="text"],
+  .manage-user input[type="email"],
+  .manage-user input[type="date"],
+  .manage-user input[type="time"],
+  .manage-user input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .manage-user button {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    background-color: rgb(15, 20, 46); /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.manage-user .addel {
+    width: 10%; /* Full width */
+    padding: 10px; /* Padding */
+    background-color: rgb(15, 20, 46); /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+
+/* might delete */
+.manage-user button:hover {
+    background-color: rgb(0, 42, 228); /* Change on hover */
+}
+
+.manage-user button:focus {
+    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
+}
+  
+  .manage-user .roundedbutton, .manage-user .deletes {
+    background-color: rgb(15, 20, 46);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .manage-user .roundedbutton:hover, .manage-user .deletes:hover {
+    background-color: rgb(15, 20, 46);
+  }
+  
+  .manage-user .deletes {
+    background-color: rgb(255, 0, 0);
+  }
+  
+  .manage-user .deletes:hover {
+    background-color: rgb(255, 0, 0);
+  }
+  
+  .manage-user .table th, .manage-user .table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .manage-user .table th {
+    background-color: rgb(15, 20, 46);
+    color: #fff;
+  }
+  
+  .manage-user .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .manage-user .table tr:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .manage-user {
+    @media (max-width: 768px) {
+      .manage-user input[type="text"],
+      .manage-user input[type="email"],
+      .manage-user input[type="date"],
+      .manage-user input[type="time"],
+      .manage-user input[type="number"] {
+        width: calc(100% - 16px);
+      }
+  
+      .manage-user .table {
+        font-size: 14px;
+      }
+    }
+  }
+  
+
+
+
+  .analytics {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .analytics  .user-stats {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .analytics  .user-stats p {
+    margin: 5px 0;
+  }
+
+  .analytics h2 {
+    text-align: center;
+  }
+
+  .analytics h3 {
+    font-size: 16px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  /* Responsive Chart Container */
+  .analytics .chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+
+  /* Adjusting canvas elements for responsiveness */
+  .analytics canvas {
+    max-width: 100%;
+    height: auto;  /* Maintains the aspect ratio */
+    flex: 1;
+    max-height: 300px;  /* Keeps the height manageable */
+  }
+
+  /* Footer styles */
+  .analytics  .footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 40px;
+  }
+
+  .analytics .footer-style-button {
+    font-size: 14px;
+  }
+.analytics {
+  @media (max-width: 768px) {
+    /* For smaller screens, stack the charts vertically */
+    .chart-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Reduce font sizes for small screens */
+    h2, h3 {
+      font-size: 14px;
+    }
+
+    .user-stats {
+      font-size: 12px;
+    }
+
+    canvas {
+      max-height: 250px;
+    }
+  }
+}
+  

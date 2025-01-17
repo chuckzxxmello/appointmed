@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    font-size: 14px; /* Smaller base font size for mobile */
+}
+
+h1, h2, h3 {
+    color: rgb(15, 20, 46);
+    margin: 10px; /* Reduced margin */
+    font-weight: 100;
+    word-spacing: 0px;
+}
+
+/* Header adjustments for mobile */
+.header {
+    width: 100%;
+    height: auto; /* Auto height for mobile */
+    padding: 10px 5px; /* Reduced padding */
+    background: #FED053;
+    text-align: center;
+}
+
+/* Navigation adjustments */
+nav {
+    width: 100%;
+    flex-direction: column; /* Stack items vertically */
+    padding: 5px;
+}
+
+nav img {
+    max-width: 15%; /* Larger image for mobile */
+    margin: 5px auto; /* Center image */
+}
+
+nav ul {
+    width: 100%;
+    text-align: center;
+}
+
+nav ul li {
+    display: block; /* Stack nav items */
+    margin: 10px 0; /* Vertical spacing */
+}
+
+nav ul li a {
+    font-size: 16px; /* Smaller font */
+    padding: 8px 0; /* Add tap target padding */
+    display: block; /* Make full width clickable */
+}
+
+/* Dropdown adjustments */
+.dropdown {
+    position: static; /* Better for mobile */
+    width: 100%;
+}
+
+.dropdown-content {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    background-color: rgba(254, 208, 83, 0.9);
+}
+
+.dropdown-content a {
+    padding: 10px;
+    text-align: center;
+}
+
+/* Login container adjustments */
+.login-container {
+    margin: 20px auto;
+    padding: 20px;
+    width: 90%; /* Use most of screen width */
+    max-width: none;
+}
+
+.login-container a {
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+/* Background info adjustments */
+.background-info {
+    margin: 20px;
+    padding: 20px;
+    width: auto;
+}
+
+/* Form adjustments */
+.form-group {
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 12px; /* Larger input fields */
+    font-size: 16px; /* Prevent zoom on iOS */
+}
+
+button {
+    padding: 12px;
+    font-size: 16px;
+}
+
+/* Footer adjustments */
+.footer {
+    padding: 20px 10px;
+}
+
+.contact-info {
+    font-size: 16px;
+}
+
+.footer-style-button {
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+}
+
+/* Admin dashboard adjustments */
+.admin-dashboard {
+    margin: 20px;
+    padding: 20px;
+    width: auto;
+}
+
+/* Edit container adjustments */
+.edit-container {
+    margin: 20px;
+    width: auto;
+    max-width: none;
+}
+
+/* Table adjustments */
+table {
+    display: block;
+    overflow-x: auto; /* Allow horizontal scroll */
+    white-space: nowrap;
+}
+
+th, td {
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* About section adjustments */
+.abouttext {
+    margin: 10px;
+    padding: 15px;
+}
+
+.about-image, .team-image {
+    width: 100%; /* Full width images */
+    margin: 10px 0;
+}
+
+/* Contact details adjustments */
+.contact-details {
+    margin: 20px;
+    padding: 15px;
+    width: auto;
+}
+
+/* News and announcements adjustments */
+.news-announcements {
+    margin: 10px;
+    padding: 15px;
+}
+
+/* Manage users container adjustments */
+.manage-users-container {
+    margin: 20px;
+    width: auto;
+    overflow-x: auto;
+}

@@ -15,7 +15,7 @@
 
 <!-- title -->    <title>Login</title>
 
-<link rel="stylesheet" href="../../../styles/nobgstylesheet.css">
+<link rel="stylesheet" href="../../../styles/stylesheet.css">
 
     <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script> 
@@ -24,114 +24,146 @@
 <body>
 
 <!-- header -->
-<div class="header">
+
+  <div class="header">
     <nav>
       <h2>ELAD School of Potentials Therapy Center</h2>
+      <ul>
+        <li><a href="../adminhome.html">Admin Dashboard</a></li>
+        <li><a href="../../calendar/calendaredit.html">View Calendar and Schedules</a></li>
+      </ul>
     </nav>
   </div>
 
-<a href="../adminhome.html">Admin Dashboard</a>
-<a href="../../calendar/calendaredit.html">View Calendar and Schedules</a>
-
-<h1>Set an Appointment</h1>
-<br><br><br><br>
-<div class="margin">
-<form class ="set">
-    <div class="forname">
-        <h2>Appointment Schedule</h2>
-        <label for="appointmentDate">Full Name of Client:</label>
-        <input type="text" id="firstName" name="firstName" placeholder="First Name">>
-        <input type="text" id="middleName" name="middleName" placeholder="Middle Name(IF any)" >>
-        <input type="text" id="surname" name="surname" placeholder="Last Name" required>>
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" required>
-        <label for="contact">Phone Number</label>
-        <input type="text" id="contact" name="contact" required>
-        <label for="appointType">Type of appointment</label>
-        <input type="text" name="appointmentType" >
-
-        <label for="appointmentDate">Select Date:</label>
-        <input type="date" id="appointmentDate" name="appointmentDate" required>>
-        <label for="appointmentTime">Select Time: Start to End</label>
-        <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
-        <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
-      <label for="doctor">Doctor</label>
-        <input type="text" name="doctor" >    
-    </div>  
+  <div class="manage-user">  
     <br>
+    <!-- Unique IDs for each button -->
+    <button class="addel" id="addAppointmentButton">Add Appointment</button>
+    <button class="addel" id="updateAppointmentButton">Update Appointment</button>
+    <button class="addel" id="deleteAppointmentButton">Delete Appointment</button>
+  
+    <script>
+      // Event listener for Add Appointment button
+      document.getElementById("addAppointmentButton").addEventListener("click", function() {
+        var setForm = document.getElementById("setForm");
+        var updateForm = document.getElementById("updateForm");
+        var deleteForm = document.getElementById("deleteForm");
+  
+        // Show the Add Appointment form and hide the others
+        setForm.style.display = "block";
+        updateForm.style.display = "none";
+        deleteForm.style.display = "none";
+      });
+  
+      // Event listener for Update Appointment button
+      document.getElementById("updateAppointmentButton").addEventListener("click", function() {
+        var setForm = document.getElementById("setForm");
+        var updateForm = document.getElementById("updateForm");
+        var deleteForm = document.getElementById("deleteForm");
+  
+        // Show the Update Appointment form and hide the others
+        setForm.style.display = "none";
+        updateForm.style.display = "block";
+        deleteForm.style.display = "none";
+      });
+  
+      // Event listener for Delete Appointment button
+      document.getElementById("deleteAppointmentButton").addEventListener("click", function() {
+        var setForm = document.getElementById("setForm");
+        var updateForm = document.getElementById("updateForm");
+        var deleteForm = document.getElementById("deleteForm");
+  
+        // Show the Delete Appointment form and hide the others
+        setForm.style.display = "none";
+        updateForm.style.display = "none";
+        deleteForm.style.display = "block";
+      });
+    </script>
+  
+    <h1>Manage Users </h1>
+  
+    <!-- Set Appointment Form -->
+    <form class="set" id="setForm" style="display:none;"> <!-- SET -->
+      <h2>Add an Appointment Schedule</h2>
+      <label for="appointmentDate">Full Name of Client:</label>
+      <input type="text" id="firstName" name="firstName" placeholder="First Name">
+      <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
+      <input type="text" id="surname" name="surname" placeholder="Last Name" required>
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
+      <label for="contact">Phone Number</label>
+      <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
+      <label for="appointType">Type of appointment</label>
+      <input type="text" name="appointmentType" required placeholder="CHECK-UP">
+      <label for="doctor">Doctor</label>
+      <input type="text" name="doctor" placeholder="Doctor's Name">    
+      <br><br>
+      <label for="appointmentDate">Select Date:</label>
+      <input type="date" id="appointmentDate" name="appointmentDate" required>
+      <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
+      <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
+      <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
+      <br><br>
+      <label for="doctor">Payment Method</label>
+      <input type="text" name="paymentType" required placeholder="CASH or ONLINE PAYMENT">
+      <label for="doctor">Cost of Appointment</label>
+      <input type="number" name="payment" required placeholder="PHP">
+      <label for="doctor">Payment Status</label>
+      <input type="text" name="paymentStatus" required placeholder="PAID or NOT PAID or DOWNPAYMENT">
+      <label for="doctor">Appointment Status</label>
+      <input type="text" name="appointmentStatus" required placeholder="FINISHED or ONGOING">
+      <br><br>
+      <button class="roundedbutton">Add appointment</button>
+    </form>
+  
+    <!-- Update Appointment Form -->
+    <form class="update-form" id="updateForm" style="display:none;"> <!-- UPDATE -->
+      <h2>Update Appointment Schedule</h2>
+      <label for="appointmentDate">Full Name of Client:</label>
+      <input type="text" name="id" required placeholder="Appointment ID">
+      <br><br>
+      <input type="text" id="firstName" name="firstName" placeholder="First Name">
+      <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
+      <input type="text" id="surname" name="surname" placeholder="Last Name" required>
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
+      <label for="contact">Phone Number</label>
+      <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
+      <label for="appointType">Type of appointment</label>
+      <input type="text" name="appointmentType" required placeholder="CHECK-UP">
+      <label for="doctor">Doctor</label>
+      <input type="text" name="doctor" placeholder="Doctor's Name">
+      <br><br>
+      <label for="appointmentDate">Select Date:</label>
+      <input type="date" id="appointmentDate" name="appointmentDate" required>
+      <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
+      <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
+      <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
+      <br><br>
+      <label for="doctor">Payment Method</label>
+      <input type="text" name="paymentType" required placeholder="CASH or ONLINE PAYMENT">
+      <label for="doctor">Cost of Appointment</label>
+      <input type="number" name="payment" required placeholder="PHP">
+      <label for="doctor">Payment Status</label>
+      <input type="text" name="paymentStatus" required placeholder="PAID or NOT PAID or DOWNPAYMENT">
+      <label for="doctor">Appointment Status</label>
+      <input type="text" name="appointmentStatus" required placeholder="FINISHED or ONGOING">
+      <br><br>
+      <button class="roundedbutton">Update</button>
+    </form>
+  
+    <!-- Delete Appointment Form -->
+    <form class="deleteappoint" id="deleteForm" style="display:none;"> <!-- DELETE -->
+      <h2>Delete Appointment from Database</h2>
+      <label for="id">Appointment ID</label>
+      <input type="text" name="id" required placeholder="Example: kM0L0iVE8Mkkm1I1vY1d">
+      <br><br>
+      <button class="deletes">Delete from Database</button>
+    </form>
 
-        <br>
-        <label for="doctor">Payment Method</label>
-        <input type="text" name="paymentType" >
-        <label for="doctor">Cost of Appointment</label>
-        <input type="number" name="payment" >
-        <label for="doctor">Payment Status</label>
-        <input type="text" name="paymentStatus" >
-        <label for="doctor">Appointment Status</label>
-        <input type="text" name="appointmentStatus" >
-        <br>
-        <button class="roundedbutton">Add appointment</button>
-</form>
-<br><br><br><br>
-<form class="update-form">
-  <h2>Update Appointment Schedule</h2>
-  <label for="appointmentDate">Full Name of Client:</label>
-  <input type="text" name="id" required placeholder="Appointment Id">
-  <input type="text" id="firstName" name="firstName" placeholder="First Name">>
-  <input type="text" id="middleName" name="middleName" placeholder="Middle Name(IF any)" >>
-  <input type="text" id="surname" name="surname" placeholder="Last Name" required>>
-  <label for="email">Email</label>
-  <input type="text" id="email" name="email" required>
-  <label for="contact">Phone Number</label>
-  <input type="text" id="contact" name="contact" required>
-  <label for="appointType">Type of appointment</label>
-  <input type="text" name="appointmentType" >
-
-  <label for="appointmentDate">Select Date:</label>
-  <input type="date" id="appointmentDate" name="appointmentDate" required>>
-  <label for="appointmentTime">Select Time: Start to End</label>
-  <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
-  <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
-<label for="doctor">Doctor</label>
-  <input type="text" name="doctor" >    
-  <br>
-  <br>
-  <label for="doctor">Payment Method</label>
-  <input type="text" name="paymentType" >
-  <label for="doctor">Cost of Appointment</label>
-  <input type="number" name="payment" >
-  <label for="doctor">Payment Status</label>
-  <input type="text" name="paymentStatus" >
-  <label for="doctor">Appointment Status</label>
-  <input type="text" name="appointmentStatus" >
-  <br>
- 
-  <button class="roundedbutton">Update</button>
- 
-
-
-</form>
-
-<br><br><br><br>
-<form class="deleteappoint">
-    <h2>Delete listed appointment from database</h2>
-    <label for="id">Appointment ID</label>
-        <input type="text" name="id" required>
-        <br>
-        <button class="deletes">Delete from database</button>
-</form>
-
-<br><br><br><br>
-<table class="table" id="appointmentTable" border="3"></table>
-
-</div> 
-
-<br>
-<br>
-
-
-
-<!-- footer -->
+    <table class="table" id="appointmentTable" border="3"><h2>View Users</h2></table>
+  </div>
+  
 
     <div class="footer"> 
         <div class="social-links">
