@@ -3,266 +3,317 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ELAD School of Potentials Therapy Center</title>
+  <title>ELAD School of Potentials Therapy Center - Analytics</title>
   <link rel="stylesheet" href="../../styles/stylesheet.css">
   <!-- Include Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
   <div class="header">
-    <nav>
-      <h2>ELAD School of Potentials Therapy Center</h2>
-      <ul>
-        <li><a href="adminhome.html">Go Back to Admin Dashboard</a></li>
-      </ul>
-    </nav>
+      <nav>
+          <h2><Wbr>Website Analytics</Wbr></h2>
+          <ul>
+              <li><a href="adminhome.html">Admin Dashboard</a></li>
+          </ul>
+      </nav>
   </div>
 
-<div class="analytics">
-  <h2>User Analytics</h2>
-
-  <div class="user-stats">
-    <p><strong>Total Users:</strong> 2</p>
-    <p><strong>Active Users:</strong> 0</p>
-    <p><strong>Appointments Made:</strong> 2</p>
+  <div class="analytics">
+      <h2>Analytics Dashboard</h2>
+      
+      <div class="dashboard-grid">
+          <div class="metric-card">
+              <h3>Type of Appointment</h3>
+              <div id="appointmentTypeStats"></div>
+              <canvas id="appointmentTypeChart"></canvas>
+          </div>
+          <div class="metric-card">
+              <h3>Appointment Status</h3>
+              <div id="appointmentStats"></div>
+              <canvas id="appointmentStatusChart"></canvas>
+          </div>
+          <div class="metric-card">
+              <h3>Payment Analytics</h3>
+              <div id="paymentStats"></div>
+              <canvas id="paymentStatusChart"></canvas>
+          </div>
+      </div>
   </div>
 
-  <div class="chart-container">
-    <h3>Appointments Chart</h3>
-    <canvas id="appointmentsChart"></canvas>
-
-    <h3>Active Users Chart</h3>
-    <canvas id="activeUsersChart"></canvas>
-
-    <h3>User Registration Count</h3>
-    <canvas id="userRegistrationChart"></canvas>
-
-    <h3>Total Appointments by Category</h3>
-    <canvas id="appointmentsCategoryChart"></canvas>
-
-    <h3>Average Appointments Per User</h3>
-    <canvas id="avgAppointmentsChart"></canvas>
+  <div class="footer">
+      <div class="social-links">
+          <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+      </div>
+      <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
   </div>
 
-  <h3>Firebase Console Access</h3>
-  <p>For a more detailed Firebase Analytics, visit the <a href="https://console.firebase.google.com/u/0/project/appointment-scheduling-s-57d01/analytics/app/web:MWQ3MzNlNzAtNzc1Mi00M2U5LWFmYWQtNzdkNjQ1MGNkNGQ2/overview/reports~2Fdashboard%3Fr%3Dfirebase-overview&fpn%3D1069885306589" target="_blank">Firebase Console</a>.</p>
-</div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+    import { getFirestore, collection, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 
-<div class="footer">
-  <div class="social-links">
-    <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
-  </div>
-  <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
-</div>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
-    authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
-    databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "appointment-scheduling-s-57d01",
-    storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
-    messagingSenderId: "1069885306589",
-    appId: "1:1069885306589:web:b31768194add4087754d34",
-    measurementId: "G-KQ4PQZZZBM"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore();
-  const auth = getAuth(app);
-
-  // Function to fetch data from Firestore
-  async function fetchData() {
-    // Fetch appointments data
-    const appointmentsRef = collection(db, "appointments");
-    const appointmentsSnapshot = await getDocs(appointmentsRef);
-    const appointmentsData = appointmentsSnapshot.docs.map(doc => doc.data());
-
-    // Fetch users data
-    const usersRef = collection(db, "users");
-    const usersSnapshot = await getDocs(usersRef);
-    const usersData = usersSnapshot.docs.map(doc => doc.data());
-
-    // Fetch active users (e.g., users with a certain active status)
-    const activeUsersRef = collection(db, "users");
-    const activeUsersQuery = query(activeUsersRef, where("isActive", "==", true));
-    const activeUsersSnapshot = await getDocs(activeUsersQuery);
-    const activeUsersData = activeUsersSnapshot.docs.map(doc => doc.data());
-
-    // Process data for the charts
-    const appointmentsCount = appointmentsData.length;
-    const activeUsersCount = activeUsersData.length;
-    const userRegistrationCount = usersData.length;
-
-    // Process categories data for appointments (assuming there's a "category" field)
-    const categories = ["Therapy", "Consultation", "Workshop"];
-    const appointmentsByCategory = categories.map(category => 
-      appointmentsData.filter(appointment => appointment.category === category).length
-    );
-
-    // Process average appointments per user
-    const avgAppointmentsPerUser = usersData.map(user => 
-      appointmentsData.filter(appointment => appointment.userId === user.id).length
-    );
-
-    return {
-      appointmentsCount,
-      activeUsersCount,
-      userRegistrationCount,
-      appointmentsByCategory,
-      avgAppointmentsPerUser
-    };
-  }
-
-  // Function to create charts
-  async function createCharts() {
-    const data = await fetchData();
-
-    const appointmentsCtx = document.getElementById('appointmentsChart').getContext('2d');
-    const activeUsersCtx = document.getElementById('activeUsersChart').getContext('2d');
-    const userRegistrationCtx = document.getElementById('userRegistrationChart').getContext('2d');
-    const appointmentsCategoryCtx = document.getElementById('appointmentsCategoryChart').getContext('2d');
-    const avgAppointmentsCtx = document.getElementById('avgAppointmentsChart').getContext('2d');
-
-    const appointmentsData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-        label: 'Appointments Made Over Time',
-        data: [data.appointmentsCount], // Replace with actual time-series data
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: true,
-      }]
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+        authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+        databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "appointment-scheduling-s-57d01",
+        storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+        messagingSenderId: "1069885306589",
+        appId: "1:1069885306589:web:b31768194add4087754d34",
+        measurementId: "G-KQ4PQZZZBM"
     };
 
-    const activeUsersData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-        label: 'Active Users Over Time',
-        data: [data.activeUsersCount], // Replace with actual time-series data
-        borderColor: 'rgba(153, 102, 255, 1)',
-        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-        fill: true,
-      }]
-    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore();
+    const auth = getAuth();
 
-    const userRegistrationData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-        label: 'User Registration Count',
-        data: [data.userRegistrationCount], // Replace with actual time-series data
-        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-        borderColor: 'rgba(255, 159, 64, 1)',
-        borderWidth: 1,
-        barThickness: 40
-      }]
-    };
+    // Real-time listener for appointments and users collection
+    function listenToAnalytics() {
+        // Listen to changes in appointments collection
+        const appointmentsRef = collection(db, 'appointments');
+        onSnapshot(appointmentsRef, async (snapshot) => {
+            const appointments = snapshot.docs.map(doc => doc.data());
 
-    const appointmentsCategoryData = {
-      labels: ['Therapy', 'Consultation', 'Workshop'],
-      datasets: [{
-        label: 'Appointments by Category',
-        data: data.appointmentsByCategory,
-        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 1)'],
-        borderWidth: 1
-      }]
-    };
+            // Fetch users data
+            const users = await getUsers();
 
-    const avgAppointmentsData = {
-      labels: ['User 1', 'User 2', 'User 3'], // Replace with actual user labels
-      datasets: [{
-        label: 'Average Appointments Per User',
-        data: data.avgAppointmentsPerUser,
-        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-        borderColor: 'rgba(153, 102, 255, 1)',
-        borderWidth: 1,
-        barThickness: 40
-      }]
-    };
+            const metrics = {
+                appointmentTypes: calculateAppointmentTypeMetrics(appointments),
+                appointments: calculateAppointmentMetrics(appointments),
+                payments: calculatePaymentMetrics(appointments)
+            };
 
-    const appointmentsConfig = {
-      type: 'line',
-      data: appointmentsData,
-      options: {
-        responsive: true,
-        scales: {
-          x: { beginAtZero: true },
-          y: { beginAtZero: true }
-        }
-      }
-    };
-
-    const activeUsersConfig = {
-      type: 'line',
-      data: activeUsersData,
-      options: {
-        responsive: true,
-        scales: {
-          x: { beginAtZero: true },
-          y: { beginAtZero: true }
-        }
-      }
-    };
-
-    const userRegistrationConfig = {
-      type: 'bar',
-      data: userRegistrationData,
-      options: {
-        responsive: true,
-        scales: {
-          x: { beginAtZero: true },
-          y: { beginAtZero: true }
-        }
-      }
-    };
-
-    const appointmentsCategoryConfig = {
-      type: 'pie',
-      data: appointmentsCategoryData,
-      options: {
-        responsive: true
-      }
-    };
-
-    const avgAppointmentsConfig = {
-      type: 'bar',
-      data: avgAppointmentsData,
-      options: {
-        responsive: true,
-        scales: {
-          x: { beginAtZero: true },
-          y: { beginAtZero: true }
-        }
-      }
-    };
-
-    // Create the charts
-    new Chart(appointmentsCtx, appointmentsConfig);
-    new Chart(activeUsersCtx, activeUsersConfig);
-    new Chart(userRegistrationCtx, userRegistrationConfig);
-    new Chart(appointmentsCategoryCtx, appointmentsCategoryConfig);
-    new Chart(avgAppointmentsCtx, avgAppointmentsConfig);
-  }
-
-  // Create the charts when the page loads
-  document.addEventListener('DOMContentLoaded', () => {
-    createCharts(); // Create the charts with the fetched data
-  });
-
-  // Update dropdown with user email when logged in
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const emailButton = document.getElementById('emailBtn');
-      emailButton.textContent = user.email;
+            updateDashboard(metrics);
+            generateCharts(metrics);
+        });
     }
-  });
-</script>
 
+    // Real-time listener for users collection
+    async function getUsers() {
+        const usersRef = collection(db, 'users');
+        const usersSnapshot = await getDocs(usersRef);
+        return usersSnapshot.docs.map(doc => doc.data());
+    }
+
+    // Function to calculate appointment type metrics
+    function calculateAppointmentTypeMetrics(appointments) {
+        const typeCounts = {
+            CONSULTATION: 0,
+            THERAPY: 0,
+            CHECK_UP: 0,
+            TRAINING_SESSION: 0,
+            COACHING: 0,
+            DIAGNOSTIC: 0,
+            TREATMENT: 0,
+            FOLLOW_UP: 0,
+            INTERVIEW: 0,
+            SUPPORT: 0
+        };
+
+        appointments.forEach(app => {
+            // Ensure appointmentType is in uppercase and handle undefined or missing values
+            const appointmentType = app.appointmentType ? app.appointmentType.toUpperCase() : 'UNKNOWN';
+            
+            // Increment the count if the appointment type is valid
+            if (appointmentType in typeCounts) {
+                typeCounts[appointmentType]++;
+            }
+        });
+
+        return typeCounts;
+    }
+
+    // Function to calculate appointment status metrics
+    function calculateAppointmentMetrics(appointments) {
+        const statusCounts = {
+            PENDING: 0,
+            ONGOING: 0,
+            FINISHED: 0,
+            CANCELLED: 0,
+            NO_SHOW: 0,
+            RESCHEDULED: 0,
+            CONFIRMED: 0,
+            CONFIRMING: 0,
+            IN_PROGRESS: 0,
+            DECLINED: 0,
+            EXPIRED: 0,
+            OVERDUE: 0
+        };
+
+        appointments.forEach(app => {
+            const status = app.appointmentStatus || 'UNKNOWN';
+            if (status in statusCounts) {
+                statusCounts[status]++;
+            }
+        });
+
+        return {
+            statusCounts,
+            cancellationRate: calculateRate(statusCounts.CANCELLED, appointments.length),
+            noShowRate: calculateRate(statusCounts.NO_SHOW, appointments.length),
+            completionRate: calculateRate(statusCounts.FINISHED, appointments.length)
+        };
+    }
+
+    // Function to calculate payment metrics
+    function calculatePaymentMetrics(appointments) {
+        const metrics = {
+            status: {
+                PAID: 0,
+                NOT_PAID: 0,
+                PARTIALLY_PAID: 0,
+                PENDING: 0,
+                REFUNDED: 0,
+                CANCELLED: 0,
+                ON_HOLD: 0
+            },
+            types: {
+                ONLINE_PAYMENT: 0,
+                CASH: 0,
+                BANK_TRANSFER: 0,
+                OTHER: 0
+            }
+        };
+
+        appointments.forEach(app => {
+            if (app.paymentStatus in metrics.status) {
+                metrics.status[app.paymentStatus]++;
+            }
+
+            if (app.paymentStatus === 'PAID' && app.paymentType) {
+                metrics.types[app.paymentType] = (metrics.types[app.paymentType] || 0) + 1;
+            }
+        });
+
+        return metrics;
+    }
+
+    // Function to calculate the rate (percentage)
+    function calculateRate(count, total) {
+        return total > 0 ? ((count / total) * 100).toFixed(1) + '%' : '0%';
+    }
+
+    // Function to update the dashboard
+    function updateDashboard(metrics) {
+        document.getElementById('appointmentTypeStats').innerHTML = `
+            <p>Consultation: ${metrics.appointmentTypes.CONSULTATION}</p>
+            <p>Therapy: ${metrics.appointmentTypes.THERAPY}</p>
+            <p>Check-up: ${metrics.appointmentTypes.CHECK_UP}</p>
+            <p>Training Session: ${metrics.appointmentTypes.TRAINING_SESSION}</p>
+            <p>Coaching: ${metrics.appointmentTypes.COACHING}</p>
+            <p>Diagnostic: ${metrics.appointmentTypes.DIAGNOSTIC}</p>
+            <p>Treatment: ${metrics.appointmentTypes.TREATMENT}</p>
+            <p>Follow-up: ${metrics.appointmentTypes.FOLLOW_UP}</p>
+            <p>Interview: ${metrics.appointmentTypes.INTERVIEW}</p>
+            <p>Support: ${metrics.appointmentTypes.SUPPORT}</p>
+        `;
+
+        document.getElementById('appointmentStats').innerHTML = `
+            <p>TOTAL FINISHED APPOINTMENTS: ${metrics.appointments.statusCounts.FINISHED}</p>
+            <p>Cancellation Rate: ${metrics.appointments.cancellationRate}</p>
+            <p>No-show Rate: ${metrics.appointments.noShowRate}</p>
+        `;
+
+        document.getElementById('paymentStats').innerHTML = `
+            <p>Paid Appointments: ${metrics.payments.status.PAID}</p>
+            <p>Online Payments: ${metrics.payments.types.ONLINE_PAYMENT}</p>
+            <p>Cash Payments: ${metrics.payments.types.CASH}</p>
+        `;
+    }
+
+    // Function to generate the charts
+    function generateCharts(metrics) {
+        // Appointment Type Chart
+        const appointmentTypeChartCtx = document.getElementById('appointmentTypeChart').getContext('2d');
+        new Chart(appointmentTypeChartCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(metrics.appointmentTypes),
+                datasets: [{
+                    label: 'Appointment Types',
+                    data: Object.values(metrics.appointmentTypes),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Appointment Status Chart
+        const appointmentStatusChartCtx = document.getElementById('appointmentStatusChart').getContext('2d');
+        new Chart(appointmentStatusChartCtx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(metrics.appointments.statusCounts),
+                datasets: [{
+                    label: 'Appointment Status',
+                    data: Object.values(metrics.appointments.statusCounts),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 205, 86, 0.2)', 
+                        'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 205, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 205, 86, 1)', 
+                        'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 205, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Payment Status Chart
+        const paymentStatusChartCtx = document.getElementById('paymentStatusChart').getContext('2d');
+        new Chart(paymentStatusChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Paid', 'Not Paid', 'Partially Paid', 'Pending', 'Refunded', 'Cancelled', 'On Hold'],
+                datasets: [{
+                    label: 'Payment Status',
+                    data: [
+                        metrics.payments.status.PAID,
+                        metrics.payments.status.NOT_PAID,
+                        metrics.payments.status.PARTIALLY_PAID,
+                        metrics.payments.status.PENDING,
+                        metrics.payments.status.REFUNDED,
+                        metrics.payments.status.CANCELLED,
+                        metrics.payments.status.ON_HOLD
+                    ],
+                    backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 
+                                      'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 205, 86, 0.2)', 
+                                      'rgba(75, 192, 192, 0.2)'],
+                    borderColor: ['rgba(54, 162, 235, 1)', 'rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)', 
+                                  'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)', 'rgba(255, 205, 86, 1)', 
+                                  'rgba(75, 192, 192, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize dashboard on page load and set up real-time updates
+    document.addEventListener('DOMContentLoaded', listenToAnalytics);
+  </script>
 </body>
 </html>

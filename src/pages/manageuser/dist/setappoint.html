@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Manage Appointment</title>
 </head>
 <body>
     
@@ -35,7 +35,7 @@
     </nav>
   </div>
 
-  <div class="manage-user">  
+  <div class="manage-user"> 
     <br>
     <!-- Unique IDs for each button -->
     <button class="addel" id="addAppointmentButton">Add Appointment</button>
@@ -80,77 +80,174 @@
       });
     </script>
   
-    <h1>Manage Users </h1>
+    <h1>Manage Appointments </h1>
   
     <!-- Set Appointment Form -->
-    <form class="set" id="setForm" style="display:none;"> <!-- SET -->
-      <h2>Add an Appointment Schedule</h2>
-      <label for="appointmentDate">Full Name of Client:</label>
-      <input type="text" id="firstName" name="firstName" placeholder="First Name">
-      <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
-      <input type="text" id="surname" name="surname" placeholder="Last Name" required>
-      <label for="email">Email</label>
-      <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
-      <label for="contact">Phone Number</label>
-      <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
-      <label for="appointType">Type of appointment</label>
-      <input type="text" name="appointmentType" required placeholder="CHECK-UP">
-      <label for="doctor">Doctor</label>
-      <input type="text" name="doctor" placeholder="Doctor's Name">    
-      <br><br>
-      <label for="appointmentDate">Select Date:</label>
-      <input type="date" id="appointmentDate" name="appointmentDate" required>
-      <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
-      <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
-      <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
-      <br><br>
-      <label for="doctor">Payment Method</label>
-      <input type="text" name="paymentType" required placeholder="CASH or ONLINE PAYMENT">
-      <label for="doctor">Cost of Appointment</label>
-      <input type="number" name="payment" required placeholder="PHP">
-      <label for="doctor">Payment Status</label>
-      <input type="text" name="paymentStatus" required placeholder="PAID or NOT PAID or DOWNPAYMENT">
-      <label for="doctor">Appointment Status</label>
-      <input type="text" name="appointmentStatus" required placeholder="FINISHED or ONGOING">
-      <br><br>
-      <button class="roundedbutton">Add appointment</button>
-    </form>
+<form class="set" id="setForm" style="display:none;"> <!-- SET -->
+  <h2>Add an Appointment Schedule</h2>
+  <label for="appointmentDate">Full Name of Client:</label>
+  <input type="text" id="firstName" name="firstName" placeholder="First Name">
+  <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
+  <input type="text" id="surname" name="surname" placeholder="Last Name" required>
+  <label for="email">Email</label>
+  <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
+  <label for="contact">Phone Number</label>
+  <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
   
-    <!-- Update Appointment Form -->
-    <form class="update-form" id="updateForm" style="display:none;"> <!-- UPDATE -->
-      <h2>Update Appointment Schedule</h2>
-      <label for="appointmentDate">Full Name of Client:</label>
-      <input type="text" name="id" required placeholder="Appointment ID">
-      <br><br>
-      <input type="text" id="firstName" name="firstName" placeholder="First Name">
-      <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
-      <input type="text" id="surname" name="surname" placeholder="Last Name" required>
-      <label for="email">Email</label>
-      <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
-      <label for="contact">Phone Number</label>
-      <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
-      <label for="appointType">Type of appointment</label>
-      <input type="text" name="appointmentType" required placeholder="CHECK-UP">
-      <label for="doctor">Doctor</label>
-      <input type="text" name="doctor" placeholder="Doctor's Name">
-      <br><br>
-      <label for="appointmentDate">Select Date:</label>
-      <input type="date" id="appointmentDate" name="appointmentDate" required>
-      <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
-      <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
-      <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
-      <br><br>
-      <label for="doctor">Payment Method</label>
-      <input type="text" name="paymentType" required placeholder="CASH or ONLINE PAYMENT">
-      <label for="doctor">Cost of Appointment</label>
-      <input type="number" name="payment" required placeholder="PHP">
-      <label for="doctor">Payment Status</label>
-      <input type="text" name="paymentStatus" required placeholder="PAID or NOT PAID or DOWNPAYMENT">
-      <label for="doctor">Appointment Status</label>
-      <input type="text" name="appointmentStatus" required placeholder="FINISHED or ONGOING">
-      <br><br>
-      <button class="roundedbutton">Update</button>
-    </form>
+  <!-- Dropdown for Type of Appointment -->
+  <label for="appointType">Type of Appointment</label>
+  <select name="appointmentType" required>
+    <option value="CONSULTATION">CONSULTATION</option>
+    <option value="THERAPY">THERAPY</option>
+    <option value="CHECK_UP">CHECK-UP</option>
+    <option value="TRAINING_SESSION">TRAINING SESSION</option>
+    <option value="COACHING">COACHING</option>
+    <option value="DIAGNOSTIC">DIAGNOSTIC</option>
+    <option value="TREATMENT">TREATMENT</option>
+    <option value="FOLLOW_UP">FOLLOW-UP</option>
+    <option value="INTERVIEW">INTERVIEW</option>
+    <option value="SUPPORT">SUPPORT</option>
+  </select>
+  
+  <label for="doctor">Doctor</label>
+  <input type="text" name="doctor" placeholder="Doctor's Name">    
+  <br><br>
+  <label for="appointmentDate">Select Date:</label>
+  <input type="date" id="appointmentDate" name="appointmentDate" required>
+  <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
+  <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
+  <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
+  <br><br>
+
+  <!-- Dropdown for Payment Method -->
+  <label for="paymentType">Payment Method</label>
+  <select name="paymentType" required>
+    <option value="BANK_TRANSFER">BANK_TRANSFER</option>
+    <option value="ONLINE_PAYMENT">ONLINE_PAYMENT</option>
+    <option value="CASH">CASH</option>
+    <option value="OTHER">OTHER</option>
+  </select>
+
+  <label for="payment">Cost of Appointment</label>
+  <input type="number" name="payment" required placeholder="Amount in PHP">
+  
+  <!-- Dropdown for Payment Status -->
+  <label for="paymentStatus">Payment Status</label>
+  <select name="paymentStatus" required>
+    <option value="PAID">PAID</option>
+    <option value="NOT_PAID">NOT_PAID</option>
+    <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
+    <option value="PENDING">PENDING</option>
+    <option value="REFUNDED">REFUNDED</option>
+    <option value="CANCELLED">CANCELLED</option>
+    <option value="ON_HOLD">ON_HOLD</option>
+  </select>
+
+  <!-- Dropdown for Appointment Status -->
+  <label for="appointmentStatus">Appointment Status</label>
+  <select name="appointmentStatus" required>
+    <option value="PENDING">PENDING</option>
+    <option value="ONGOING">ONGOING</option>
+    <option value="FINISHED">FINISHED</option>
+    <option value="CANCELLED">CANCELLED</option>
+    <option value="NO_SHOW">NO_SHOW</option>
+    <option value="RESCHEDULED">RESCHEDULED</option>
+    <option value="CONFIRMED">CONFIRMED</option>
+    <option value="CONFIRMING">CONFIRMING</option>
+    <option value="IN_PROGRESS">IN_PROGRESS</option>
+    <option value="DECLINED">DECLINED</option>
+    <option value="EXPIRED">EXPIRED</option>
+    <option value="OVERDUE">OVERDUE</option>
+  </select>
+
+  <br><br>
+  <button class="roundedbutton">Add Appointment</button>
+</form>
+
+<!-- Update Appointment Form -->
+<form class="update-form" id="updateForm" style="display:none;"> <!-- UPDATE -->
+  <h2>Update Appointment Schedule</h2>
+  <label for="appointmentDate">Full Name of Client:</label>
+  <input type="text" name="id" required placeholder="Appointment ID">
+  <br><br>
+  <input type="text" id="firstName" name="firstName" placeholder="First Name">
+  <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
+  <input type="text" id="surname" name="surname" placeholder="Last Name" required>
+  <label for="email">Email</label>
+  <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
+  <label for="contact">Phone Number</label>
+  <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
+
+  <!-- Dropdown for Type of Appointment -->
+  <label for="appointType">Type of Appointment</label>
+  <select name="appointmentType" required>
+    <option value="CONSULTATION">CONSULTATION</option>
+    <option value="THERAPY">THERAPY</option>
+    <option value="CHECK_UP">CHECK-UP</option>
+    <option value="TRAINING_SESSION">TRAINING_SESSION</option>
+    <option value="COACHING">COACHING</option>
+    <option value="DIAGNOSTIC">DIAGNOSTIC</option>
+    <option value="TREATMENT">TREATMENT</option>
+    <option value="FOLLOW_UP">FOLLOW_UP</option>
+    <option value="INTERVIEW">INTERVIEW</option>
+    <option value="SUPPORT">SUPPORT</option>
+  </select>
+
+  <label for="doctor">Doctor</label>
+  <input type="text" name="doctor" placeholder="Doctor's Name">
+  <br><br>
+  <label for="appointmentDate">Select Date:</label>
+  <input type="date" id="appointmentDate" name="appointmentDate" required>
+  <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
+  <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
+  <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
+  <br><br>
+
+  <!-- Dropdown for Payment Method -->
+  <label for="paymentType">Payment Method</label>
+  <select name="paymentType" required>
+    <option value="BANK_TRANSFER">BANK_TRANSFER</option>
+    <option value="ONLINE_PAYMENT">ONLINE_PAYMENT</option>
+    <option value="CASH">CASH</option>
+    <option value="OTHER">OTHER</option>
+  </select>
+
+  <label for="payment">Cost of Appointment</label>
+  <input type="number" name="payment" required placeholder="Amount in PHP">
+
+  <!-- Dropdown for Payment Status -->
+  <label for="paymentStatus">Payment Status</label>
+  <select name="paymentStatus" required>
+    <option value="PAID">PAID</option>
+    <option value="NOT_PAID">NOT_PAID</option>
+    <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
+    <option value="PENDING">PENDING</option>
+    <option value="REFUNDED">REFUNDED</option>
+    <option value="CANCELLED">CANCELLED</option>
+    <option value="ON_HOLD">ON_HOLD</option>
+  </select>
+
+  <!-- Dropdown for Appointment Status -->
+  <label for="appointmentStatus">Appointment Status</label>
+  <select name="appointmentStatus" required>
+    <option value="PENDING">PENDING</option>
+    <option value="ONGOING">ONGOING</option>
+    <option value="FINISHED">FINISHED</option>
+    <option value="CANCELLED">CANCELLED</option>
+    <option value="NO_SHOW">NO_SHOW</option>
+    <option value="RESCHEDULED">RESCHEDULED</option>
+    <option value="CONFIRMED">CONFIRMED</option>
+    <option value="CONFIRMING">CONFIRMING</option>
+    <option value="IN_PROGRESS">IN_PROGRESS</option>
+    <option value="DECLINED">DECLINED</option>
+    <option value="EXPIRED">EXPIRED</option>
+    <option value="OVERDUE">OVERDUE</option>
+  </select>
+
+  <br><br>
+  <button class="roundedbutton">Update</button>
+</form>
+
   
     <!-- Delete Appointment Form -->
     <form class="deleteappoint" id="deleteForm" style="display:none;"> <!-- DELETE -->

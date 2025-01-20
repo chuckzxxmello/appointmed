@@ -169,6 +169,16 @@ async function getUsersFromFirestore() {
     return appointments;
 }
 
+function convertTo12HourFormat(time) {
+    const [hours, minutes] = time.split(':');
+    let hour = parseInt(hours, 10);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12;
+    hour = hour ? hour : 12; // the hour '0' should be '12'
+    const minute = minutes.length === 1 ? `0${minutes}` : minutes;
+    return `${hour}:${minute} ${ampm}`;
+}
+
 // print the appointments into the table
 function printTable(appointments) {
     const table = document.getElementById('appointmentTable');
@@ -183,12 +193,10 @@ function printTable(appointments) {
         table.appendChild(thead);
         const headerRow = `
             <tr>
-
                 <th>ID</th>
                 <th>Email</th>
                 <th>Full Name</th>
                 <th>Phone Number</th>
-                <th>Type</th>
                 <th>Date</th>
                 <th>TimeStart</th>
                 <th>TimeEnd</th>
@@ -225,10 +233,9 @@ function printTable(appointments) {
                 <td>${data.email}</td>
                 <td>${data.firstName} ${data.middleName} ${data.surname}</td>
                 <td>${data.contact}</td>
-                <td>${data.appointmentType}</td>
                 <td>${data.appointmentDate}</td>
-                <td>${data.appointmentTimeStart}</td>
-                <td>${data.appointmentTimeEnd}</td>
+                <td>${convertTo12HourFormat(data.appointmentTimeStart)}</td>
+                <td>${convertTo12HourFormat(data.appointmentTimeEnd)}</td>
                 <td>${data.appointmentType}</td>
                 <td>${data.paymentType}</td>
                 <td>${data.appointmentStatus}</td>

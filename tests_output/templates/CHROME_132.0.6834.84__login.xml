@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="1"
+            tests="1">
+
+  <testsuite name="templates.login"
+    errors="1" failures="1" hostname="" id="" package="login" skipped="0"
+    tests="1" time="11.34" timestamp="">
+  
+    <testcase name="To check session cookie after successful login" classname="templates.login" time="5.148" assertions="1">  <failure message="Testing if element &lt;&lt;css locator&gt;&gt; is present in 5000ms - expected &#34;is present&#34; but got: &#34;element could not be located&#34; (5044ms)">    at DescribeInstance.&lt;anonymous&gt; (C:\Users\User\Downloads\c\1-17-25\appointment-scheduling-system\nightwatch\templates\login.js:40:20)</failure>
+
+    
+    <error message="invalid selector: An invalid or illegal selector was specified
+  (Session info: chrome=132.0.6834.84)" type="error"><![CDATA[
+    InvalidSelectorError: invalid selector: An invalid or illegal selector was specified
+  (Session info: chrome=132.0.6834.84)
+    at Object.throwDecodedError (C:\Users\User\Downloads\c\1-17-25\appointment-scheduling-system\node_modules\selenium-webdriver\lib\error.js:521:15)
+    at parseHttpResponse (C:\Users\User\Downloads\c\1-17-25\appointment-scheduling-system\node_modules\selenium-webdriver\lib\http.js:514:13)
+    at Executor.execute (C:\Users\User\Downloads\c\1-17-25\appointment-scheduling-system\node_modules\selenium-webdriver\lib\http.js:446:28)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Driver.execute (C:\Users\User\Downloads\c\1-17-25\appointment-scheduling-system\node_modules\selenium-webdriver\lib\webdriver.js:744:17)
+    at async Driver.findElements (C:\Users\User\Downloads\c\1-17-25\appointment-scheduling-system\node_modules\selenium-webdriver\lib\webdriver.js:1072:17)
+    at async MethodMappings.locateMultipleElements (C:\Users\User\Downloads\c\1-17-25\appointment-scheduling-system\node_modules\nightwatch\lib\transport\selenium-webdriver\method-mappings.js:386:31)
+    at async Object.locateMultipleElements (C:\Users\User\Downloads\c\1-17-25\appointment-scheduling-system\node_modules\nightwatch\lib\transport\selenium-webdriver\actions.js:69:18)
+    ]]></error>
+    
+    </testcase>
+  
+
+  
+    <system-err>
+       InvalidSelectorError
+   invalid selector: An invalid or illegal selector was specified
+  (Session info: chrome=132.0.6834.84)
+    </system-err>
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

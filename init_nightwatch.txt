@@ -1,0 +1,12 @@
+npm init nightwatch
+
+? Select testing type to setup for your project End-to-End testing
+? Select language + test runner variant JavaScript / default
+? Select target browsers Chrome
+? Enter source folder where test files are stored tests
+? Enter the base_url of the project http://127.0.0.1:5500
+? Select where to run Nightwatch tests On localhost
+? Allow Nightwatch to collect completely anonymous usage metrics? No
+? Setup testing on Mobile devices as well? Yes
+
+npx nightwatch ./tests

@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
   
-  <link rel="stylesheet" href="../../styles/stylesheet.css" media="screen and (min-width: 1024px)">
-  
-  <link rel="stylesheet" href="../../styles/mobileview.css" media="screen and (max-width: 480px)">
+  <link rel="stylesheet" href="../../styles/stylesheet.css">
 
 </head>
 <body>
@@ -16,8 +14,6 @@
   <nav>
     <h2>ELAD School of Potentials Therapy Center</h2>
     <ul>
-      <li><a href="../../../index.html">Home</a></li>
-      <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
       <li><a href="../contact.html">Contact Us</a></li>
       <div class="dropdown">
         <div id="emailBtn"></div> 
@@ -111,7 +107,7 @@
                                 verifyBtn.textContent = "Verify E-mail";
                                 verifyBtn.href = "#"; 
                             }
-                            getUserDataByEmail(user.email); // Call the function to get user data
+                            getUserDataByEmail(user.email);
                         })
                         .catch((error) => {
                             console.log("Error reloading user:", error);
@@ -136,7 +132,6 @@
         const userData = querySnapshot.docs[0].data(); 
         console.log("User Data from Firestore:", userData);
   
-        // Update the user's details on the page
         document.getElementById('name').textContent = `Name: ${userData.firstName + " " + userData.middleName + " " + userData.surname || 'N/A'}`; 
         document.getElementById('appointmentType').textContent = `Appointment Type: ${userData.appointmentType || 'N/A'}`;
         document.getElementById('appointmentDate').textContent = `Date of Appointment: ${userData.appointmentDate || 'N/A'}`;
@@ -144,7 +139,6 @@
         document.getElementById('paymentStatus').textContent = `Payment Status: ${userData.paymentStatus || 'N/A'}`;  
         document.getElementById('appointmentStatus').textContent = `Appointment Status: ${userData.appointmentStatus || 'N/A'}`;  
         
-        // Add logic to check appointment date and display reminders
         const appointmentDate = new Date(userData.appointmentDate);
         const currentDate = new Date();
         const threeDaysBefore = new Date(appointmentDate);
@@ -153,26 +147,22 @@
         const twentyFourHoursBefore = new Date(appointmentDate);
         twentyFourHoursBefore.setDate(appointmentDate.getDate() - 1);
   
-        // Normalize dates to ignore time components for comparison
-        const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0));  // Reset time to 00:00
+        const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0));
         const normalizedThreeDaysBefore = new Date(threeDaysBefore.setHours(0, 0, 0, 0)); 
         const normalizedTwentyFourHoursBefore = new Date(twentyFourHoursBefore.setHours(0, 0, 0, 0)); 
   
         let notification = '';
         
-        // Debug log to see the date comparison
         console.log("Current Date: ", normalizedCurrentDate);
         console.log("Three Days Before: ", normalizedThreeDaysBefore);
         console.log("24 Hours Before: ", normalizedTwentyFourHoursBefore);
         
-        // Check for the 3-day and 24-hour reminders
         if (normalizedCurrentDate.getTime() === normalizedThreeDaysBefore.getTime()) {
           notification = 'Reminder: Your appointment is in 3 days!';
         } else if (normalizedCurrentDate.getTime() === normalizedTwentyFourHoursBefore.getTime()) {
           notification = 'Reminder: Your appointment is in 24 hours!';
         }
   
-        // Update the notification area on the profile page
         document.getElementById('appointmentNotif').textContent = notification;
   
       } else {

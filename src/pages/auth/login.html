@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -8,7 +9,6 @@
     <link rel="stylesheet" href="../../styles/stylesheet.css">
 
     <script type="module">
-        // Import necessary Firebase modules from CDN
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
         import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js';
         import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
@@ -28,32 +28,46 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app); 
+
         const handleLogin = (email, password) => {
-    console.log("handleLogin called with:", email, password);
+            console.log("handleLogin called with:", email, password);
 
-    // Check for admin credentials
-    if (email === 'admin.control@mail.com' && password === 'adminXCZ457!@#') {
-        window.location.href = '../manageuser/adminhome.html';
-        return Promise.resolve();
-    }
+            // Check for admin credentials
+            if (email === 'admin.control@mail.com' && password === 'adminXCZ457!@#') {
+                window.location.href = '../manageuser/adminhome.html';
+                return Promise.resolve();
+            }
 
-    return signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("User logged in: ", user);
+            return signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log("User logged in: ", user);
 
-            window.location.href = 'userprofile.html'; 
+                    window.location.href = 'userprofile.html'; 
 
-            return user; 
-        })
-        .catch((error) => {
-            const errorMessage = error.message;
-            console.error("Login error:", errorMessage);
-            const messageDiv = document.getElementById("message");
-            messageDiv.innerText = `Error: ${errorMessage}`; 
-            throw error;  
-        });
-};
+                    return user; 
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error("Login error:", errorMessage);
+
+                    let customMessage = "";
+
+                    if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
+                        customMessage = "Invalid email or password. Please try again.";
+                    } else {
+                        customMessage = "Invalid email or password. Please try again.";
+                    }
+
+                    alert(customMessage);
+
+                    const messageDiv = document.getElementById("message");
+                    messageDiv.innerText = customMessage;
+
+                    throw error;
+                });
+        };
 
         window.signInWithGoogle = function () {
             const provider = new GoogleAuthProvider();
@@ -84,6 +98,7 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    
 </head>
 
 <body>
@@ -93,15 +108,14 @@
             <h2>ELAD School of Potentials Therapy Center</h2>
             <ul>
                 <li><a href="../../../index.html">Home</a></li>
-                <li><a href="https://www.facebook.com/ELADSchoolofPotentials">Facebook</a></li>
-                <li><a href="../contact.html">Contact Us</a></li>
+                <li><a href="../contact_home.html">Contact Us</a></li>
             </ul>
         </nav>
     </div>
 
     <div class="login-container">
         <h2>Log-In</h2>
-        <form id="auth" onsubmit="handleLogin(event)">
+        <form id="auth">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input id="email" type="email" name="email" required />
@@ -118,7 +132,7 @@
             <br>or<br><br>
             <a href="signup.html">Sign-up</a>
             <br><br>
-            <button onclick="signInWithGoogle()">Log-in with Google</button>
+            <button type="button" onclick="signInWithGoogle()">Log-in with Google</button>
         </form>
     </div>
 

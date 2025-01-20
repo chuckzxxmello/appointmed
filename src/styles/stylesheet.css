@@ -1,894 +1,223 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/*-------------------------- MAIN HTML -------------------------- */
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: rgba(28, 28, 30, 0.8);  /* Glass-like effect */
+  --primary: #ffd60a;  /* Dark Yellow */
+  --primary-hover: #ffc60a;
+  --muted: #8e8e93;
+  --border: #38383a;
+  --radius: 0.75rem;
+}
 
 * {
-    margin: 0; /* Reset margin */
-    padding: 0; /* Reset padding */
-    box-sizing: border-box; /* Include padding and border in element's total width/height */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Background Image */
 .bg-image {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%; 
-    background-image: url('../assets/images/bg-home.jpg'); 
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    opacity: 0.5; 
-    z-index: -1; 
-}
-  
-  body {
-    font-family: 'Roboto', sans-serif; 
-    font-weight: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: -1;
 }
 
-h1, h2, h3 {
-    color: rgb(15, 20, 46); /* Header text color */
-    margin: 20px; /* Margin around headers */
-    font-weight: 100; /* Light font weight */
-    word-spacing: 0px; /* Space between words */
-}
-
-/*-------------------------- HEADER -------------------------- */
-
+/* Header Styles */
 .header {
-    width: 100%; /* Full width */
-    height: 10hv; /* Header height */
-    padding: 0 10px; /* Padding */
-    background: #FED053;
-    text-align: center; /* Center text */
-}
-.header a {
-    font-size: 18px;
+  background-color: var(--card);
+  backdrop-filter: blur(100 px);
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
-/*-------------------------- FOOTER -------------------------- */
+.header nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
 
+.header h2 {
+  color: var(--foreground);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+.header nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+/* Background Info Section */
+.background-info {
+  flex: 1;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.background-info h2 {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.background-info a {
+  display: inline-block;
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  text-decoration: none;
+  margin: 0.5rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.background-info a:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Footer Styles */
 .footer {
-    background-color: #FED053;
-    color: rgb(9, 17, 51); /* Dark text color */
-    text-align: center; /* Center align text */
-    font-weight: bold; 
-    padding: 30px; /* Padding */
-    position: relative; /* Positioning */
-    bottom: 0; /* Stick to bottom */
-    width: 100%; /* Full width */
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.contact-info {
-    font-size: 20px; /* Font size for contact info */
-    margin: 5px 0; /* Spacing */
-}
-
-.footer-style-button {
-    background-color: rgb(0, 42, 228);
-    color: #000000 ;
-    padding: 10px 20px; /* Padding for button */
-    border-radius: 5px; /* Rounded corners */
-    text-decoration: none; /* No underline */
-    transition: background-color 0.3s; /* Smooth transition */
-    margin: 5px; /* Margin between buttons */
-    display: inline-block; /* Ensure buttons are inline */
-}
-
-.footer-style-button:hover {
-    background-color: rgb(9, 17, 51); /* Darker on hover */
-    color: #FFFFFF ;
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  text-align: center;
+  margin-top: auto;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
 .social-links {
-    margin-top: 15px; /* Space above buttons */
+  margin-bottom: 1rem;
 }
 
-/*-------------------------- NAV -------------------------- */
-
-nav {
-    width: 100%; /* Full width */
-    display: flex; /* Flexbox layout */
-    align-items: center; /* Center vertically */
-    justify-content: space-between; /* Space between items */
-    padding: 5px 0; /* Padding */
-    text-decoration: none;
+.footer-style-button {
+  display: inline-block;
+  background-color: var(--secondary);
+  color: var(--foreground);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-nav ul {
-    position: relative; /* For dropdown positioning */
-    list-style: none; /* No bullet points */
-    padding: 0; /* Reset padding */
+.footer-style-button:hover {
+  background-color: var(--primary);
+  color: var(--background);
+  transform: translateY(-1px);
 }
 
-nav ul li {
-    display: inline; /* Horizontal list */
-    margin: 0 20px; /* Margin between items */
-    position: relative; /* For dropdown positioning */
+.footer p {
+  color: var(--muted);
+  font-size: 0.875rem;
 }
 
-nav ul li a {
-    text-decoration: none; /* No underline */
-    color: rgb(15, 20, 46); /* Link color */
-    font-size: 18px; /* Font size */
-    transition: color 0.3s; /* Smooth transition */
-}
-
-nav ul li a:hover {
-    color: #FFFFFF;
-}
-
-/*-------------------------- LOGIN AND CONTACT CONTAINER -------------------------- */
-
-.login-container {
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-    padding: 40px; /* Padding */
-    border-radius: 20px; /* Rounded corners */
-    max-width: 400px; /* Max width */
-    margin: 164.5px auto; /* Center the box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    text-align: center; /* Center text */
-}
-
-.login-container h2 {
-    font-size: 28px; /* Header size */
-    margin-bottom: 20px; /* Space below header */
-    color: rgb(15, 20, 46); /* Header color */
-}
-
-.login-container button {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding */
-    background-color: rgb(15, 20, 46); /* Button background */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
-}
-.login-container button:hover {
-    background-color: rgb(0, 42, 228); /* Change on hover */
-}
-.login-container button:focus {
-    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
-}
-.login-container a {
-    text-decoration: none;
-    width: 100%; /* Full width */
-    padding: 10px 128px; /* Padding */
-    background-color: rgb(15, 20, 46); /* Button background */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
-    font-size: 18px; /* Header size */
-    margin-bottom: 20px; /* Space below header */
-    
-}
-.login-container a:hover {
-    background-color: rgb(0, 42, 228); /* Change on hover */
-}
-
-.login-container a:focus {
-    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
-}
-
-.contact-btn {
-    background-color: rgb(255, 255, 255); /* White background */
-    color: white; /* Button text color */
-    padding: 10px 15px; /* Button padding */
-    border-radius: 5px; /* Rounded corners */
-    text-decoration: none; /* No underline */
-    transition: background-color 0.3s; /* Smooth transition */
-}
-
-.contact-btn:hover {
-    background-color: rgb(0, 42, 228); /* Change on hover */
-}
-
-/*-------------------------- ADMIN CONTAINER -------------------------- */
-
-.admin-dashboard {
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-    padding: 100px; /* Padding */
-    border-radius: 20px; /* Rounded corners */
-    max-width: 1100px; /* Max width */
-    margin: 40px; /* Margin */
-    margin-top: 130px; /* Margin above */
-    margin-bottom: 400px; /* Margin below */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-}
-
-/*-------------------------- FORM GROUP -------------------------- */
-
-.form-group {
-    margin-bottom: 15px; /* Space below each group */
-}
-
-label {
-    display: block; /* Block display */
-    margin-bottom: 5px; /* Space below label */
-    color: rgb(15, 20, 46); /* Label color */
-}
-
-input {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding */
-    border: 1px solid #ccc; /* Border */
-    border-radius: 5px; /* Rounded corners */
-    transition: border-color 0.3s; /* Smooth border color transition */
-}
-
-input:focus {
-    border-color: rgb(0, 42, 228); /* Highlight border on focus */
-    outline: none; /* Remove default outline */
-}
-
-button {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding */
-    background-color: rgb(15, 20, 46); /* Button background */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
-}
-
-
-/* might delete */
-button:hover {
-    background-color: rgb(0, 42, 228); /* Change on hover */
-}
-
-button:focus {
-    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
-}
-
-/*-------------------------- MESSAGE STYLES -------------------------- */
-
-#message {
-    margin-top: 15px; /* Space above message */
-    color: rgb(255, 0, 0); /* Red for error messages */
-}
-
-.success {
-    color: rgb(0, 128, 0); /* Green for success messages */
-}
-
-/*-------------------------- RESPONSIVENESS -------------------------- */
-
-@media (max-width: 480px) {
-    .login-container {
-        margin: 20px; /* Reduce margin on smaller screens */
-        padding: 20px; /* Adjust padding */
-    }
-
-    .login-container h2 {
-        font-size: 24px; /* Smaller header size for mobile */
-    }
-
-    input, button {
-        padding: 8px; /* Adjust padding for smaller devices */
-    }
-}
-
-/*-------------------------- EDIT CONTAINER -------------------------- */
-
-.edit-container {
-    max-width: 400px; /* Max width */
-    margin: 227px auto; /* Center the box */
-    padding: 20px; /* Padding */
-    background-color: white; /* Background color */
-    border: 1px solid #ddd; /* Border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
-}
-
-.edit-container h2 {
-    text-align: center; /* Center header text */
-    color: #333; /* Header color */
-}
-
-.form-group {
-    margin-bottom: 15px; /* Space below each group */
-}
-
-.form-group label {
-    display: block; /* Block display */
-    margin-bottom: 5px; /* Space below label */
-    font-weight: bold; /* Bold label */
-}
-
-.form-group input {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding */
-    border: 1px solid #ccc; /* Border */
-    border-radius: 4px; /* Rounded corners */
-}
-
-#confirmEdit {
-    background-color: #4CAF50; /* Confirm button color */
-}
-
-#confirmEdit:hover {
-    background-color: #45a049; /* Darker on hover */
-}
-
-#goBack {
-    background-color: #f44336; /* Go Back button color (red) */
-}
-
-#goBack:hover {
-    background-color: #e53935; /* Darker red on hover */
-}
-
-/*-------------------------- BACKGROUND INFO -------------------------- */
-
-.background-info {
-  background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-  padding: 48px;
-  border-radius: 10px;
-  max-width: 800px;
-  margin: 40px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* gawing invisible yung text sa index.html*/
-.background-info h2 {
-    opacity: 0;
-}
-
-/* index.html proceed to log-in and contact us */
-.background-info a {
-    display: inline-block;
-    text-decoration: none;
-    color: rgb(255, 255, 255); /* Link color */
-    background-color: rgb(15, 20, 46);
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 6px; /* Rounded corners */
-}
-.background-info a:hover {
-    background-color: rgb(0, 42, 228);
-    transition: background-color 0.3s;
-}
-button {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding */
-    background-color: #FED053;
-    font-size: 18px;
-    color: rgb(15, 20, 46);
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
-}
-
-button:hover {
-    background-color: #FED053;
-    color: #FFFFFF;
-}
-
-.background-info button:focus {
-    outline: #FED053;
-}
-
-a:focus {
-    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
-}
-
-/*-------------------------- MANAGE USERS -------------------------- */
-
-.manage-users-container {
-    max-width: 800px; /* Max width */
-    margin: 430px auto; /* Center the box */
-    padding: 20px; /* Padding */
-    background-color: white; /* Background color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
-}
-
-table {
-    width: 100%; /* Full width */
-    border-collapse: collapse; /* Collapse borders */
-}
-
-th, td {
-    border: 1px solid #ddd; /* Table cell border */
-    padding: 2px; /* Cell padding */
-    text-align: left; /* Left-align text */
-}
-
-th {
-    background-color: #4CAF50; /* Header background color */
-    color: white; /* Header text color */
-}
-
-/******** DISCARDED SYNTAXES *******/
-
-/*-------------------------- ABOUT -------------------------- */
-.abouttext {
-    padding: 20px;
-    text-align: justify; /* Justify text alignment */
-    max-width: 1500px;
-    margin: 20px auto;
-    background-color: white; /* White background for content area */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.abouttext h2, .abouttext p {
-    color: rgb(15, 20, 46);
-    margin-bottom: 15px; /* Spacing between paragraphs */
-}
-
-.background-info h1 {
-    font-size: 45px;
-    margin-bottom: 40px;
-    color: rgb(15, 20, 46);
-}
-
-.about-image, .team-image {
-    display: block; /* Ensures the images are treated as block elements */
-    margin: 20px auto; /* Center the images */
-    width: 50%; /* Adjust width as needed */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 8px; /* Rounded corners */
-}
-
-.contact-details {
-    padding: 20px;
-    text-align: center; /* Center align for location */
-    max-width: 800px;
-    margin: 215px auto;
-    background-color: white; /* White background for content area */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-/* gawing invisible yung text sa contact.html*/
-.contact-details h2 {
-    opacity: 0;
-}
-
-/*-------------------------- NEWS AND ANNOUNCEMENT -------------------------- */
-.news-announcements {
-    padding: 20px;
-    max-width: 1500px;
-    margin: 20px auto;
-    background-color: white; /* White background */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.news-announcements h1 {
-    color: rgb(15, 20, 46);
-}
-
-.announcement {
-    margin-bottom: 20px; /* Space between announcements */
-}
-
-.announcement h2 {
-    color: rgb(15, 20, 46); /* Darker color for headers */
-}
-
-.announcement p {
-    color: rgb(50, 50, 50); /* Darker gray for text */
-    text-align: justify; /* Justify text alignment */
-}
-
-/*-------------------------- DROPDOWN -------------------------- */
-
-.dropbox {
-display:inline-block;
-text-align: center;
-font-size: 100px;
-justify-content: center;
-align-items: center; 
-padding: 10px;
-
-
-}
-
-.dropbox select {
-    height: 25px;
-    width: 100px;
-    
-}
-
-
-
-.dropbtn {
-    background: inherit;
-    padding: 16px;
-    border: none;
+/* Mobile Design */
+@media (max-width: 768px) {
+  .header nav {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
   }
-  
-  
-.dropdown {
-    position: relative;
-    display: inline-block;
-    font-size: 18px;
-    transition: background-color 0.3s;
-    
-}
-.dropdown:hover {
-    color: #FFFFFF;
-}
 
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: inherit;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    font-size: 16px;
+  .background-info {
+    margin: 1rem;
+    padding: 1.5rem;
   }
-  
-  .dropdown-content a {
-    font-weight: bold;
-    color: black;
-    padding: 10px 40px;
-    text-decoration: none;
+
+  .background-info a {
     display: block;
-    background-color: #FFFFFF;
+    margin: 1rem 0;
   }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #FED053;;}
-  
-  /* Show the dropdown menu on hover  please fix this in js if not logged in*/
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: #FED053;;}
 
-.user-info {
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-    padding: 100px; /* Padding */
-    border-radius: 20px; /* Rounded corners */
-    max-width:600px; /* Max width */
-    margin: 42px auto; /* Center the box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    text-align: center; /* Center text */
-    font-size: 17px;
-    
+  .footer {
+    padding: 1.5rem;
+  }
 }
 
-img {
-    margin: 10px; 
-    width: 100px; /* Example width */
-    height: auto;
+/* Firebase Auth Elements */
+#emailBtn {
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.top-button a {
-    text-decoration: none;
-    width: 100%; /* Full width */
-    padding: 10px 10px; /* Padding */
-    background-color: rgb(15, 20, 46); /* Button background */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
-    font-size: 14px; /* Header size */
-    margin-bottom: 20px; /* Space below header */
-}
-.top-button a:hover {
-    background-color: rgb(0, 42, 228); /* Change on hover */
+#emailBtn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
-.admin-info {
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-    padding: 40px; /* Padding */
-    border-radius: 20px; /* Rounded corners */
-    max-width: 600px; /* Max width */
-    margin: 153.5px auto; /* Center the box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    text-align: center; /* Center text */
-    display: flex; /* Enable flexbox */
-    flex-direction: column; /* Arrange buttons vertically */
-    align-items: center; /* Center buttons horizontally */ 
-  }
-  
-  .admin-info h2 {
-    font-size: 28px; /* Header size */
-    margin-bottom: 20px; /* Space below header */
-    color: rgb(15, 20, 46); /* Header color */
-  }
-  
-  .admin-info button {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding */
-    background-color: rgb(15, 20, 46); /* Button background */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
-    margin-bottom: 10px; /* Add spacing between buttons */ 
-  }
-  
-  .admin-info button:hover {
-    background-color: rgb(0, 42, 228); /* Change on hover */
-  }
-  
-  .admin-info button:focus {
-    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
-  }
-  
-  .admin-info a {
-    text-decoration: none;
-    width: 100%; /* Full width */
-    padding: 10px 40px; /* Padding */
-    background-color: rgb(15, 20, 46); /* Button background */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
-    font-size: 18px; /* Header size */
-    margin-bottom: 20px; /* Space below header */
-  }
-  
-  .admin-info a:hover {
-    background-color: rgb(0, 42, 228); /* Change on hover */
-  }
-  
-  .admin-info a:focus {
-    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
-  }
-  
-
-
-  .manage-user .set, .manage-user .update-form {
-    margin-bottom: 30px;
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-    padding: 20px; /* Padding */
-    border-radius: 20px; /* Rounded corners */
-    max-width: 1000px; /* Max width */
-    margin: 40px auto; /* Center the box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    text-align: left; /* Center text */
-  }
-
-  .manage-user .table {
-    margin-bottom: 30px;
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-    padding: 20px; /* Padding */
-    border-radius: 20px; /* Rounded corners */
-    max-width: 1000px; /* Max width */
-    margin: 40px auto; /* Center the box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    text-align: left; /* Center text */
-  }
-
-  .manage-user .deleteappoint{
-    width: 100%;
-    margin-bottom: 30px;
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-    padding: 20px; /* Padding */
-    border-radius: 20px; /* Rounded corners */
-    max-width: 600px; /* Max width */
-    margin: 40px right; /* Center the box */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    text-align: left; /* Center text */
-  }
-  
-  .manage-user h1 {
-    text-align: center;
-    color: #2c3e50;
-  }
-  
-  .manage-user .margin {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-
-  
-  .manage-user h2 {
-    color: rgb(15, 20, 46);
-    border-bottom: 2px solid rgb(15, 20, 46);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .manage-user label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .manage-user input[type="text"],
-  .manage-user input[type="email"],
-  .manage-user input[type="date"],
-  .manage-user input[type="time"],
-  .manage-user input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-
-  .manage-user button {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding */
-    background-color: rgb(15, 20, 46); /* Button background */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 10px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
+#userDropdown {
+  display: none;
+  position: absolute;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  z-index: 100;
 }
 
-.manage-user .addel {
-    width: 10%; /* Full width */
-    padding: 10px; /* Padding */
-    background-color: rgb(15, 20, 46); /* Button background */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 10px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth transition */
+#verifyBtn {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-
-/* might delete */
-.manage-user button:hover {
-    background-color: rgb(0, 42, 228); /* Change on hover */
+#verifyBtn:hover {
+  color: var(--primary-hover);
 }
 
-.manage-user button:focus {
-    outline: 2px solid rgb(0, 42, 228); /* Focus outline for accessibility */
+#logoutBtn {
+  color: var(--destructive);
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.3s ease;
 }
-  
-  .manage-user .roundedbutton, .manage-user .deletes {
-    background-color: rgb(15, 20, 46);
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .manage-user .roundedbutton:hover, .manage-user .deletes:hover {
-    background-color: rgb(15, 20, 46);
-  }
-  
-  .manage-user .deletes {
-    background-color: rgb(255, 0, 0);
-  }
-  
-  .manage-user .deletes:hover {
-    background-color: rgb(255, 0, 0);
-  }
-  
-  .manage-user .table th, .manage-user .table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .manage-user .table th {
-    background-color: rgb(15, 20, 46);
-    color: #fff;
-  }
-  
-  .manage-user .table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .manage-user .table tr:hover {
-    background-color: #e6e6e6;
-  }
-  
-  .manage-user {
-    @media (max-width: 768px) {
-      .manage-user input[type="text"],
-      .manage-user input[type="email"],
-      .manage-user input[type="date"],
-      .manage-user input[type="time"],
-      .manage-user input[type="number"] {
-        width: calc(100% - 16px);
-      }
-  
-      .manage-user .table {
-        font-size: 14px;
-      }
-    }
-  }
-  
 
-
-
-  .analytics {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  .analytics  .user-stats {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-
-  .analytics  .user-stats p {
-    margin: 5px 0;
-  }
-
-  .analytics h2 {
-    text-align: center;
-  }
-
-  .analytics h3 {
-    font-size: 16px;
-    margin-top: 20px;
-    text-align: center;
-  }
-
-  /* Responsive Chart Container */
-  .analytics .chart-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 30px;
-    margin-bottom: 20px;
-  }
-
-  /* Adjusting canvas elements for responsiveness */
-  .analytics canvas {
-    max-width: 100%;
-    height: auto;  /* Maintains the aspect ratio */
-    flex: 1;
-    max-height: 300px;  /* Keeps the height manageable */
-  }
-
-  /* Footer styles */
-  .analytics  .footer {
-    text-align: center;
-    font-size: 12px;
-    margin-top: 40px;
-  }
-
-  .analytics .footer-style-button {
-    font-size: 14px;
-  }
-.analytics {
-  @media (max-width: 768px) {
-    /* For smaller screens, stack the charts vertically */
-    .chart-container {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* Reduce font sizes for small screens */
-    h2, h3 {
-      font-size: 14px;
-    }
-
-    .user-stats {
-      font-size: 12px;
-    }
-
-    canvas {
-      max-height: 250px;
-    }
-  }
+#logoutBtn:hover {
+  background-color: var(--secondary);
+  transform: translateY(-1px);
 }
-  
