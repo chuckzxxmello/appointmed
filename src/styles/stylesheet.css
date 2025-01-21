@@ -9,6 +9,8 @@
   --muted: #8e8e93;
   --border: #38383a;
   --radius: 0.75rem;
+  --secondary: #4a4a4d;
+  --destructive: #ff453a;
 }
 
 * {
@@ -45,8 +47,9 @@ body {
 /* Header Styles */
 .header {
   background-color: var(--card);
-  backdrop-filter: blur(100 px);
-  padding: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
@@ -74,17 +77,32 @@ body {
   list-style: none;
 }
 
+.header nav ul li a {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header nav ul li a:hover {
+  color: var(--primary);
+}
+
 /* Background Info Section */
 .background-info {
   flex: 1;
-  max-width: 800px;
-  margin: 2rem auto;
+  max-width: 600px;
+  margin: 12rem auto;
   padding: 2rem;
   background-color: var(--card);
   border-radius: var(--radius);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .background-info h2 {
@@ -94,7 +112,7 @@ body {
   margin-bottom: 2rem;
 }
 
-.background-info a {
+.background-info a, .cta-button {
   display: inline-block;
   background-color: var(--primary);
   color: var(--background);
@@ -106,7 +124,7 @@ body {
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.background-info a:hover {
+.background-info a:hover, .cta-button:hover {
   background-color: var(--primary-hover);
   transform: translateY(-2px);
 }
@@ -115,7 +133,8 @@ body {
 .footer {
   background-color: var(--card);
   backdrop-filter: blur(10px);
-  padding: 2rem;
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem;
   text-align: center;
   margin-top: auto;
   opacity: 0.8;
@@ -147,6 +166,77 @@ body {
   font-size: 0.875rem;
 }
 
+/* Login Container Styles */
+.login-container {
+  background-color: var(--card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  max-width: 400px;
+  margin: 4rem auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.login-container h2 {
+  color: var(--foreground);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--foreground);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary);
+  color: var(--background);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.loading {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+#message {
+  margin-top: 1rem;
+  text-align: center;
+}
+
 /* Mobile Design */
 @media (max-width: 768px) {
   .header nav {
@@ -155,12 +245,12 @@ body {
     gap: 1rem;
   }
 
-  .background-info {
-    margin: 1rem;
+  .background-info, .login-container {
+    margin: 2rem 1rem;
     padding: 1.5rem;
   }
 
-  .background-info a {
+  .background-info a, .cta-button {
     display: block;
     margin: 1rem 0;
   }
@@ -171,7 +261,7 @@ body {
 }
 
 /* Firebase Auth Elements */
-#emailBtn {
+#emailBtn, #loginBtn {
   background-color: var(--primary);
   color: var(--background);
   padding: 0.75rem 1.5rem;
@@ -181,7 +271,7 @@ body {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#emailBtn:hover {
+#emailBtn:hover, #loginBtn:hover {
   background-color: var(--primary-hover);
   transform: translateY(-1px);
 }
@@ -220,4 +310,500 @@ body {
 #logoutBtn:hover {
   background-color: var(--secondary);
   transform: translateY(-1px);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: rgba(28, 28, 30, 0.8);
+  --primary: #ffd60a;
+  --primary-hover: #ffc60a;
+  --muted: #8e8e93;
+  --border: #38383a;
+  --radius: 0.75rem;
+  --secondary: #4a4a4d;
+  --destructive: #ff453a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.header {
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.header nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  color: var(--foreground);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.header nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.header nav ul li a {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header nav ul li a:hover {
+  color: var(--primary);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: var(--card);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: var(--radius);
+}
+
+.dropdown-content a {
+  color: var(--foreground);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--secondary);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#emailBtn {
+  background-color: transparent;
+  color: var(--foreground);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.user-info, .contact-details {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.user-info h2, .contact-details h1, .contact-details h2 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.user-info p, .contact-details p {
+  margin-bottom: 0.5rem;
+}
+
+.user-info .img {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.user-info .profile {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info a, .contact-details a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.user-info a:hover, .contact-details a:hover {
+  color: var(--primary-hover);
+}
+
+.footer {
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+.social-links {
+  margin-bottom: 1rem;
+}
+
+.footer-style-button {
+  display: inline-block;
+  background-color: var(--secondary);
+  color: var(--foreground);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-style-button:hover {
+  background-color: var(--primary);
+  color: var(--background);
+  transform: translateY(-1px);
+}
+
+.footer p {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .header nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header nav ul {
+    margin-top: 1rem;
+  }
+
+  .user-info, .contact-details {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: rgba(28, 28, 30, 0.8);
+  --primary: #ffd60a;
+  --primary-hover: #ffc60a;
+  --muted: #8e8e93;
+  --border: #38383a;
+  --radius: 0.75rem;
+  --secondary: #4a4a4d;
+  --destructive: #ff453a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.header {
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header h2 {
+  color: var(--foreground);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.header nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.header nav ul li a {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header nav ul li a:hover {
+  color: var(--primary);
+}
+
+.admin-info, .analytics, .manage-user, .user-info, .contact-details {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.admin-info h1, .analytics h2, .manage-user h1, .user-info h2, .contact-details h1 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.admin-info a, .manage-user button, .addel {
+  display: inline-block;
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  margin: 0.5rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.admin-info a:hover, .manage-user button:hover, .addel:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.metric-card {
+  background-color: var(--secondary);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.metric-card h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form label {
+  color: var(--muted);
+}
+
+form input, form select {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+form button {
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+form button:hover {
+  background-color: var(--primary-hover);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+table th, table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+table th {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.footer {
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+.social-links {
+  margin-bottom: 1rem;
+}
+
+.footer-style-button {
+  display: inline-block;
+  background-color: var(--secondary);
+  color: var(--foreground);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-style-button:hover {
+  background-color: var(--primary);
+  color: var(--background);
+  transform: translateY(-1px);
+}
+
+.footer p {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .header nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header nav ul {
+    margin-top: 1rem;
+  }
+
+  .admin-info, .analytics, .manage-user, .user-info, .contact-details {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+#ec {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.ec-header, .ec-toolbar, .ec-view {
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+.ec-day, .ec-time {
+  border-color: var(--border);
+}
+
+.ec-event {
+  background-color: var(--primary);
+  color: var(--background);
+  border-radius: calc(var(--radius) / 2);
+}
+
+.ec-toolbar button {
+  background-color: var(--secondary);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ec-toolbar button:hover {
+  background-color: var(--primary);
+  color: var(--background);
 }
