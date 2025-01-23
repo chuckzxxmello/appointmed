@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: #1a1a1a;
+  --foreground: #ffffff;
+  --card: rgba(28, 28, 30, 0.9);
+  --primary: #ffd60a;
+  --primary-hover: #ffc60a;
+  --muted: #a1a1aa;
+  --border: #27272a;
+  --radius: 0.75rem;
+  --secondary: #27272a;
+  --destructive: #ff4d4f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url('../assets/images/elad.png');
+  background-size: auto; /* Keep the image at its original size */
+  background-position: right center; /* Align the image to the right, vertically centered */
+  background-repeat: no-repeat;
+  
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.05;
+  z-index: -1;
+}
+
+/* Common header styles for both userprofile.html and login.html */
+.header {
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.header nav {
+  max-width: 100%; /* Ensure nav takes full width */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: left; /* Align text to the left (adjust as needed) */
+}
+
+.header nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.header nav ul li a {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header nav ul li a:hover {
+  color: var(--primary);
+}
+
+/* Dropdown menu specific styles */
+.dropdown {
+  position: relative; /* Needed to position dropdown content correctly */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--card);
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  padding: 1rem;
+  text-align: left;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.background-info {
+  max-width: 800px;
+  margin: 8rem 0 4rem 4rem;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 50%;
+
+  margin: left auto;
+  padding: 2rem;
+  background-color: var(--background);
+  border-radius: var(--radius);
+  /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+
+}
+
+.background-info h2 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+  max-width: 42rem;
+}
+
+.background-info p {
+  font-size: 2.5rem;
+  font-weight: 00;
+  color: var(--muted);
+  font-size: 1.125rem;
+  max-width: 36rem;
+}
+
+.background-info #text {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--muted);
+  max-width: 42rem;
+  margin-bottom: 2rem;
+}
+
+.background-info a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.background-info a:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.footer {
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.2rem 0.5rem; /* Minimal padding */
+  text-align: center;
+  margin-top: auto;
+}
+
+.social-links {
+  margin-bottom: 0.2rem; /* Minimal margin-bottom */
+}
+
+.footer-style-button {
+  display: inline-block;
+  background-color: var(--secondary);
+  color: var(--foreground);
+  padding: 0.2rem 0.4rem; /* Reduced button padding */
+  border-radius: var(--radius);
+  font-size: 0.75rem; /* Smaller font size for buttons */
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-style-button:hover {
+  background-color: var(--primary);
+  color: #1a1a1a;
+  transform: translateY(-1px);
+}
+
+.footer p {
+  color: var(--muted);
+  font-size: 0.625rem; /* Further reduced font size */
+  margin: 0; /* Remove any extra spacing */
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .background-info {
+    margin-top: 6rem;
+    padding: 3rem 2rem;
+  }
+
+  .background-info h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header nav {
+    padding: 1rem;
+  }
+
+  .header h2 {
+    font-size: 1rem;
+  }
+
+  .background-info {
+    margin-top: 5rem;
+    padding: 2rem 1rem;
+  }
+
+  .background-info h2 {
+    font-size: 1.75rem;
+  }
+
+  .background-info #text {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .header nav {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .header nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .header nav ul li {
+    width: 100%;
+  }
+
+  .header nav ul li a {
+    display: block;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .background-info {
+    margin-top: 7rem;
+  }
+
+  .background-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .background-info a {
+    width: 100%;
+  }
+}

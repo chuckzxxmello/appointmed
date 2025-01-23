@@ -16,16 +16,17 @@
     <nav>
       <h2>ELAD School of Potentials Therapy Center</h2>
       <ul>
-        <li> 
-          <div class="dropdown">
-            <button id="emailBtn"></button>
-            <div class="dropdown-content" id="userDropdown">
-              <a href="auth/userprofile.html">View Profile</a>
-              <a href="#" id="logoutBtn">Logout</a>
-            </div>
+        <div class="dropdown">
+          <a href="auth/userprofile.html">
+            <div id="emailBtn"></div>
+          </a>       
+          <div class="dropdown-content">
+            <a href="../pages/calendar/calendaruser.html">View Calendar</a>
+            <li><a href="contact.html">Contact Us</a></li>
+            <a href="#" id="verifyBtn">Verify E-mail</a> 
+            <a href="#" id="logoutBtn">Logout</a> 
           </div>
-
-        </li>
+        </div>
       </ul>
     </nav>
   </div>
@@ -127,22 +128,7 @@
         });
     };
 
-    const verifyEmail = () => {
-      const user = auth.currentUser;
-      if (user) {
-        sendEmailVerification(user)
-          .then(() => {
-            alert("Verification email sent!");
-          })
-          .catch((error) => {
-            console.log('Error sending verification email:', error);
-            alert("Error: " + error.message); 
-          });
-      }
-    };
-
     document.getElementById('logoutBtn').addEventListener('click', signOutUser);
-    document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
   </script>
 </body>
 </html>

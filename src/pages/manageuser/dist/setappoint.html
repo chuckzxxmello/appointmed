@@ -23,64 +23,108 @@
 
 <body>
 
-<!-- header -->
-
   <div class="header">
     <nav>
-      <h2>ELAD School of Potentials Therapy Center</h2>
-      <ul>
-        <li><a href="../adminhome.html">Admin Dashboard</a></li>
-        <li><a href="../../calendar/calendaredit.html">View Calendar and Schedules</a></li>
-      </ul>
+        <h2>ELAD School of Potentials Therapy Center</h2>
+        <ul>
+          <div class="dropdown-admin">
+            <div class="dropdown-admin" onclick="window.location.href='../adminhome.html';">Admin Dashboard</div>
+            <div class="dropdown-content-admin">
+                <li><a href="setappoint.html">Manage Users</a></li>
+                <li><a href="../../calendar/calendaredit.html">View Calendar</a></li>
+                <li><a href="../analytics.html">Analytics</a></li>
+                <li><a href="#" id="logoutBtn">Logout</a></li>
+            </div>
+        </div>
+        </ul> 
     </nav>
-  </div>
+</div>
 
   <div class="manage-user"> 
-    <br>
+    <h1>Manage Appointments </h1>
     <!-- Unique IDs for each button -->
     <button class="addel" id="addAppointmentButton">Add Appointment</button>
     <button class="addel" id="updateAppointmentButton">Update Appointment</button>
     <button class="addel" id="deleteAppointmentButton">Delete Appointment</button>
+
+    <style>
+      .window-pane {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: #4a4a4d;
+          padding: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+          width: 400px;
+          border-radius: 8px;
+      }
+      .window-pane h2 {
+          margin-top: 0;
+      }
+      .window-pane button.close-btn {
+          margin-top: 10px;
+          background-color: #ff4d4d;
+          color: #4a4a4d;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 4px;
+          cursor: pointer;
+      }
+      .window-pane button.close-btn:hover {
+          background-color: #ff1a1a;
+      }
+    </style>
   
     <script>
-      // Event listener for Add Appointment button
+      function openWindowPane(formId) {
+        var form = document.getElementById(formId);
+        var existingPane = document.querySelector('.window-pane');
+        
+        // Remove existing pane if any
+        if (existingPane) {
+            document.body.removeChild(existingPane);
+        }
+    
+        var windowPane = document.createElement('div');
+        windowPane.className = 'window-pane';
+        windowPane.style.position = 'fixed';
+        windowPane.style.top = '50%';
+        windowPane.style.left = '50%';
+        windowPane.style.transform = 'translate(-50%, -50%)';
+        windowPane.style.backgroundColor = 'white';
+        windowPane.style.padding = '20px';
+        windowPane.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+        windowPane.style.zIndex = '1000';
+    
+        var clonedForm = form.cloneNode(true);
+        clonedForm.style.display = 'block'; // Ensure the form is visible
+        windowPane.appendChild(clonedForm);
+    
+        var closeButton = document.createElement('button');
+        closeButton.innerText = 'Close';
+        closeButton.style.marginTop = '10px';
+        closeButton.addEventListener('click', function() {
+          document.body.removeChild(windowPane);
+        });
+        windowPane.appendChild(closeButton);
+    
+        document.body.appendChild(windowPane);
+      }
+    
       document.getElementById("addAppointmentButton").addEventListener("click", function() {
-        var setForm = document.getElementById("setForm");
-        var updateForm = document.getElementById("updateForm");
-        var deleteForm = document.getElementById("deleteForm");
-  
-        // Show the Add Appointment form and hide the others
-        setForm.style.display = "block";
-        updateForm.style.display = "none";
-        deleteForm.style.display = "none";
+        openWindowPane("setForm");
       });
-  
-      // Event listener for Update Appointment button
+    
       document.getElementById("updateAppointmentButton").addEventListener("click", function() {
-        var setForm = document.getElementById("setForm");
-        var updateForm = document.getElementById("updateForm");
-        var deleteForm = document.getElementById("deleteForm");
-  
-        // Show the Update Appointment form and hide the others
-        setForm.style.display = "none";
-        updateForm.style.display = "block";
-        deleteForm.style.display = "none";
+        openWindowPane("updateForm");
       });
-  
-      // Event listener for Delete Appointment button
+    
       document.getElementById("deleteAppointmentButton").addEventListener("click", function() {
-        var setForm = document.getElementById("setForm");
-        var updateForm = document.getElementById("updateForm");
-        var deleteForm = document.getElementById("deleteForm");
-  
-        // Show the Delete Appointment form and hide the others
-        setForm.style.display = "none";
-        updateForm.style.display = "none";
-        deleteForm.style.display = "block";
+        openWindowPane("deleteForm");
       });
     </script>
-  
-    <h1>Manage Appointments </h1>
   
     <!-- Set Appointment Form -->
 <form class="set" id="setForm" style="display:none;"> <!-- SET -->
@@ -258,7 +302,118 @@
       <button class="deletes">Delete from Database</button>
     </form>
 
-    <table class="table" id="appointmentTable" border="3"><h2>View Users</h2></table>
+    <div class="view-table">
+      <p>View table by:</p>
+      <button id="view_users">Users</button>
+      <button id="view_appointments">Appointments</button>
+  
+      <table class="table" id="appointmentTable" border="3">
+          <h2>List of Appointments</h2>
+          <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Email</th>
+                  <th>Full Name</th>
+                  <th>Phone Number</th>
+                  <th>Date</th>
+                  <th>TimeStart</th>
+                  <th>TimeEnd</th>
+                  <th>Type of Appointment</th>
+                  <th>Type of Payment</th>
+                  <th>Appointment Status</th>
+                  <th>Payment Status</th>
+                  <th>Cost</th>
+                  <th>Doctor</th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Appointment data rows will be inserted here -->
+          </tbody>
+      </table>
+  </div>
+  
+  <script type="module">
+    function toggleColumns(columnsToShow) {
+        const table = document.getElementById('appointmentTable');
+        const headerRow = table.querySelector('thead tr');
+        const bodyRows = table.querySelectorAll('tbody tr');
+
+        const headers = Array.from(headerRow.querySelectorAll('th'));
+
+        // Hide all columns initially
+        headers.forEach((header, index) => {
+            header.style.display = 'none';
+            bodyRows.forEach(row => {
+                row.querySelectorAll('td')[index].style.display = 'none';
+            });
+        });
+
+        // Show only the specified columns
+        columnsToShow.forEach(columnName => {
+            const headerIndex = headers.findIndex(header =>
+                header.textContent.trim().toLowerCase() === columnName.toLowerCase()
+            );
+
+            if (headerIndex !== -1) {
+                headers[headerIndex].style.display = '';
+                bodyRows.forEach(row => {
+                    row.querySelectorAll('td')[headerIndex].style.display = '';
+                });
+            }
+        });
+    }
+
+    document.getElementById('view_users').addEventListener('click', () => {
+        toggleColumns(['ID', 'Email', 'Full Name', 'Phone Number', 'Type of Payment', 'Payment Status', 'Cost']);
+    });
+
+    document.getElementById('view_appointments').addEventListener('click', () => {
+        toggleColumns(['Full Name', 'Type of Appointment', 'Appointment Status', 'Doctor', 'Date', 'TimeStart', 'TimeEnd']);
+    });
+
+    function printTable(appointments) {
+        const table = document.getElementById('appointmentTable');
+        const tbody = table.querySelector('tbody');
+        tbody.innerHTML = '';
+
+        appointments.sort((a, b) => {
+            const dateTimeA = new Date(`${a.appointmentDate}T${a.appointmentTimeStart}`);
+            const dateTimeB = new Date(`${b.appointmentDate}T${b.appointmentTimeStart}`);
+            return dateTimeA - dateTimeB;
+        });
+
+        appointments.forEach((data) => {
+            const row = `
+                <tr>
+                    <td>${data.id}</td>
+                    <td>${data.email}</td>
+                    <td>${data.firstName} ${data.middleName} ${data.surname}</td>
+                    <td>${data.contact}</td>
+                    <td>${data.appointmentDate}</td>
+                    <td>${convertTo12HourFormat(data.appointmentTimeStart)}</td>
+                    <td>${convertTo12HourFormat(data.appointmentTimeEnd)}</td>
+                    <td>${data.appointmentType}</td>
+                    <td>${data.paymentType}</td>
+                    <td>${data.appointmentStatus}</td>
+                    <td>${data.paymentStatus}</td>
+                    <td>${data.payment}</td>
+                    <td>${data.doctor}</td>
+                </tr>`;
+            tbody.innerHTML += row;
+        });
+
+        // Ensure correct columns are shown after populating the table
+        toggleColumns(['Full Name', 'Date', 'TimeStart', 'TimeEnd', 'Type of Appointment', 'Appointment Status', 'Doctor']);
+    }
+
+    // Assuming appointments data is available
+    const appointments = [
+        // Sample appointment data objects
+    ];
+
+    printTable(appointments);
+</script>
+
   </div>
   
 
@@ -269,7 +424,7 @@
         <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
     </div>
 
-
+    <!--
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
         import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
@@ -287,26 +442,6 @@
     
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-    
-        function updateDropdownEmail(user) {
-          const emailButton = document.getElementById('emailBtn');
-          const userDropdown = document.getElementById('userDropdown');
-          if (user) {
-            emailButton.textContent = user.email;
-            emailButton.onclick = () => { 
-              if (userDropdown.style.display === 'block') {
-                userDropdown.style.display = 'none';
-              } else {
-                userDropdown.style.display = 'block';
-              }
-            };
-          } else {
-            emailButton.textContent = "Login";
-            emailButton.onclick = () => {
-              window.location.href = '../login.html';
-            };
-          }
-        }
     
         onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -347,23 +482,6 @@
             });
         };
     
-        const verifyEmail = () => {
-          const user = auth.currentUser;
-          if (user) {
-            sendEmailVerification(user)
-              .then(() => {
-                alert("Verification email sent!");
-              })
-              .catch((error) => {
-                console.log('Error sending verification email:', error);
-                alert("Error: " + error.message); 
-              });
-          }
-        };
-    
-        document.getElementById('logoutBtn').addEventListener('click', signOutUser);
-        document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
-    
         const loginBtn = document.getElementById('loginBtn');
         loginBtn.onclick = () => {
           const user = auth.currentUser; 
@@ -374,6 +492,7 @@
           }
         };
       </script>
+      -->
 
 <script type="module" src="appoint.js"></script>
 

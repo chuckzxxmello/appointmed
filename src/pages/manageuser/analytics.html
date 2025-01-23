@@ -9,14 +9,23 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="header">
-      <nav>
-          <h2><Wbr>Website Analytics</Wbr></h2>
-          <ul>
-              <li><a href="adminhome.html">Admin Dashboard</a></li>
-          </ul>
-      </nav>
-  </div>
+    <div class="header">
+        <nav>
+            <h2>ELAD School of Potentials Therapy Center</h2>
+            <ul>
+                <div class="dropdown-admin">
+                    <div class="dropdown-admin" onclick="window.location.href='adminhome.html';">Admin Dashboard</div>
+                    <div class="dropdown-content-admin">
+                        <li><a href="../manageuser/dist/setappoint.html">Manage Users</a></li>
+                        <li><a href="../calendar/calendaredit.html">View Calendar</a></li>
+                        <li><a href="analytics.html">Analytics</a></li>
+                        <li><a href="#" id="logoutBtn">Logout</a></li>
+                    </div>
+                </div>
+            </ul>
+        </nav>
+    </div>
+    
 
   <div class="analytics">
       <h2>Analytics Dashboard</h2>
