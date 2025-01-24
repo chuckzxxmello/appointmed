@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../styles/stylesheet.css">
   <title>Contact Us</title>
+    
+  <!-- Favicon and app icons -->
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+  <link rel="icon" sizes="96x96" href="../assets/images/favicon-96x96.png">
+  <link rel="manifest" href="../assets/images/site.webmanifest">
 
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
@@ -39,105 +46,7 @@
     <div class="social-links">
       <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
     </div>
-    <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+    <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
   </div>
-
-  <!--
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-    import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
-      authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
-      databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "appointment-scheduling-s-57d01",
-      storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
-      messagingSenderId: "1069885306589",
-      appId: "1:1069885306589:web:b31768194add4087754d34",
-      measurementId: "G-KQ4PQZZZBM"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    function updateDropdownEmail(user) {
-      const emailButton = document.getElementById('emailBtn');
-      const userDropdown = document.getElementById('userDropdown');
-      if (user) {
-        emailButton.textContent = user.email;
-        // Add an onclick event to the button to toggle the dropdown
-        emailButton.onclick = () => {
-          if (userDropdown.style.display === 'block') {
-            userDropdown.style.display = 'none';
-          } else {
-            userDropdown.style.display = 'block';
-          }
-        };
-      } else {
-        emailButton.textContent = "Login";
-        emailButton.onclick = () => {
-          window.location.href = 'auth/login.html';
-        };
-      }
-    }
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        updateDropdownEmail(user);
-
-        user.reload()
-          .then(() => {
-            const verifyBtn = document.getElementById('verifyBtn');
-            if (user.emailVerified) {
-              verifyBtn.textContent = "Email Verified";
-              verifyBtn.removeAttribute('href');
-            } else {
-              verifyBtn.textContent = "Verify E-mail";
-              verifyBtn.href = "#";
-            }
-
-            console.log("Logged in:", user.email);
-            console.log("Verified:", user.emailVerified);
-          })
-          .catch((error) => {
-            console.log("Error reloading user:", error);
-          });
-
-      } else {
-        updateDropdownEmail(null); 
-      }
-    });
-
-    const signOutUser = () => {
-      signOut(auth)
-        .then(() => {
-          console.log('Signed out successfully');
-          window.location.href = 'auth/login.html'; 
-        })
-        .catch((error) => {
-          console.log('Error signing out:', error);
-          alert("Error: " + error.message);
-        });
-    };
-
-    const verifyEmail = () => {
-      const user = auth.currentUser;
-      if (user) {
-        sendEmailVerification(user)
-          .then(() => {
-            alert("Verification email sent!");
-          })
-          .catch((error) => {
-            console.log('Error sending verification email:', error);
-            alert("Error: " + error.message); 
-          });
-      }
-    };
-
-    document.getElementById('logoutBtn').addEventListener('click', signOutUser);
-    document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
-  </script>
-  -->
 </body>
 </html>

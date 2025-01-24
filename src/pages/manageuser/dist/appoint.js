@@ -63,11 +63,9 @@ addappointForm.addEventListener('submit', (e) => {
         .then(() => {
             addappointForm.reset()
             // Added notification for successful addition
-            alert('Appointment Saved.'); 
         })
         .catch(error => {
             console.error('Error adding appointment: ', error);
-            alert('Failed to add appointment. Please check the console for more details.');
         });
 })
 
@@ -85,12 +83,9 @@ deleteappointForm.addEventListener('submit', (e) => {
     deleteDoc(docRef)
         .then(() => {
             deleteappointForm.reset()
-            // Added notification for successful deletion
-            alert('Deleted Successfully.'); 
         })
         .catch(error => {
             console.error('Error deleting appointment: ', error);
-            alert('Failed to delete appointment. Please check the console for more details.');
         });
 
 })
@@ -121,7 +116,6 @@ updateForm.addEventListener('submit', async (e) => {
 
     // Check if user ID is present
     if (!id) {
-        alert('User ID is required to update the document.');
         return;
     }
 
@@ -149,13 +143,10 @@ updateForm.addEventListener('submit', async (e) => {
         // Update only the fields that have new values
         await updateDoc(docRef, updatedData);
 
-        alert('Successfully Updated.');
-
         // Clear the form after update
         updateForm.reset();
     } catch (error) {
         console.error('Error updating document: ', error);
-        alert('Failed to update user. Please check the console for more details.');
     }
 });
 

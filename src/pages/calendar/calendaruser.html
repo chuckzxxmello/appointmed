@@ -5,9 +5,51 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>View Calendar</title>
+  
+    <!-- Favicon and app icons -->
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+    <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
+    <link rel="manifest" href="../../assets/images/site.webmanifest">
 
     <link rel="stylesheet" href="event-calendar.css">
     <script src="event-calendar.js"></script>
+
+    <style>
+        /* Light Mode Custom Styles */
+
+
+        /* Style for main content area */
+        main.row {
+            padding: 20px;
+            background-color: #4a4a4d;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        
+
+        /* Custom styling for the calendar container */
+        #ec {
+            background-color: #38383a;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for calendar events */
+        .fc-event {
+            background-color: #007bff; /* Blue color for events */
+            color: #38383a; 
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .fc-event:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
 
     <script type="module">
         // Import Firebase SDK modules
@@ -136,8 +178,7 @@
         <div class="social-links">
             <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
         </div>
-        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+        <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
     </div>
-
 </body>
 </html>

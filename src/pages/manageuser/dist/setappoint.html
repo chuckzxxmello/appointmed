@@ -3,6 +3,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Appointment</title>
+
+    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../../../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../../assets/images/apple-touch-icon.png">
+    <link rel="icon" sizes="96x96" href="../../../assets/images/favicon-96x96.png">
+    <link rel="manifest" href="../../../assets/images/site.webmanifest">
+      
+    <meta name="theme-color" content="#ffd60a">
+    <meta name="msapplication-TileImage" content="src/assets/images/web-app-manifest-192x192.png">
+    <meta name="msapplication-TileColor" content="#ffd60a">
+
 </head>
 <body>
     
@@ -42,6 +53,7 @@
     </nav>
   </div>  
 
+
   <div class="manage-user"> 
     <!-- Unique IDs for each button -->
     <button class="addel" id="addAppointmentButton">Add Appointment</button>
@@ -51,50 +63,82 @@
 
   <div class="col-row-appoint">
     <script>
-document.getElementById("addAppointmentButton").addEventListener("click", function () {
-    var setForm = document.getElementById("setForm");
-    var updateForm = document.getElementById("updateForm");
-    var deleteForm = document.getElementById("deleteForm");
-    var appointmentTable = document.getElementById("appointmentTable");
-
-    setForm.style.display = "block";
-    updateForm.style.display = "none";
-    deleteForm.style.display = "none";
-    appointmentTable.style.display = "none";
-});
-
-document.getElementById("updateAppointmentButton").addEventListener("click", function () {
-    var setForm = document.getElementById("setForm");
-    var updateForm = document.getElementById("updateForm");
-    var deleteForm = document.getElementById("deleteForm");
-    var appointmentTable = document.getElementById("appointmentTable");
-
-    setForm.style.display = "none";
-    updateForm.style.display = "block";
-    deleteForm.style.display = "none";
-    appointmentTable.style.display = "none";
-});
-
-document.getElementById("deleteAppointmentButton").addEventListener("click", function () {
-    var setForm = document.getElementById("setForm");
-    var updateForm = document.getElementById("updateForm");
-    var deleteForm = document.getElementById("deleteForm");
-    var appointmentTable = document.getElementById("appointmentTable");
-
-    setForm.style.display = "none";
-    updateForm.style.display = "none";
-    deleteForm.style.display = "block";
-    appointmentTable.style.display = "none";
-});
-    </script>
+      // Event listeners for buttons to show respective forms
+      document.getElementById("addAppointmentButton").addEventListener("click", function () {
+          showForm("add");
+      });
+  
+      document.getElementById("updateAppointmentButton").addEventListener("click", function () {
+          showForm("update");
+      });
+  
+      document.getElementById("deleteAppointmentButton").addEventListener("click", function () {
+          showForm("delete");
+      });
+  
+      // Function to handle the visibility of forms and tables
+      function showForm(type) {
+          var setForm = document.getElementById("setForm");
+          var updateForm = document.getElementById("updateForm");
+          var deleteForm = document.getElementById("deleteForm");
+          var appointmentTable = document.getElementById("appointmentTable");
+          var usersTable = document.getElementById("usersTable");
+  
+          // Reset all forms and tables to hidden
+          setForm.style.display = "none";
+          updateForm.style.display = "none";
+          deleteForm.style.display = "none";
+          appointmentTable.style.display = "none";
+          if (usersTable) usersTable.style.display = "none";
+  
+          // Show the relevant form and tables based on the action type
+          switch (type) {
+              case "add":
+                  setForm.style.display = "block";
+                  appointmentTable.style.display = "block"; // Show appointment table only for adding an appointment
+                  break;
+              case "update":
+                  updateForm.style.display = "block";
+                  if (usersTable) usersTable.style.display = "block"; // Show users table for updating an appointment
+                  break;
+              case "delete":
+                  deleteForm.style.display = "block";
+                  if (usersTable) usersTable.style.display = "block"; // Show users table for deleting an appointment
+                  break;
+              default:
+                  console.log("Invalid form type");
+          }
+      }
+  
+      // Event listener for "View Users" to show the users table and hide the appointment table
+      document.getElementById("view_users").addEventListener("click", function() {
+          var appointmentTable = document.getElementById("appointmentTable");
+          var usersTable = document.getElementById("usersTable");
+  
+          // Hide the appointment table
+          if (appointmentTable) appointmentTable.style.display = "none";
+  
+          // Show the users table
+          if (usersTable) usersTable.style.display = "block";
+      });
+  
+      // Event listener for "View Appointments" to show the appointment table and hide the users table
+      document.getElementById("view_appointments").addEventListener("click", function() {
+          var appointmentTable = document.getElementById("appointmentTable");
+          var usersTable = document.getElementById("usersTable");
+  
+          // Show the appointment table
+          if (appointmentTable) appointmentTable.style.display = "block";
+  
+          // Hide the users table
+          if (usersTable) usersTable.style.display = "none";
+      });
+  </script>
+  
+  
   
     <form class="set" id="setForm" style="display:none;">
       <h2>Add an Appointment Schedule</h2>
-
-      <div class="view-table">
-        <p>Show By:</p>
-        <button type="button" class="user" id="view_appointments">Appointments</button>
-      </div>
       
       <div class="form-container">
         <!-- Left Column -->
@@ -183,17 +227,11 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
 <!-- Update Appointment Form -->
 <form class="update-form" id="updateForm" style="display:none;"> <!-- UPDATE -->
   <h2>Update Appointment Schedule</h2>
-  <div class="view-table">
-    <p>Show By:</p>
-    <button type="button" class="user" id="view_users">Users</button>
-    <button type="button" class="user" id="view_appointments">Appointments</button>
-  </div>
 
   <div class="form-container">
     <div class="form-column">
       <label for="appointmentDate">User UID:</label>
   <input type="text" name="id" required placeholder="Appointment ID">
-  <br><br>
   <label for="appointmentDate">Full Name of Client:</label>
   <input type="text" id="firstName" name="firstName" placeholder="First Name">
   <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
@@ -223,13 +261,11 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
 <div class="form-column">
   <label for="doctor">Doctor</label>
   <input type="text" name="doctor" placeholder="Doctor's Name">
-  <br><br>
   <label for="appointmentDate">Select Date:</label>
   <input type="date" id="appointmentDate" name="appointmentDate" >
   <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
   <input type="time" id="appointmentTime" name="appointmentTimeStart" >
   <input type="time" id="appointmentTime" name="appointmentTimeEnd" >
-  <br><br>
 
   <!-- Dropdown for Payment Method -->
   <label for="paymentType">Payment Method</label>
@@ -280,14 +316,9 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
     <!-- Delete Appointment Form -->
     <form class="deleteappoint" id="deleteForm" style="display:none;"> <!-- DELETE -->
       <h2>Delete Appointment from Database</h2>
-      <div class="view-table">
-        <p>Show By:</p>
-        <button type="button" class="user" id="view_users">Users</button>
-        <button type="button" class="user" id="view_appointments">Appointments</button>
-      </div>
       
       <label for="id">Appointment ID</label>
-      <input type="text" name="id" required placeholder="Example: kM0L0iVE8Mkkm1I1vY1d">
+      <input type="text" name="id">
       <br><br>
       <button class="deletes">Delete from Database</button>
     </form>
@@ -295,34 +326,38 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
 </div>
   
 <table class="view-table" id="appointmentTable" border="3" style="display: none;">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Full Name</th>
-            <th>Phone Number</th>
-            <th>Date</th>
-            <th>TimeStart</th>
-            <th>TimeEnd</th>
-            <th>Type of Appointment</th>
-            <th>Type of Payment</th>
-            <th>Appointment Status</th>
-            <th>Payment Status</th>
-            <th>Cost</th>
-            <th>Doctor</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Appointment data rows will be inserted here -->
-    </tbody>
+  <thead>
+      <tr>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Full Name</th>
+          <th>Phone Number</th>
+          <th>Date</th>
+          <th>TimeStart</th>
+          <th>TimeEnd</th>
+          <th>Type of Appointment</th>
+          <th>Type of Payment</th>
+          <th>Appointment Status</th>
+          <th>Payment Status</th>
+          <th>Cost</th>
+          <th>Doctor</th>
+      </tr>
+  </thead>
+  <tbody>
+      <!-- Appointment data rows will be inserted here -->
+  </tbody>
 </table>
-  
+
+<div class="manage-user"> 
+  <button type="button" class="user" id="view_users">Users</button>
+  <button type="button" class="user" id="view_appointments">Appointments</button>
+</div>
 
     <div class="footer"> 
         <div class="social-links">
             <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
         </div>
-        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+        <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
     </div>
 
 
@@ -395,7 +430,7 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
           signOut(auth)
             .then(() => {
               console.log('Signed out successfully');
-              window.location.href = 'auth/login.html'; 
+              window.location.href = '../../../pages/auth/login.html'; 
             })
             .catch((error) => {
               console.log('Error signing out:', error);
@@ -434,36 +469,47 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
       </script>
 
 <script type="module">
-  function toggleColumns(columnsToShow) {
-      const table = document.getElementById('appointmentTable');
-      const headerRow = table.querySelector('thead tr');
-      const bodyRows = table.querySelectorAll('tbody tr');
-
-      const headers = Array.from(headerRow.querySelectorAll('th'));
-
-      // Hide all columns initially
-      headers.forEach((header, index) => {
-          header.style.display = 'none';
-          bodyRows.forEach(row => {
-              row.querySelectorAll('td')[index].style.display = 'none';
-          });
-      });
-
-      // Show only the specified columns
-      columnsToShow.forEach(columnName => {
-          const headerIndex = headers.findIndex(header =>
-              header.textContent.trim().toLowerCase() === columnName.toLowerCase()
-          );
-
-          if (headerIndex !== -1) {
-              headers[headerIndex].style.display = '';
-              bodyRows.forEach(row => {
-                  row.querySelectorAll('td')[headerIndex].style.display = '';
-              });
-          }
-      });
+  // Function to convert 24-hour time format to 12-hour format
+  function convertTo12HourFormat(time24) {
+    if (!time24) return '';
+    const [hours, minutes] = time24.split(':');
+    const hour = parseInt(hours, 10);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12}:${minutes} ${ampm}`;
   }
 
+  // Function to toggle columns visibility in the table
+  function toggleColumns(columnsToShow) {
+    const table = document.getElementById('appointmentTable');
+    const headerRow = table.querySelector('thead tr');
+    const bodyRows = table.querySelectorAll('tbody tr');
+
+    const headers = Array.from(headerRow.querySelectorAll('th'));
+
+    // Reset all columns to visible
+    headers.forEach((header, index) => {
+        header.style.display = '';
+        bodyRows.forEach(row => {
+            row.querySelectorAll('td')[index].style.display = '';
+        });
+    });
+
+    // If no specific columns are specified, show all
+    if (columnsToShow.length === 0) return;
+
+    // Hide columns not in the specified list
+    headers.forEach((header, index) => {
+        if (!columnsToShow.some(col => header.textContent.trim().toLowerCase().includes(col.toLowerCase()))) {
+            header.style.display = 'none';
+            bodyRows.forEach(row => {
+                row.querySelectorAll('td')[index].style.display = 'none';
+            });
+        }
+    });
+  }
+
+  // Event listener for viewing users
   document.getElementById('view_users').addEventListener('click', () => {
     toggleColumns(['ID', 'Email', 'Full Name', 'Phone Number']);
     
@@ -473,64 +519,95 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
     // Change its display property to "block"
     if (appointmentTable) {
         appointmentTable.style.display = 'block';
-    } else {
-        console.error('Element with ID "appointmentTable" not found.');
-    }
-});
-  document.getElementById('view_appointments').addEventListener('click', () => {
-      toggleColumns(['Full Name', 'Type of Appointment', 'Appointment Status', 'Doctor', 'Date', 'TimeStart', 'TimeEnd', 'Type of Payment', 'Payment Status', 'Cost']);
-
-          // Get the appointment table element by its ID
-    const appointmentTable = document.getElementById('appointmentTable');
-    
-    // Change its display property to "block"
-    if (appointmentTable) {
-        appointmentTable.style.display = 'block';
-    } else {
-        console.error('Element with ID "appointmentTable" not found.');
     }
   });
 
+  // Show the update form first, if needed
+  document.getElementById('updateForm').style.display = 'block';
+
+  // Fixing the typo here, changing ddocument to document
+  document.getElementById('view_appointments').addEventListener('click', () => {
+    toggleColumns([
+        'name', 
+        'date', 
+        'timestart', 
+        'timeend', 
+        'type of appointment', 
+        'appointment status', 
+        'doctor',
+        'type of payment',
+        'payment status',
+        'cost'
+    ]);
+
+    const appointmentTable = document.getElementById('appointmentTable');
+    if (appointmentTable) {
+        appointmentTable.style.display = 'block';
+    }
+  });
+
+  // Function to print the table with appointment data
   function printTable(appointments) {
-      const table = document.getElementById('appointmentTable');
-      const tbody = table.querySelector('tbody');
-      tbody.innerHTML = '';
+    const table = document.getElementById('appointmentTable');
+    const tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
 
-      appointments.sort((a, b) => {
-          const dateTimeA = new Date(`${a.appointmentDate}T${a.appointmentTimeStart}`);
-          const dateTimeB = new Date(`${b.appointmentDate}T${b.appointmentTimeStart}`);
-          return dateTimeA - dateTimeB;
-      });
+    appointments.forEach((data) => {
+        const fullName = `${data.firstName || ''} ${data.middleName || ''} ${data.surname || ''}`.trim();
+        const row = `
+            <tr>
+                <td>${data.id || ''}</td>
+                <td>${data.email || ''}</td>
+                <td>${fullName}</td>
+                <td>${data.contact || ''}</td>
+                <td>${data.appointmentDate || ''}</td>
+                <td>${convertTo12HourFormat(data.appointmentTimeStart) || ''}</td>
+                <td>${convertTo12HourFormat(data.appointmentTimeEnd) || ''}</td>
+                <td>${data.appointmentType || ''}</td>
+                <td>${data.paymentType || ''}</td>
+                <td>${data.appointmentStatus || ''}</td>
+                <td>${data.paymentStatus || ''}</td>
+                <td>${data.payment || ''}</td>
+                <td>${data.doctor || ''}</td>
+            </tr>`;
+        tbody.innerHTML += row;
+    });
 
-      appointments.forEach((data) => {
-          const row = `
-              <tr>
-                  <td>${data.id}</td>
-                  <td>${data.email}</td>
-                  <td>${data.firstName} ${data.middleName} ${data.surname}</td>
-                  <td>${data.contact}</td>
-                  <td>${data.appointmentDate}</td>
-                  <td>${convertTo12HourFormat(data.appointmentTimeStart)}</td>
-                  <td>${convertTo12HourFormat(data.appointmentTimeEnd)}</td>
-                  <td>${data.appointmentType}</td>
-                  <td>${data.paymentType}</td>
-                  <td>${data.appointmentStatus}</td>
-                  <td>${data.paymentStatus}</td>
-                  <td>${data.payment}</td>
-                  <td>${data.doctor}</td>
-              </tr>`;
-          tbody.innerHTML += row;
-      });
-
-      // Ensure correct columns are shown after populating the table
-      toggleColumns(['Full Name', 'Date', 'TimeStart', 'TimeEnd', 'Type of Appointment', 'Appointment Status', 'Doctor']);
+    // Ensure all relevant columns are shown by default for appointments view
+    toggleColumns([
+        'name', 
+        'date', 
+        'timestart', 
+        'timeend', 
+        'type of appointment', 
+        'appointment status', 
+        'doctor'
+    ]);
   }
 
-  // Assuming appointments data is available
+  // Sample appointments data (just an example)
   const appointments = [
-      // Sample appointment data objects
+      {
+          id: '1',
+          email: 'john.doe@example.com',
+          firstName: 'John',
+          middleName: 'Doe',
+          surname: 'Smith',
+          contact: '123-456-7890',
+          appointmentDate: '2025-01-26',
+          appointmentTimeStart: '14:00',
+          appointmentTimeEnd: '15:00',
+          appointmentType: 'Consultation',
+          paymentType: 'Credit Card',
+          appointmentStatus: 'Confirmed',
+          paymentStatus: 'Paid',
+          payment: '$100',
+          doctor: 'Dr. Alice'
+      },
+      // More appointment objects can go here...
   ];
 
+  // Print the sample appointments to the table
   printTable(appointments);
 </script>
 

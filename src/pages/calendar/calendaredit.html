@@ -1,14 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <link rel="stylesheet" href="../../styles/stylesheet.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>View Calendar</title>
+  
+    <!-- Favicon and app icons -->
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+    <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
+    <link rel="manifest" href="../../assets/images/site.webmanifest">
 
     <!-- vkurko links -->
     <link rel="stylesheet" href="event-calendar.css">
     <script src="event-calendar.js"></script>
+
+    <style>
+        /* Light Mode Custom Styles */
+
+
+        /* Style for main content area */
+        main.row {
+            padding: 20px;
+            background-color: #38383a;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        
+
+        /* Custom styling for the calendar container */
+        #ec {
+            background-color: #38383a;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for calendar events */
+        .fc-event {
+            background-color: #007bff; /* Blue color for events */
+            color: #38383a; 
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .fc-event:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+
+    
 
     <!-- Firebase SDK (with ES Modules) -->
     <script type="module">
@@ -39,7 +84,20 @@
         let doctorColorMap = {};
 
         // Define a list of colors to use (you can expand this list if needed)
-        const availableColors = ["#FF5733", "#FFC107", "#28A745", "#007BFF", "#DC3545", "#6F42C1"];
+        const availableColors = [
+            "#FF5733", "#FFC107", "#28A745", "#007BFF", "#DC3545", "#6F42C1", "#FF6F61", "#6B8E23", "#FF8C00", "#20B2AA",
+            "#8A2BE2", "#D2691E", "#00CED1", "#A52A2A", "#5F9EA0", "#C71585", "#FF1493", "#00BFFF", "#1E90FF", "#FF4500",
+            "#2E8B57", "#800080", "#4B0082", "#8B0000", "#228B22", "#FFD700", "#B22222", "#FF6347", "#FF8C00", "#7CFC00",
+            "#00FF7F", "#0000FF", "#800000", "#808000", "#ADFF2F", "#FF00FF", "#32CD32", "#00FA9A", "#FFFF00", "#A9A9A9",
+            "#D3D3D3", "#A52A2A", "#FF69B4", "#E9967A", "#8B4513", "#20B2AA", "#A52A2A", "#A9A9A9", "#F08080", "#90EE90",
+            "#FF6347", "#6A5ACD", "#8A2BE2", "#5F9EA0", "#7FFF00", "#FF1493", "#3CB371", "#D2691E", "#000080", "#800080",
+            "#4682B4", "#FF4500", "#FF6347", "#808080", "#E0E0E0", "#6A5ACD", "#D2691E", "#FF8C00", "#8B0000", "#ADFF2F",
+            "#8B0000", "#00FA9A", "#FFF5EE", "#98FB98", "#7CFC00", "#A9A9A9", "#D3D3D3", "#FFD700", "#E0FFFF", "#F5FFFA",
+            "#FFD700", "#98FB98", "#B8860B", "#C71585", "#FA8072", "#D2691E", "#FF1493", "#ADFF2F", "#F0E68C", "#F4A460",
+            "#00008B", "#BDB76B", "#228B22", "#FF4500", "#A52A2A", "#FF69B4", "#C71585", "#2E8B57", "#800000", "#0000FF",
+            "#4B0082", "#6A5ACD", "#FF6347", "#8B4513", "#20B2AA", "#DC143C", "#8A2BE2", "#9ACD32", "#3CB371", "#F0E68C",
+            "#D3D3D3", "#32CD32", "#8B0000", "#00FA9A", "#FFD700", "#C71585", "#B22222", "#FF4500", "#0000FF", "#8A2BE2"
+        ];
         let colorIndex = 0; // Start with the first color in the list
 
         querySnapshot.forEach((doc) => {
@@ -135,8 +193,115 @@
         <div class="social-links">
             <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
         </div>
-        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+        <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
+    
+        const firebaseConfig = {
+          apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+          authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+          databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "appointment-scheduling-s-57d01",
+          storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+          messagingSenderId: "1069885306589",
+          appId: "1:1069885306589:web:b31768194add4087754d34",
+          measurementId: "G-KQ4PQZZZBM"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+    
+        function updateDropdownEmail(user) {
+          const emailButton = document.getElementById('emailBtn');
+          const userDropdown = document.getElementById('userDropdown');
+          if (user) {
+            emailButton.textContent = user.email;
+            emailButton.onclick = () => { 
+              if (userDropdown.style.display === 'block') {
+                userDropdown.style.display = 'none';
+              } else {
+                userDropdown.style.display = 'block';
+              }
+            };
+          } else {
+            emailButton.textContent = "Login";
+            emailButton.onclick = () => {
+              window.location.href = '../login.html';
+            };
+          }
+        }
+    
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            updateDropdownEmail(user);
+    
+            user.reload()
+              .then(() => {
+                const verifyBtn = document.getElementById('verifyBtn');
+                if (user.emailVerified) {
+                  verifyBtn.textContent = "Email Verified";
+                  verifyBtn.removeAttribute('href');
+                } else {
+                  verifyBtn.textContent = "Verify E-mail";
+                  verifyBtn.href = "#";
+                }
+    
+                console.log("Logged in:", user.email);
+                console.log("Verified:", user.emailVerified);
+              })
+              .catch((error) => {
+                console.log("Error reloading user:", error);
+              });
+    
+          } else {
+            updateDropdownEmail(null); 
+          }
+        });
+    
+        const signOutUser = () => {
+          signOut(auth)
+            .then(() => {
+              console.log('Signed out successfully');
+              window.location.href = '../auth/login.html'; 
+            })
+            .catch((error) => {
+              console.log('Error signing out:', error);
+              alert("Error: " + error.message);
+            });
+        };
+    
+        const verifyEmail = () => {
+          const user = auth.currentUser;
+          if (user) {
+            sendEmailVerification(user)
+              .then(() => {
+                alert("Verification email sent!");
+              })
+              .catch((error) => {
+                console.log('Error sending verification email:', error);
+                alert("Error: " + error.message); 
+              });
+          }
+        };
+    
+        document.getElementById('logoutBtn').addEventListener('click', signOutUser);
+        document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
+    
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.onclick = () => {
+          const user = auth.currentUser; 
+          if (user) {
+            window.location.href = 'auth/userprofile.html'; 
+          } else {
+            window.location.href = 'auth/login.html'; 
+          }
+        };
+
+        
+      </script>
 
 </body>
 </html>

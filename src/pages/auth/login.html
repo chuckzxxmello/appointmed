@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login
+    </title>
+      
+      <!-- Favicon and app icons -->
+      <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+      <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+      <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+      <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
+      <link rel="manifest" href="../../assets/images/site.webmanifest">
+
     <link rel="stylesheet" href="../../styles/stylesheet.css">
 </head>
 
@@ -31,7 +40,7 @@
                 <div class="form-group">
                     <label for="login-password">Password:</label>
                     <input id="login-password" type="password" name="password" required />
-                    <button type="button" id="show-hide-password" style="color: #000000;" onclick="togglePassword()">Show</button>
+                    <button type="button" id="show-hide-login-password" style="color: #000000;" onclick="togglePassword('login-password', 'show-hide-login-password')">Show</button>
                 </div>
 
                 <div id="error-message" style="color: red;"></div>
@@ -54,6 +63,7 @@
                 <div class="form-group">
                     <label for="signup-password">Password:</label>
                     <input id="signup-password" type="password" name="password" required />
+                    <button type="button" id="show-hide-signup-password" style="color: #000000;" onclick="togglePassword('signup-password', 'show-hide-signup-password')">Show</button>
                 </div>
     
                 <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
@@ -69,7 +79,7 @@
         <div class="social-links">
             <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
         </div>
-        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+        <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
     </div>
 
     <script type="module">
@@ -187,9 +197,9 @@
             document.querySelector('.login-container').style.display = 'block';
         };
 
-        window.togglePassword = function togglePassword() {
-            const passwordField = document.getElementById('login-password');
-            const showHideButton = document.getElementById('show-hide-password');
+        window.togglePassword = function togglePassword(passwordFieldId, buttonId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const showHideButton = document.getElementById(buttonId);
             if (passwordField.type === "password") {
                 passwordField.type = "text";
                 showHideButton.textContent = "Hide";

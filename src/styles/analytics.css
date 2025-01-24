@@ -36,6 +36,10 @@
   font-weight: 600;
   margin-bottom: 1rem;
 }
+.dropdown {
+  position: relative; /* Needed to position dropdown content correctly */
+  z-index: 999;
+}
 
 /* Chart.js Custom Styles */
 canvas {

@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
   
+  <!-- Favicon and app icons -->
+  <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+  <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
+  <link rel="manifest" href="../../assets/images/site.webmanifest">
+  
   <link rel="stylesheet" href="../../styles/stylesheet.css">
 
 </head>
@@ -57,7 +64,7 @@
   <div class="social-links">
     <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
   </div>
-  <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+  <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
 </div>
 
 <script type="module">
@@ -141,25 +148,29 @@
         
             const appointmentDate = new Date(userData.appointmentDate);
             const currentDate = new Date();
-            const threeDaysBefore = new Date(appointmentDate);
-            threeDaysBefore.setDate(appointmentDate.getDate() - 3);
+
+            // Ensure both dates are at midnight to ignore time components
+            const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0)); 
+            const normalizedAppointmentDate = new Date(appointmentDate.setHours(0, 0, 0, 0)); 
+
+            // Create dates for reminders: 3 days before and 1 day before
+            const threeDaysBefore = new Date(normalizedAppointmentDate);
+            threeDaysBefore.setDate(normalizedAppointmentDate.getDate() - 3);
   
-            const twentyFourHoursBefore = new Date(appointmentDate);
-            twentyFourHoursBefore.setDate(appointmentDate.getDate() - 1);
-  
-            const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0));
-            const normalizedThreeDaysBefore = new Date(threeDaysBefore.setHours(0, 0, 0, 0)); 
-            const normalizedTwentyFourHoursBefore = new Date(twentyFourHoursBefore.setHours(0, 0, 0, 0)); 
-  
+            const twentyFourHoursBefore = new Date(normalizedAppointmentDate);
+            twentyFourHoursBefore.setDate(normalizedAppointmentDate.getDate() - 1);
+
+            console.log("Normalized Current Date: ", normalizedCurrentDate);
+            console.log("Normalized Appointment Date: ", normalizedAppointmentDate);
+            console.log("Three Days Before: ", threeDaysBefore);
+            console.log("24 Hours Before: ", twentyFourHoursBefore);
+
             let notification = '';
         
-            console.log("Current Date: ", normalizedCurrentDate);
-            console.log("Three Days Before: ", normalizedThreeDaysBefore);
-            console.log("24 Hours Before: ", normalizedTwentyFourHoursBefore);
-        
-            if (normalizedCurrentDate.getTime() === normalizedThreeDaysBefore.getTime()) {
+            // Compare dates only based on the day
+            if (normalizedCurrentDate.getTime() === threeDaysBefore.getTime()) {
                 notification = 'Reminder: Your appointment is in 3 days!';
-            } else if (normalizedCurrentDate.getTime() === normalizedTwentyFourHoursBefore.getTime()) {
+            } else if (normalizedCurrentDate.getTime() === twentyFourHoursBefore.getTime()) {
                 notification = 'Reminder: Your appointment is in 24 hours!';
             }
   
@@ -188,6 +199,7 @@ function formatTime(timeString) {
     const options = { hour: '2-digit', minute: '2-digit', hour12: true };
     return time.toLocaleTimeString('en-US', options); 
 }
+
 
         const signOutUser = () => {
             signOut(auth)
