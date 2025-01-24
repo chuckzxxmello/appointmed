@@ -70,23 +70,73 @@ body {
   font-size: 1rem;
   font-weight: 600;
   margin: 0;
-  text-align: left; /* Align text to the left (adjust as needed) */
+  .background-info a {
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    margin: 10px;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+  }
+  
+  .background-info a:hover {
+    background: #ffc60a;
+    color: #1e1e2f;
+    box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
+    transform: scale(1.05);
+  }
+  
+  .background-info .emailBtn:hover {
+    background: #ffc60a;
+    color: #1e1e2f;
+    box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }-align: left; /* Align text to the left (adjust as needed) */
 }
 
 .header nav ul {
+  background-color: var(--primary);
+  color: #1e1e2f; 
+  border-radius: 10px;
   display: flex;
   gap: 1.5rem;
+  padding: 0ch 10px; 
   list-style: none;
 }
 
 .header nav ul li a {
-  color: var(--foreground);
+  color: #1e1e2f; 
   text-decoration: none;
   transition: color 0.3s ease;
+  animation: slideIn 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 .header nav ul li a:hover {
   color: var(--primary);
+  color: #ffffff; box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
+  transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Dropdown menu specific styles */
@@ -151,15 +201,15 @@ body {
 }
 
 .background-info p {
-  font-size: 2.5rem;
-  font-weight: 00;
+  font-size: 1200;
+  font-weight: 800;
   color: var(--muted);
   font-size: 1.125rem;
   max-width: 36rem;
 }
 
 .background-info #text {
-  font-size: 48px;
+  font-size: 64px;
   font-weight: 800;
   color: var(--muted);
   max-width: 42rem;

@@ -118,9 +118,7 @@ body {
   color: var(--foreground);
   padding: 4px 16px;
   text-decoration: none;
-  z-index: 999;
   display: block;
-  
 }
 
 .dropdown-content a:hover {
@@ -340,7 +338,6 @@ body {
 }
 
 button {
-  width: 100%;
   padding: 0.75rem;
   background-color: var(--primary);
   color: #1a1a1a;
@@ -562,32 +559,42 @@ button:hover {
 .manage-user {
   background-color: var(--card);
   border-radius: var(--radius);
+  margin: 1rem auto;
+  max-width: 1800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+.user-list {
+  background-color: var(--card);
+  border-radius: var(--radius);
   padding: 2rem;
   margin: 2rem auto;
-  max-width: 1800px;
+  max-width: 700px;
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  
 }
 
-.manage-user button {
+.manage-user button .user-list {
   background-color: var(--primary);
   color: #1a1a1a;
-  padding: 0.75rem;
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
+  padding: 1rem;
   transition: background-color 0.2s ease;
 }
 
 /* Tables */
 table {
-  width: 90%;
+  width: 20%;
   height: 40%;
-  max-width: 1600px;
+  max-width: 1400px;
   border-collapse: separate;
   border-spacing: 0;
+  margin-left: 300;
 }
 
 th {
@@ -611,16 +618,16 @@ tr:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.admin-info h1, .analytics h2, .manage-user h1, .contact-details h1 {
+.admin-info h1, .analytics h2, .manage-user h1, .contact-details h1, .user-list {
   color: var(--primary);
   margin-bottom: 1rem;
 }
 
-.admin-info a, .manage-user button, .addel {
+.addel {
   display: inline-block;
   background-color: var(--primary);
   color: #1a1a1a;
-  padding: 0.75rem 1.5rem;
+  padding: 0.40rem 0.75rem;
   border-radius: var(--radius);
   text-decoration: none;
   margin: 0.5rem;
@@ -630,7 +637,7 @@ tr:hover {
   font-size: 1rem;
 }
 
-.admin-info a:hover, .manage-user button:hover, .addel:hover {
+.admin-info a:hover, .manage-user button:hover, .addel:hover .user-list{
   background-color: var(--primary-hover);
   transform: translateY(-2px);
 }
@@ -691,22 +698,50 @@ form button:hover {
   background-color: var(--primary-hover);
 }
 
-table {
+.table-container {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  max-width: 100%; /* Adjust as needed */
+}
+
+#appointmentTable {
+  display: table;
+  margin: 1rem auto; /* Updated margin-bottom */
   width: 100%;
   border-collapse: collapse;
-  margin-top: 2rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem; /* Added padding */
+  background-color: var(--card);
+  border-radius: var(--radius);
+  max-width: 1500px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 999;
 }
 
-table th, table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-table th {
+#appointmentTable thead {
   background-color: var(--secondary);
   color: var(--primary);
+  text-align: left;
 }
+
+#appointmentTable th, #appointmentTable td {
+  padding: .75rem; /* Adjusted padding */
+}
+
+#appointmentTable th {
+  font-weight: 600;
+}
+
+#appointmentTable td {
+  font-weight: 400;
+}
+
+
+
 
 @media (max-width: 768px) {
   .header nav {
@@ -718,7 +753,7 @@ table th {
     margin-top: 1rem;
   }
 
-  .admin-info, .analytics, .manage-user, .user-info, .contact-details {
+  .admin-info, .analytics, .manage-user, .user-info, .contact-details .user-list{
     margin: 1rem;
     padding: 1.5rem;
   }
@@ -774,4 +809,127 @@ table th {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+
+
+
+
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+  gap: 20px; /* Space between columns */
+  height: 500px,
+
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between form elements */
+}
+
+label {
+  font-weight: bold;
+}
+
+input, select, button {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+
+
+.col-row-appoint {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: .05rem auto;
+  max-width: 1000px;
+  width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+}
+
+
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+  gap: 20px; /* Space between columns */
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between form elements */
+}
+
+label {
+  font-weight: bold;
+}
+
+input, select, button {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background-color: #333;
+  padding-top: 20px;
+  z-index: -999;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+}
+
+.sidebar ul li a:hover {
+  background-color: #e5e848;
+}
+
+/* Adjust content to avoid sidebar overlap and header */
+.content {
+  margin-left: 270px;  /* Sidebar width + some margin */
+  padding: 20px;
+  margin-top: 80px; /* Adjust this based on your header's height */
+  color: #333;
+
+}
+
+
+.content h1, h2 {
+
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  text-align: center; /* Optional: to center the text */
+
 }

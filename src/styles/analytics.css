@@ -3,13 +3,13 @@
 
 /* Analytics Dashboard Specific Styles */
 .analytics {
-  max-width: 1200px;
-  margin: 6rem auto 2rem;
+  max-width: 1600px;
+  margin: 4rem auto 2rem;
   padding: 2rem;
 }
 
 .analytics h2 {
-  color: var(--foreground);
+  color: #ffd60a;
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 2rem;
@@ -24,45 +24,34 @@
 }
 
 .metric-card {
-  background-color: var(--card);
+  background-color: rgba(28, 28, 30, 0.8);
   border-radius: var(--radius);
   padding: 1.5rem;
   border: 1px solid var(--border);
 }
 
 .metric-card h3 {
-  color: var(--primary);
+  color: #FFFFFF;
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
-/* Stats Container Styles */
-#appointmentTypeStats,
-#appointmentStats,
-#paymentStats {
-  margin-bottom: 1rem;
-  font-size: 0.875rem;
-  color: var(--muted);
-}
-
-#appointmentTypeStats p,
-#appointmentStats p,
-#paymentStats p {
-  margin-bottom: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-}
-
 /* Chart.js Custom Styles */
 canvas {
+  color: #FFFFFF;
   margin-top: 1rem;
   border-radius: calc(var(--radius) * 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+canvas:hover {
+  transform: scale(1.02);
 }
 
 /* Custom Chart Colors */
 :root {
-  --chart-1: var(--primary);
+  --chart-1: #9D4EDD; /* Primary color */
   --chart-2: #3291ff;
   --chart-3: #7c3aed;
   --chart-4: #ec4899;
@@ -74,13 +63,25 @@ canvas {
 
 /* Chart.js Global Styles */
 .chartjs-tooltip {
-  background-color: var(--card) !important;
-  border: 1px solid var(--border) !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-radius: var(--radius) !important;
-  color: var(--foreground) !important;
-  font-family: inherit !important;
-  padding: 0.5rem !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  color: white !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 0.8rem 1rem !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2) !important;
+  animation: tooltipFadeIn 0.3s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Chart Legend Styles */
@@ -90,13 +91,15 @@ canvas {
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 1rem !important;
+  color: #B0B0B0 !important;
+  font-size: 1rem !important;
 }
 
 .chartjs-legend li {
   display: flex !important;
   align-items: center !important;
   font-size: 0.875rem !important;
-  color: var(--muted) !important;
+  color: white !important;
 }
 
 .chartjs-legend li span {
@@ -105,64 +108,13 @@ canvas {
   height: 12px !important;
   margin-right: 0.5rem !important;
   border-radius: 2px !important;
+  background-color: var(--chart-1) !important;
+  transition: background-color 0.3s ease;
 }
 
-/* Dropdown Admin Styles */
-.dropdown-admin {
-  position: relative;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  color: var(--foreground);
-  font-weight: 500;
-}
-
-.dropdown-content-admin {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  min-width: 200px;
-  z-index: 10;
-}
-
-.dropdown-admin:hover .dropdown-content-admin {
-  display: block;
-}
-
-.dropdown-content-admin li {
-  list-style: none;
-}
-
-.dropdown-content-admin a {
-  display: block;
-  padding: 0.75rem 1rem;
-  color: var(--foreground);
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.dropdown-content-admin a:hover {
-  background-color: var(--secondary);
-  color: var(--primary);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .analytics {
-    margin-top: 5rem;
-    padding: 1rem;
-  }
-
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .metric-card {
-    padding: 1rem;
-  }
+.chartjs-legend li:hover span {
+  background-color: #ffffff !important;
+  transform: scale(1.2);
 }
 
 /* Chart.js Responsive Container */
@@ -170,12 +122,28 @@ canvas {
   position: relative;
   height: 300px;
   width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeInChart 0.5s ease-out;
+}
+
+@keyframes fadeInChart {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Custom Chart Colors Override */
 .chart-colors-primary {
-  --chart-color: var(--primary);
-  --chart-color-opacity: rgba(255, 214, 10, 0.2);
+  --chart-color: var(--chart-1);
+  --chart-color-opacity: rgba(157, 78, 221, 0.2);
 }
 
 .chart-colors-secondary {
@@ -186,4 +154,33 @@ canvas {
 .chart-colors-tertiary {
   --chart-color: var(--chart-3);
   --chart-color-opacity: rgba(124, 58, 237, 0.2);
+}
+
+/* Hover & Active Effects for Legends */
+.chartjs-legend li:hover {
+  cursor: pointer;
+  color: #00d4ff !important;
+  transform: scale(1.05);
+}
+
+.chartjs-legend li:hover span {
+  background-color: #00d4ff !important;
+  transform: scale(1.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 250px;
+    padding: 0.8rem;
+  }
+
+  .chartjs-legend {
+    font-size: 0.85rem;
+    margin-top: 0.8rem !important;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

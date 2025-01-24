@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  
+  <link rel="stylesheet" href="../../styles/stylesheet.css">
+
+</head>
+<body>
+  <div class="bg-image"></div>
+
+<div class="header">
+  <nav>
+    <h2>ELAD School of Potentials Therapy Center</h2>
+    <ul>
+      <div class="dropdown">
+        <a href="userprofile.html">
+          <div id="emailBtn"></div>
+        </a>       
+        <div class="dropdown-content">
+          <a href="../calendar/calendaruser.html">View Calendar</a>
+          <li><a href="../contact.html">Contact Us</a></li>
+          <li><a href="#" id="verifyBtn">Verify E-mail</a></li>
+          <li><a href="#" id="logoutBtn">Logout</a></li>
+        </div>
+      </div>
+    </ul>
+  </nav>
+</div>
+
+  <div class="user-info">
+
+    <div class="img"><img src='../../assets/images/login_profile.png' class="profile">  </div>
+    <h2>Personal Info</h2>
+    <strong>
+      <p id="email"></p>
+      <p id="id"></p>
+      <p id="name"></p>
+    </strong>
+    <br>
+    <div id="appointmentStatusSection" style="display: none;">
+      <h2>Appointment Status</h2>
+      <strong>
+        <p id="appointmentType"></p>
+        <p id="appointmentDate"></p>
+        <p id="appointmentTime"></p>
+        <p id="appointmentStatus"></p>
+        <p id="paymentStatus"></p>
+        <p id="appointmentNotif"></p>
+      </strong>
+    </div>
+    <br><br>
+    <p>If you want to set up a new Appointment, please <a href="../contact.html">Contact Us</a>.</p>
+  </div>
+
+<div class="footer"> 
+  <div class="social-links">
+    <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+  </div>
+  <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+</div>
+
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+  import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
+  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+    authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+    databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "appointment-scheduling-s-57d01",
+    storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
+    messagingSenderId: "1069885306589",
+    appId: "1:1069885306589:web:b31768194add4087754d34",
+    measurementId: "G-KQ4PQZZZBM"
+  };  
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app); 
+  const db = getFirestore();
+
+  function updateDropdownEmail(user) {
+    const emailButton = document.getElementById('emailBtn'); 
+    if (user) {
+      emailButton.textContent = user.email;
+    } else {
+      emailButton.textContent = 'Guest'; 
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', (event) => { 
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        updateDropdownEmail(user);
+        const appointmentStatusSection = document.getElementById("appointmentStatusSection");
+        if (user.emailVerified) {
+          document.getElementById("email").innerHTML = "Email: " + user.email;
+          appointmentStatusSection.style.display = "block";
+        } else {
+          document.getElementById("email").innerHTML = "Email: Not Verified";
+          appointmentStatusSection.style.display = "none";
+        }
+
+        user.reload()
+          .then(() => {
+            const verifyBtn = document.getElementById('verifyBtn');
+            if (user.emailVerified) {
+              verifyBtn.textContent = "Email Verified";
+              verifyBtn.removeAttribute('href'); 
+            } else {
+              verifyBtn.textContent = "Verify E-mail";
+              verifyBtn.href = "#"; 
+            }
+            getUserDataByEmail(user.email);
+          })
+          .catch((error) => {
+            console.log("Error reloading user:", error);
+            alert("Error reloading user: " + error.message); 
+          });
+      } else {
+        console.log("No user is signed in.");
+        window.location.href = 'login.html'; 
+      }
+    });
+  }); 
+
+  async function getUserDataByEmail(email) {
+    try {
+      const usersRef = collection(db, 'appointments');
+      const q = query(usersRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q); 
+
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data(); 
+        console.log("User Data from Firestore:", userData);
+
+        document.getElementById('name').textContent = `Name: ${userData.firstName + " " + userData.middleName + " " + userData.surname || 'N/A'}`; 
+        document.getElementById('appointmentType').textContent = `Appointment Type: ${userData.appointmentType || 'N/A'}`;
+        document.getElementById('appointmentDate').textContent = `Date of Appointment: ${userData.appointmentDate || 'N/A'}`;
+        document.getElementById('appointmentTime').textContent = `Time of Appointment: ${userData.appointmentTimeStart + "-" + userData.appointmentTimeEnd || 'N/A'}`;
+        document.getElementById('paymentStatus').textContent = `Payment Status: ${userData.paymentStatus || 'N/A'}`;  
+        document.getElementById('appointmentStatus').textContent = `Appointment Status: ${userData.appointmentStatus || 'N/A'}`;  
+        
+        const appointmentDate = new Date(userData.appointmentDate);
+        const currentDate = new Date();
+        const threeDaysBefore = new Date(appointmentDate);
+        threeDaysBefore.setDate(appointmentDate.getDate() - 3);
+
+        const twentyFourHoursBefore = new Date(appointmentDate);
+        twentyFourHoursBefore.setDate(appointmentDate.getDate() - 1);
+
+        const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0));
+        const normalizedThreeDaysBefore = new Date(threeDaysBefore.setHours(0, 0, 0, 0)); 
+        const normalizedTwentyFourHoursBefore = new Date(twentyFourHoursBefore.setHours(0, 0, 0, 0)); 
+
+        let notification = '';
+        
+        console.log("Current Date: ", normalizedCurrentDate);
+        console.log("Three Days Before: ", normalizedThreeDaysBefore);
+        console.log("24 Hours Before: ", normalizedTwentyFourHoursBefore);
+        
+        if (normalizedCurrentDate.getTime() === normalizedThreeDaysBefore.getTime()) {
+          notification = 'Reminder: Your appointment is in 3 days!';
+        } else if (normalizedCurrentDate.getTime() === normalizedTwentyFourHoursBefore.getTime()) {
+          notification = 'Reminder: Your appointment is in 24 hours!';
+        }
+
+        document.getElementById('appointmentNotif').textContent = notification;
+
+      } else {
+        console.log("No user found with this email.");
+      }
+    } catch (error) {
+      console.log("Error getting Firestore data:", error);
+      alert("Error getting user data: " + error.message); 
+    }
+  }
+
+  const signOutUser = () => {
+    signOut(auth)
+      .then(() => {
+        console.log('Signed out successfully');
+        window.location.href = 'login.html'; 
+      })
+      .catch((error) => {
+        console.log('Error signing out:', error);
+        alert("Error: " + error.message); 
+      });
+  };
+
+  const verifyEmail = () => {
+    const user = auth.currentUser;
+    if (user) {
+      sendEmailVerification(user)
+        .then(() => {
+          alert("Verification email sent!");
+        })
+        .catch((error) => {
+          console.log('Error sending verification email:', error);
+          alert("Error: " + error.message); 
+        });
+    }
+  };
+
+  document.getElementById('logoutBtn').addEventListener('click', signOutUser);
+  document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
+</script>
+</body>
+</body>
+</html>
+
+
+
+  

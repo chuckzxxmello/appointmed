@@ -15,7 +15,7 @@
 
 <!-- title -->    <title>Login</title>
 
-<link rel="stylesheet" href="../../../styles/stylesheet.css">
+<link rel="stylesheet" href="../../../styles/setappoint.css">
 
     <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script> 
@@ -38,193 +38,179 @@
         </div>
         </ul> 
     </nav>
-</div>
+  </div>  
 
   <div class="manage-user"> 
-    <h1>Manage Appointments </h1>
     <!-- Unique IDs for each button -->
     <button class="addel" id="addAppointmentButton">Add Appointment</button>
     <button class="addel" id="updateAppointmentButton">Update Appointment</button>
     <button class="addel" id="deleteAppointmentButton">Delete Appointment</button>
+  </div>
 
-    <style>
-      .window-pane {
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background-color: #4a4a4d;
-          padding: 20px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-          z-index: 1000;
-          width: 400px;
-          border-radius: 8px;
-      }
-      .window-pane h2 {
-          margin-top: 0;
-      }
-      .window-pane button.close-btn {
-          margin-top: 10px;
-          background-color: #ff4d4d;
-          color: #4a4a4d;
-          border: none;
-          padding: 8px 16px;
-          border-radius: 4px;
-          cursor: pointer;
-      }
-      .window-pane button.close-btn:hover {
-          background-color: #ff1a1a;
-      }
-    </style>
-  
+  <div class="col-row-appoint">
     <script>
-      function openWindowPane(formId) {
-        var form = document.getElementById(formId);
-        var existingPane = document.querySelector('.window-pane');
-        
-        // Remove existing pane if any
-        if (existingPane) {
-            document.body.removeChild(existingPane);
-        }
-    
-        var windowPane = document.createElement('div');
-        windowPane.className = 'window-pane';
-        windowPane.style.position = 'fixed';
-        windowPane.style.top = '50%';
-        windowPane.style.left = '50%';
-        windowPane.style.transform = 'translate(-50%, -50%)';
-        windowPane.style.backgroundColor = 'white';
-        windowPane.style.padding = '20px';
-        windowPane.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
-        windowPane.style.zIndex = '1000';
-    
-        var clonedForm = form.cloneNode(true);
-        clonedForm.style.display = 'block'; // Ensure the form is visible
-        windowPane.appendChild(clonedForm);
-    
-        var closeButton = document.createElement('button');
-        closeButton.innerText = 'Close';
-        closeButton.style.marginTop = '10px';
-        closeButton.addEventListener('click', function() {
-          document.body.removeChild(windowPane);
-        });
-        windowPane.appendChild(closeButton);
-    
-        document.body.appendChild(windowPane);
-      }
-    
-      document.getElementById("addAppointmentButton").addEventListener("click", function() {
-        openWindowPane("setForm");
-      });
-    
-      document.getElementById("updateAppointmentButton").addEventListener("click", function() {
-        openWindowPane("updateForm");
-      });
-    
-      document.getElementById("deleteAppointmentButton").addEventListener("click", function() {
-        openWindowPane("deleteForm");
-      });
+document.getElementById("addAppointmentButton").addEventListener("click", function () {
+    var setForm = document.getElementById("setForm");
+    var updateForm = document.getElementById("updateForm");
+    var deleteForm = document.getElementById("deleteForm");
+    var appointmentTable = document.getElementById("appointmentTable");
+
+    setForm.style.display = "block";
+    updateForm.style.display = "none";
+    deleteForm.style.display = "none";
+    appointmentTable.style.display = "none";
+});
+
+document.getElementById("updateAppointmentButton").addEventListener("click", function () {
+    var setForm = document.getElementById("setForm");
+    var updateForm = document.getElementById("updateForm");
+    var deleteForm = document.getElementById("deleteForm");
+    var appointmentTable = document.getElementById("appointmentTable");
+
+    setForm.style.display = "none";
+    updateForm.style.display = "block";
+    deleteForm.style.display = "none";
+    appointmentTable.style.display = "none";
+});
+
+document.getElementById("deleteAppointmentButton").addEventListener("click", function () {
+    var setForm = document.getElementById("setForm");
+    var updateForm = document.getElementById("updateForm");
+    var deleteForm = document.getElementById("deleteForm");
+    var appointmentTable = document.getElementById("appointmentTable");
+
+    setForm.style.display = "none";
+    updateForm.style.display = "none";
+    deleteForm.style.display = "block";
+    appointmentTable.style.display = "none";
+});
     </script>
   
-    <!-- Set Appointment Form -->
-<form class="set" id="setForm" style="display:none;"> <!-- SET -->
-  <h2>Add an Appointment Schedule</h2>
-  <label for="appointmentDate">Full Name of Client:</label>
-  <input type="text" id="firstName" name="firstName" placeholder="First Name">
-  <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
-  <input type="text" id="surname" name="surname" placeholder="Last Name" required>
-  <label for="email">Email</label>
-  <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
-  <label for="contact">Phone Number</label>
-  <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
-  
-  <!-- Dropdown for Type of Appointment -->
-  <label for="appointType">Type of Appointment</label>
-  <select name="appointmentType" required>
-    <option value="CONSULTATION">CONSULTATION</option>
-    <option value="THERAPY">THERAPY</option>
-    <option value="CHECK_UP">CHECK-UP</option>
-    <option value="TRAINING_SESSION">TRAINING SESSION</option>
-    <option value="COACHING">COACHING</option>
-    <option value="DIAGNOSTIC">DIAGNOSTIC</option>
-    <option value="TREATMENT">TREATMENT</option>
-    <option value="FOLLOW_UP">FOLLOW-UP</option>
-    <option value="INTERVIEW">INTERVIEW</option>
-    <option value="SUPPORT">SUPPORT</option>
-  </select>
-  
-  <label for="doctor">Doctor</label>
-  <input type="text" name="doctor" placeholder="Doctor's Name">    
-  <br><br>
-  <label for="appointmentDate">Select Date:</label>
-  <input type="date" id="appointmentDate" name="appointmentDate" required>
-  <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
-  <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
-  <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
-  <br><br>
+    <form class="set" id="setForm" style="display:none;">
+      <h2>Add an Appointment Schedule</h2>
 
-  <!-- Dropdown for Payment Method -->
-  <label for="paymentType">Payment Method</label>
-  <select name="paymentType" required>
-    <option value="BANK_TRANSFER">BANK_TRANSFER</option>
-    <option value="ONLINE_PAYMENT">ONLINE_PAYMENT</option>
-    <option value="CASH">CASH</option>
-    <option value="OTHER">OTHER</option>
-  </select>
-
-  <label for="payment">Cost of Appointment</label>
-  <input type="number" name="payment" required placeholder="Amount in PHP">
-  
-  <!-- Dropdown for Payment Status -->
-  <label for="paymentStatus">Payment Status</label>
-  <select name="paymentStatus" required>
-    <option value="PAID">PAID</option>
-    <option value="NOT_PAID">NOT_PAID</option>
-    <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
-    <option value="PENDING">PENDING</option>
-    <option value="REFUNDED">REFUNDED</option>
-    <option value="CANCELLED">CANCELLED</option>
-    <option value="ON_HOLD">ON_HOLD</option>
-  </select>
-
-  <!-- Dropdown for Appointment Status -->
-  <label for="appointmentStatus">Appointment Status</label>
-  <select name="appointmentStatus" required>
-    <option value="PENDING">PENDING</option>
-    <option value="ONGOING">ONGOING</option>
-    <option value="FINISHED">FINISHED</option>
-    <option value="CANCELLED">CANCELLED</option>
-    <option value="NO_SHOW">NO_SHOW</option>
-    <option value="RESCHEDULED">RESCHEDULED</option>
-    <option value="CONFIRMED">CONFIRMED</option>
-    <option value="CONFIRMING">CONFIRMING</option>
-    <option value="IN_PROGRESS">IN_PROGRESS</option>
-    <option value="DECLINED">DECLINED</option>
-    <option value="EXPIRED">EXPIRED</option>
-    <option value="OVERDUE">OVERDUE</option>
-  </select>
-
-  <br><br>
-  <button class="roundedbutton">Add Appointment</button>
-</form>
+      <div class="view-table">
+        <p>Show By:</p>
+        <button class="addel" id="view_users">Users</button>
+        <button class="addel" id="view_appointments">Appointments</button>
+      </div>
+      
+      <div class="form-container">
+        <!-- Left Column -->
+        <div class="form-column">
+          <label for="appointmentDate">Full Name of Client:</label>
+          <input type="text" id="firstName" name="firstName" required placeholder="First Name">
+          <input type="text" id="middleName" name="middleName" required placeholder="Middle Name">
+          <input type="text" id="surname" name="surname" required placeholder="Last Name">
+          
+          <label for="email">Email</label>
+          <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
+          
+          <label for="contact">Phone Number</label>
+          <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
+          
+          <label for="appointType">Type of Appointment</label>
+          <select name="appointmentType">
+            <option value=""></option>
+            <option value="CONSULTATION">CONSULTATION</option>
+            <option value="THERAPY">THERAPY</option>
+            <option value="CHECK_UP">CHECK-UP</option>
+            <option value="TRAINING_SESSION">TRAINING SESSION</option>
+            <option value="COACHING">COACHING</option>
+            <option value="DIAGNOSTIC">DIAGNOSTIC</option>
+            <option value="TREATMENT">TREATMENT</option>
+            <option value="FOLLOW_UP">FOLLOW-UP</option>
+            <option value="INTERVIEW">INTERVIEW</option>
+            <option value="SUPPORT">SUPPORT</option>
+          </select>
+        </div>
+    
+        <!-- Right Column -->
+        <div class="form-column">
+          <label for="doctor">Doctor</label>
+          <input type="text" name="doctor" placeholder="Doctor's Name">    
+          
+          <label for="appointmentDate">Select Date:</label>
+          <input type="date" id="appointmentDate" name="appointmentDate" required>
+          
+          <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
+          <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
+          <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
+          
+          <label for="paymentType">Payment Method</label>
+          <select name="paymentType" required>
+            <option value=""></option>
+            <option value="BANK_TRANSFER">BANK_TRANSFER</option>
+            <option value="ONLINE_PAYMENT">ONLINE_PAYMENT</option>
+            <option value="CASH">CASH</option>
+            <option value="OTHER">OTHER</option>
+          </select>
+          
+          <label for="payment">Cost of Appointment</label>
+          <input type="number" name="payment" required placeholder="Amount in PHP">
+          
+          <label for="paymentStatus">Payment Status</label>
+          <select name="paymentStatus" required>
+            <option value=""></option>
+            <option value="PAID">PAID</option>
+            <option value="NOT_PAID">NOT_PAID</option>
+            <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
+            <option value="PENDING">PENDING</option>
+            <option value="REFUNDED">REFUNDED</option>
+            <option value="CANCELLED">CANCELLED</option>
+            <option value="ON_HOLD">ON_HOLD</option>
+          </select>
+          
+          <label for="appointmentStatus">Appointment Status</label>
+          <select name="appointmentStatus" required>
+            <option value=""></option>
+            <option value="PENDING">PENDING</option>
+            <option value="ONGOING">ONGOING</option>
+            <option value="FINISHED">FINISHED</option>
+            <option value="CANCELLED">CANCELLED</option>
+            <option value="NO_SHOW">NO_SHOW</option>
+            <option value="RESCHEDULED">RESCHEDULED</option>
+            <option value="CONFIRMED">CONFIRMED</option>
+            <option value="CONFIRMING">CONFIRMING</option>
+            <option value="IN_PROGRESS">IN_PROGRESS</option>
+            <option value="DECLINED">DECLINED</option>
+            <option value="EXPIRED">EXPIRED</option>
+            <option value="OVERDUE">OVERDUE</option>
+          </select>
+        </div>
+      </div>
+    
+      <br>
+      <button class="roundedbutton">Add Appointment</button>
+    </form>
 
 <!-- Update Appointment Form -->
 <form class="update-form" id="updateForm" style="display:none;"> <!-- UPDATE -->
   <h2>Update Appointment Schedule</h2>
-  <label for="appointmentDate">Full Name of Client:</label>
+  <div class="view-table">
+    <p>Show By:</p>
+    <button class="addel" id="view_users">Users</button>
+    <button class="addel" id="view_appointments">Appointments</button>
+  </div>
+
+  <div class="form-container">
+    <div class="form-column">
+      <label for="appointmentDate">User UID:</label>
   <input type="text" name="id" required placeholder="Appointment ID">
   <br><br>
+  <label for="appointmentDate">Full Name of Client:</label>
   <input type="text" id="firstName" name="firstName" placeholder="First Name">
   <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
-  <input type="text" id="surname" name="surname" placeholder="Last Name" required>
+  <input type="text" id="surname" name="surname" placeholder="Last Name" >
   <label for="email">Email</label>
-  <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
+  <input type="text" id="email" name="email"  placeholder="john.doe@gmail.com">
   <label for="contact">Phone Number</label>
-  <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
+  <input type="text" id="contact" name="contact"  placeholder="+63-XXX-XXXX-XXX">
 
   <!-- Dropdown for Type of Appointment -->
   <label for="appointType">Type of Appointment</label>
-  <select name="appointmentType" required>
+  <select name="appointmentType" >
+    <option value=""></option>
     <option value="CONSULTATION">CONSULTATION</option>
     <option value="THERAPY">THERAPY</option>
     <option value="CHECK_UP">CHECK-UP</option>
@@ -236,20 +222,23 @@
     <option value="INTERVIEW">INTERVIEW</option>
     <option value="SUPPORT">SUPPORT</option>
   </select>
+</div>
 
+<div class="form-column">
   <label for="doctor">Doctor</label>
   <input type="text" name="doctor" placeholder="Doctor's Name">
   <br><br>
   <label for="appointmentDate">Select Date:</label>
-  <input type="date" id="appointmentDate" name="appointmentDate" required>
+  <input type="date" id="appointmentDate" name="appointmentDate" >
   <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
-  <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
-  <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
+  <input type="time" id="appointmentTime" name="appointmentTimeStart" >
+  <input type="time" id="appointmentTime" name="appointmentTimeEnd" >
   <br><br>
 
   <!-- Dropdown for Payment Method -->
   <label for="paymentType">Payment Method</label>
-  <select name="paymentType" required>
+  <select name="paymentType" >
+    <option value=""></option>
     <option value="BANK_TRANSFER">BANK_TRANSFER</option>
     <option value="ONLINE_PAYMENT">ONLINE_PAYMENT</option>
     <option value="CASH">CASH</option>
@@ -257,11 +246,12 @@
   </select>
 
   <label for="payment">Cost of Appointment</label>
-  <input type="number" name="payment" required placeholder="Amount in PHP">
+  <input type="number" name="payment"  placeholder="Amount in PHP">
 
   <!-- Dropdown for Payment Status -->
   <label for="paymentStatus">Payment Status</label>
-  <select name="paymentStatus" required>
+  <select name="paymentStatus" >
+    <option value=""></option>
     <option value="PAID">PAID</option>
     <option value="NOT_PAID">NOT_PAID</option>
     <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
@@ -273,7 +263,8 @@
 
   <!-- Dropdown for Appointment Status -->
   <label for="appointmentStatus">Appointment Status</label>
-  <select name="appointmentStatus" required>
+  <select name="appointmentStatus" >
+    <option value=""></option>
     <option value="PENDING">PENDING</option>
     <option value="ONGOING">ONGOING</option>
     <option value="FINISHED">FINISHED</option>
@@ -287,134 +278,53 @@
     <option value="EXPIRED">EXPIRED</option>
     <option value="OVERDUE">OVERDUE</option>
   </select>
-
+</div>
   <br><br>
   <button class="roundedbutton">Update</button>
 </form>
 
-  
+
+</div>
+
     <!-- Delete Appointment Form -->
     <form class="deleteappoint" id="deleteForm" style="display:none;"> <!-- DELETE -->
       <h2>Delete Appointment from Database</h2>
+      <div class="view-table">
+        <p>Show By:</p>
+        <button class="addel" id="view_users">Users</button>
+        <button class="addel" id="view_appointments">Appointments</button>
+      </div>
+      
       <label for="id">Appointment ID</label>
       <input type="text" name="id" required placeholder="Example: kM0L0iVE8Mkkm1I1vY1d">
       <br><br>
       <button class="deletes">Delete from Database</button>
     </form>
-
-    <div class="view-table">
-      <p>View table by:</p>
-      <button id="view_users">Users</button>
-      <button id="view_appointments">Appointments</button>
-  
-      <table class="table" id="appointmentTable" border="3">
-          <h2>List of Appointments</h2>
-          <thead>
-              <tr>
-                  <th>ID</th>
-                  <th>Email</th>
-                  <th>Full Name</th>
-                  <th>Phone Number</th>
-                  <th>Date</th>
-                  <th>TimeStart</th>
-                  <th>TimeEnd</th>
-                  <th>Type of Appointment</th>
-                  <th>Type of Payment</th>
-                  <th>Appointment Status</th>
-                  <th>Payment Status</th>
-                  <th>Cost</th>
-                  <th>Doctor</th>
-              </tr>
-          </thead>
-          <tbody>
-              <!-- Appointment data rows will be inserted here -->
-          </tbody>
-      </table>
   </div>
+</div>
   
-  <script type="module">
-    function toggleColumns(columnsToShow) {
-        const table = document.getElementById('appointmentTable');
-        const headerRow = table.querySelector('thead tr');
-        const bodyRows = table.querySelectorAll('tbody tr');
-
-        const headers = Array.from(headerRow.querySelectorAll('th'));
-
-        // Hide all columns initially
-        headers.forEach((header, index) => {
-            header.style.display = 'none';
-            bodyRows.forEach(row => {
-                row.querySelectorAll('td')[index].style.display = 'none';
-            });
-        });
-
-        // Show only the specified columns
-        columnsToShow.forEach(columnName => {
-            const headerIndex = headers.findIndex(header =>
-                header.textContent.trim().toLowerCase() === columnName.toLowerCase()
-            );
-
-            if (headerIndex !== -1) {
-                headers[headerIndex].style.display = '';
-                bodyRows.forEach(row => {
-                    row.querySelectorAll('td')[headerIndex].style.display = '';
-                });
-            }
-        });
-    }
-
-    document.getElementById('view_users').addEventListener('click', () => {
-        toggleColumns(['ID', 'Email', 'Full Name', 'Phone Number', 'Type of Payment', 'Payment Status', 'Cost']);
-    });
-
-    document.getElementById('view_appointments').addEventListener('click', () => {
-        toggleColumns(['Full Name', 'Type of Appointment', 'Appointment Status', 'Doctor', 'Date', 'TimeStart', 'TimeEnd']);
-    });
-
-    function printTable(appointments) {
-        const table = document.getElementById('appointmentTable');
-        const tbody = table.querySelector('tbody');
-        tbody.innerHTML = '';
-
-        appointments.sort((a, b) => {
-            const dateTimeA = new Date(`${a.appointmentDate}T${a.appointmentTimeStart}`);
-            const dateTimeB = new Date(`${b.appointmentDate}T${b.appointmentTimeStart}`);
-            return dateTimeA - dateTimeB;
-        });
-
-        appointments.forEach((data) => {
-            const row = `
-                <tr>
-                    <td>${data.id}</td>
-                    <td>${data.email}</td>
-                    <td>${data.firstName} ${data.middleName} ${data.surname}</td>
-                    <td>${data.contact}</td>
-                    <td>${data.appointmentDate}</td>
-                    <td>${convertTo12HourFormat(data.appointmentTimeStart)}</td>
-                    <td>${convertTo12HourFormat(data.appointmentTimeEnd)}</td>
-                    <td>${data.appointmentType}</td>
-                    <td>${data.paymentType}</td>
-                    <td>${data.appointmentStatus}</td>
-                    <td>${data.paymentStatus}</td>
-                    <td>${data.payment}</td>
-                    <td>${data.doctor}</td>
-                </tr>`;
-            tbody.innerHTML += row;
-        });
-
-        // Ensure correct columns are shown after populating the table
-        toggleColumns(['Full Name', 'Date', 'TimeStart', 'TimeEnd', 'Type of Appointment', 'Appointment Status', 'Doctor']);
-    }
-
-    // Assuming appointments data is available
-    const appointments = [
-        // Sample appointment data objects
-    ];
-
-    printTable(appointments);
-</script>
-
-  </div>
+<table class="view-table" id="appointmentTable" border="3" style="display: none;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Phone Number</th>
+            <th>Date</th>
+            <th>TimeStart</th>
+            <th>TimeEnd</th>
+            <th>Type of Appointment</th>
+            <th>Type of Payment</th>
+            <th>Appointment Status</th>
+            <th>Payment Status</th>
+            <th>Cost</th>
+            <th>Doctor</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Appointment data rows will be inserted here -->
+    </tbody>
+</table>
   
 
     <div class="footer"> 
@@ -424,7 +334,7 @@
         <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
     </div>
 
-    <!--
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
         import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
@@ -442,6 +352,26 @@
     
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+    
+        function updateDropdownEmail(user) {
+          const emailButton = document.getElementById('emailBtn');
+          const userDropdown = document.getElementById('userDropdown');
+          if (user) {
+            emailButton.textContent = user.email;
+            emailButton.onclick = () => { 
+              if (userDropdown.style.display === 'block') {
+                userDropdown.style.display = 'none';
+              } else {
+                userDropdown.style.display = 'block';
+              }
+            };
+          } else {
+            emailButton.textContent = "Login";
+            emailButton.onclick = () => {
+              window.location.href = '../login.html';
+            };
+          }
+        }
     
         onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -482,6 +412,23 @@
             });
         };
     
+        const verifyEmail = () => {
+          const user = auth.currentUser;
+          if (user) {
+            sendEmailVerification(user)
+              .then(() => {
+                alert("Verification email sent!");
+              })
+              .catch((error) => {
+                console.log('Error sending verification email:', error);
+                alert("Error: " + error.message); 
+              });
+          }
+        };
+    
+        document.getElementById('logoutBtn').addEventListener('click', signOutUser);
+        document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
+    
         const loginBtn = document.getElementById('loginBtn');
         loginBtn.onclick = () => {
           const user = auth.currentUser; 
@@ -491,8 +438,110 @@
             window.location.href = 'auth/login.html'; 
           }
         };
+
+        
       </script>
-      -->
+
+<script type="module">
+  function toggleColumns(columnsToShow) {
+      const table = document.getElementById('appointmentTable');
+      const headerRow = table.querySelector('thead tr');
+      const bodyRows = table.querySelectorAll('tbody tr');
+
+      const headers = Array.from(headerRow.querySelectorAll('th'));
+
+      // Hide all columns initially
+      headers.forEach((header, index) => {
+          header.style.display = 'none';
+          bodyRows.forEach(row => {
+              row.querySelectorAll('td')[index].style.display = 'none';
+          });
+      });
+
+      // Show only the specified columns
+      columnsToShow.forEach(columnName => {
+          const headerIndex = headers.findIndex(header =>
+              header.textContent.trim().toLowerCase() === columnName.toLowerCase()
+          );
+
+          if (headerIndex !== -1) {
+              headers[headerIndex].style.display = '';
+              bodyRows.forEach(row => {
+                  row.querySelectorAll('td')[headerIndex].style.display = '';
+              });
+          }
+      });
+  }
+
+  document.getElementById('view_users').addEventListener('click', () => {
+    toggleColumns(['ID', 'Email', 'Full Name', 'Phone Number']);
+    
+    // Get the appointment table element by its ID
+    const appointmentTable = document.getElementById('appointmentTable');
+    
+    // Change its display property to "block"
+    if (appointmentTable) {
+        appointmentTable.style.display = 'block';
+    } else {
+        console.error('Element with ID "appointmentTable" not found.');
+    }
+});
+  document.getElementById('view_appointments').addEventListener('click', () => {
+      toggleColumns(['Full Name', 'Type of Appointment', 'Appointment Status', 'Doctor', 'Date', 'TimeStart', 'TimeEnd', 'Type of Payment', 'Payment Status', 'Cost']);
+
+          // Get the appointment table element by its ID
+    const appointmentTable = document.getElementById('appointmentTable');
+    
+    // Change its display property to "block"
+    if (appointmentTable) {
+        appointmentTable.style.display = 'block';
+    } else {
+        console.error('Element with ID "appointmentTable" not found.');
+    }
+  });
+
+  function printTable(appointments) {
+      const table = document.getElementById('appointmentTable');
+      const tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+
+      appointments.sort((a, b) => {
+          const dateTimeA = new Date(`${a.appointmentDate}T${a.appointmentTimeStart}`);
+          const dateTimeB = new Date(`${b.appointmentDate}T${b.appointmentTimeStart}`);
+          return dateTimeA - dateTimeB;
+      });
+
+      appointments.forEach((data) => {
+          const row = `
+              <tr>
+                  <td>${data.id}</td>
+                  <td>${data.email}</td>
+                  <td>${data.firstName} ${data.middleName} ${data.surname}</td>
+                  <td>${data.contact}</td>
+                  <td>${data.appointmentDate}</td>
+                  <td>${convertTo12HourFormat(data.appointmentTimeStart)}</td>
+                  <td>${convertTo12HourFormat(data.appointmentTimeEnd)}</td>
+                  <td>${data.appointmentType}</td>
+                  <td>${data.paymentType}</td>
+                  <td>${data.appointmentStatus}</td>
+                  <td>${data.paymentStatus}</td>
+                  <td>${data.payment}</td>
+                  <td>${data.doctor}</td>
+              </tr>`;
+          tbody.innerHTML += row;
+      });
+
+      // Ensure correct columns are shown after populating the table
+      toggleColumns(['Full Name', 'Date', 'TimeStart', 'TimeEnd', 'Type of Appointment', 'Appointment Status', 'Doctor']);
+  }
+
+  // Assuming appointments data is available
+  const appointments = [
+      // Sample appointment data objects
+  ];
+
+  printTable(appointments);
+</script>
 
 <script type="module" src="appoint.js"></script>
 

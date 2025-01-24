@@ -11,7 +11,8 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
         import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js';
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+        import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';   
 
         const firebaseConfig = {
             apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ", 
@@ -95,6 +96,45 @@
                     // Error is already handled in handleLogin
                 });
         });
+
+        // Handle form submission for signup
+            const handleSignup = (event) => {
+            console.log("Form submitted"); // Debugging log
+            event.preventDefault();  // Prevent default form submission
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            console.log(`Email: ${email}, Password: ${password}`); 
+            createAccount(email, password); 
+            };
+
+            // Create user account with email and password
+            const createAccount = (email, password) => {
+            console.log("Creating account..."); 
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                const user = userCredential.user;
+                console.log("Account created:", user); 
+                window.location.href = 'userprofile.html'; 
+                })
+                .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                console.error(`Error Code: ${errorCode}, Message: ${errorMessage}`); 
+                errorHandler(errorMessage); 
+                });
+            };
+
+            // Handle errors by displaying them on the page
+            const errorHandler = (errorMessage) => {
+            document.getElementById('message').textContent = `Error: ${errorMessage}`;
+            };
+
+            // Attach the event listener to the form 
+            document.getElementById('createAccountForm').addEventListener('submit', handleSignup);
+
     </script>
 
     <script src="particles.js"></script>
