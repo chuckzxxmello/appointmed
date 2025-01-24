@@ -23,6 +23,8 @@
 
 <body>
 
+  <div class="bg-image"></div>
+
   <div class="header">
     <nav>
         <h2>ELAD School of Potentials Therapy Center</h2>
@@ -91,8 +93,7 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
 
       <div class="view-table">
         <p>Show By:</p>
-        <button class="addel" id="view_users">Users</button>
-        <button class="addel" id="view_appointments">Appointments</button>
+        <button type="button" class="user" id="view_appointments">Appointments</button>
       </div>
       
       <div class="form-container">
@@ -165,16 +166,11 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
           <select name="appointmentStatus" required>
             <option value=""></option>
             <option value="PENDING">PENDING</option>
-            <option value="ONGOING">ONGOING</option>
             <option value="FINISHED">FINISHED</option>
             <option value="CANCELLED">CANCELLED</option>
             <option value="NO_SHOW">NO_SHOW</option>
             <option value="RESCHEDULED">RESCHEDULED</option>
-            <option value="CONFIRMED">CONFIRMED</option>
             <option value="CONFIRMING">CONFIRMING</option>
-            <option value="IN_PROGRESS">IN_PROGRESS</option>
-            <option value="DECLINED">DECLINED</option>
-            <option value="EXPIRED">EXPIRED</option>
             <option value="OVERDUE">OVERDUE</option>
           </select>
         </div>
@@ -189,8 +185,8 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
   <h2>Update Appointment Schedule</h2>
   <div class="view-table">
     <p>Show By:</p>
-    <button class="addel" id="view_users">Users</button>
-    <button class="addel" id="view_appointments">Appointments</button>
+    <button type="button" class="user" id="view_users">Users</button>
+    <button type="button" class="user" id="view_appointments">Appointments</button>
   </div>
 
   <div class="form-container">
@@ -266,16 +262,11 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
   <select name="appointmentStatus" >
     <option value=""></option>
     <option value="PENDING">PENDING</option>
-    <option value="ONGOING">ONGOING</option>
     <option value="FINISHED">FINISHED</option>
     <option value="CANCELLED">CANCELLED</option>
     <option value="NO_SHOW">NO_SHOW</option>
     <option value="RESCHEDULED">RESCHEDULED</option>
-    <option value="CONFIRMED">CONFIRMED</option>
     <option value="CONFIRMING">CONFIRMING</option>
-    <option value="IN_PROGRESS">IN_PROGRESS</option>
-    <option value="DECLINED">DECLINED</option>
-    <option value="EXPIRED">EXPIRED</option>
     <option value="OVERDUE">OVERDUE</option>
   </select>
 </div>
@@ -291,8 +282,8 @@ document.getElementById("deleteAppointmentButton").addEventListener("click", fun
       <h2>Delete Appointment from Database</h2>
       <div class="view-table">
         <p>Show By:</p>
-        <button class="addel" id="view_users">Users</button>
-        <button class="addel" id="view_appointments">Appointments</button>
+        <button type="button" class="user" id="view_users">Users</button>
+        <button type="button" class="user" id="view_appointments">Appointments</button>
       </div>
       
       <label for="id">Appointment ID</label>

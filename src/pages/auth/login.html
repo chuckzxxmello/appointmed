@@ -1,12 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
     <link rel="stylesheet" href="../../styles/stylesheet.css">
+</head>
+
+<body>
+
+    <div class="bg-image"></div>
+    <div class="header">
+        <nav>
+            <h2>ELAD School of Potentials Therapy Center</h2>
+            <ul>
+                <li><a href="../contact_home.html">Contact Us</a></li>
+                <li><a href="../../../index.html">Home</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="login-wrapper">
+        <div class="login-container">
+            <h2>Log-In</h2>
+            <form id="auth">
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input id="login-email" type="email" name="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input id="login-password" type="password" name="password" required />
+                    <button type="button" id="show-hide-password" style="color: #000000;" onclick="togglePassword()">Show</button>
+                </div>
+
+                <div id="error-message" style="color: red;"></div>
+                <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
+    
+                <button id="submit" type="submit">Log-in</button>
+                <button type="button" onclick="signInWithGoogle()">Log-in with Google</button>
+            </form>
+            <h2>or</h2>
+            <button id="switchToSignup" onclick="switchToSignup()">Create an Account</button>
+        </div>
+    
+        <div class="signup-container" style="display: none;">
+            <h2>Create an Account</h2>
+            <form id="createAccountForm">
+                <div class="form-group">
+                    <label for="signup-email">Email:</label>
+                    <input id="signup-email" type="email" name="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password:</label>
+                    <input id="signup-password" type="password" name="password" required />
+                </div>
+    
+                <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
+    
+                <button type="submit">Create Account</button>
+            </form>
+            <h2>or</h2>
+            <button id="switchToLogin" onclick="switchToLogin()">Login Instead</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="social-links">
+            <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+        </div>
+        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
+    </div>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
@@ -25,7 +89,6 @@
             measurementId: "G-KQ4PQZZZBM"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app); 
@@ -33,7 +96,6 @@
         const handleLogin = (email, password) => {
             console.log("handleLogin called with:", email, password);
 
-            // Check for admin credentials
             if (email === 'admin.control@mail.com' && password === 'adminXCZ457!@#') {
                 window.location.href = '../manageuser/adminhome.html';
                 return Promise.resolve();
@@ -43,9 +105,7 @@
                 .then((userCredential) => {
                     const user = userCredential.user;
                     console.log("User logged in: ", user);
-
                     window.location.href = 'userprofile.html'; 
-
                     return user; 
                 })
                 .catch((error) => {
@@ -53,19 +113,12 @@
                     const errorMessage = error.message;
                     console.error("Login error:", errorMessage);
 
-                    let customMessage = "";
-
+                    let customMessage = "Invalid email or password. Please try again.";
                     if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
-                        customMessage = "Invalid email or password. Please try again.";
-                    } else {
                         customMessage = "Invalid email or password. Please try again.";
                     }
 
-                    alert(customMessage);
-
-                    const messageDiv = document.getElementById("message");
-                    messageDiv.innerText = customMessage;
-
+                    document.getElementById("error-message").textContent = customMessage;
                     throw error;
                 });
         };
@@ -84,181 +137,68 @@
         };
 
         const loginForm = document.getElementById('auth');
-
         loginForm.addEventListener('submit', (event) => {
             event.preventDefault();
-
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
-            handleLogin(email, password)
-                .catch((error) => { 
-                    // Error is already handled in handleLogin
-                });
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+            handleLogin(email, password).catch((error) => {});
         });
 
-        // Handle form submission for signup
-            const handleSignup = (event) => {
-            console.log("Form submitted"); // Debugging log
-            event.preventDefault();  // Prevent default form submission
+        const handleSignup = (event) => {
+            console.log("Form submitted");
+            event.preventDefault();  
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
 
             console.log(`Email: ${email}, Password: ${password}`); 
             createAccount(email, password); 
-            };
+        };
 
-            // Create user account with email and password
-            const createAccount = (email, password) => {
+        const createAccount = (email, password) => {
             console.log("Creating account..."); 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                const user = userCredential.user;
-                console.log("Account created:", user); 
-                window.location.href = 'userprofile.html'; 
+                    const user = userCredential.user;
+                    console.log("Account created:", user); 
+                    window.location.href = 'userprofile.html'; 
                 })
                 .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-
-                console.error(`Error Code: ${errorCode}, Message: ${errorMessage}`); 
-                errorHandler(errorMessage); 
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error(`Error Code: ${errorCode}, Message: ${errorMessage}`); 
+                    errorHandler(errorMessage); 
                 });
-            };
+        };
 
-            // Handle errors by displaying them on the page
-            const errorHandler = (errorMessage) => {
+        const errorHandler = (errorMessage) => {
             document.getElementById('message').textContent = `Error: ${errorMessage}`;
-            };
+        };
 
-            // Attach the event listener to the form 
-            document.getElementById('createAccountForm').addEventListener('submit', handleSignup);
+        document.getElementById('createAccountForm').addEventListener('submit', handleSignup);
 
-    </script>
+        window.switchToSignup = function switchToSignup() {
+            document.querySelector('.login-container').style.display = 'none';
+            document.querySelector('.signup-container').style.display = 'block';
+        };
 
-    <script src="particles.js"></script>
-    
-</head>
+        window.switchToLogin = function switchToLogin() {
+            document.querySelector('.signup-container').style.display = 'none';
+            document.querySelector('.login-container').style.display = 'block';
+        };
 
-<body>
-
-    <div id="particles-js"></div>
-      
-    <div class="bg-image"></div>
-    <div class="header">
-        <nav>
-            <h2>ELAD School of Potentials Therapy Center</h2>
-            <ul>
-                <li><a href="../contact_home.html">Contact Us</a></li>
-                <li><a href="../../../index.html">Home</a></li>
-            </ul>
-        </nav>
-    </div>
-
-    <div class="login-wrapper">
-        <div class="login-container">
-            <h2>Log-In</h2>
-            <form id="auth">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input id="email" type="email" name="email" required />
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input id="password" type="password" name="password" required />
-                </div>
-    
-                <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
-                <div id="message" style="color: red;"></div>
-    
-                <button id="submit" type="submit">Log-in</button>
-                <button type="button" onclick="signInWithGoogle()">Log-in with Google</button>
-            </form>
-            <h2>or</h2>
-            <button id="switchToSignup" onclick="switchToSignup()">Create an Account</button> <!-- Switch to Signup Form -->
-        </div>
-    
-        <div class="signup-container" style="display: none;"> <!-- Initially hidden -->
-            <h2>Create an Account</h2>
-            <form id="createAccountForm">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input id="email" type="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input id="password" type="password" name="password" required>
-                </div>
-    
-                <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
-    
-                <button type="submit">Create Account</button>
-            </form>
-            <h2>or</h2>
-            <button id="switchToLogin" onclick="switchToLogin()">Login Instead</button> <!-- Switch to Login Form -->
-        </div>
-    
-        <script>
-            function switchToSignup() {
-                // Hide login form and show signup form
-                document.querySelector('.login-container').style.display = 'none';
-                document.querySelector('.signup-container').style.display = 'block';
+        window.togglePassword = function togglePassword() {
+            const passwordField = document.getElementById('login-password');
+            const showHideButton = document.getElementById('show-hide-password');
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                showHideButton.textContent = "Hide";
+            } else {
+                passwordField.type = "password";
+                showHideButton.textContent = "Show";
             }
-    
-            function switchToLogin() {
-                // Hide signup form and show login form
-                document.querySelector('.signup-container').style.display = 'none';
-                document.querySelector('.login-container').style.display = 'block';
-            }
-        </script>    
-
-        </div>
-    </div>
-
-    <div class="footer">
-        <div class="social-links">
-            <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
-        </div>
-        <p>&copy; 2024 ELAD School of Potentials Therapy Center</p>
-    </div>
-
-    <script>
-        // Initialize particles.js after page load
-        window.onload = function () {
-            particlesJS("particles-js", {
-                "particles": {
-                    "number": {
-                        "value": 80,
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
-                    },
-                    "size": {
-                        "value": 3
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 1,
-                        "direction": "none",
-                        "random": false,
-                        "straight": false,
-                        "out_mode": "out"
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "repulse"
-                        }
-                    }
-                }
-            });
-        }
+        };
+        
     </script>
-
 </body>
 </html>

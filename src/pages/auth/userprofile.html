@@ -33,19 +33,17 @@
   <div class="user-info">
 
     <div class="img"><img src='../../assets/images/login_profile.png' class="profile">  </div>
-    <h2>Personal Info</h2>
     <strong>
+    <h2>Personal Info</h2>
     <p id="email"></p>
     <p id="id"></p>
     <p id="name"></p>
-    </strong>
     <br>
     <h2>Appointment Status</h2>
-    <strong>
+    <p id="appointmentStatus"></p>
     <p id="appointmentType"></p>
     <p id="appointmentDate"></p>
     <p id="appointmentTime"></p>
-    <p id="appointmentStatus"></p>
     <p id="paymentStatus"></p>
     <p id="appointmentNotif"></p>
     </strong>
@@ -126,55 +124,70 @@
 
         async function getUserDataByEmail(email) {
     try {
-      const usersRef = collection(db, 'appointments');
-      const q = query(usersRef, where("email", "==", email));
-      const querySnapshot = await getDocs(q); 
+        const usersRef = collection(db, 'appointments');
+        const q = query(usersRef, where("email", "==", email));
+        const querySnapshot = await getDocs(q); 
   
-      if (!querySnapshot.empty) {
-        const userData = querySnapshot.docs[0].data(); 
-        console.log("User Data from Firestore:", userData);
+        if (!querySnapshot.empty) {
+            const userData = querySnapshot.docs[0].data(); 
+            console.log("User Data from Firestore:", userData);
   
-        document.getElementById('name').textContent = `Name: ${userData.firstName + " " + userData.middleName + " " + userData.surname || 'N/A'}`; 
-        document.getElementById('appointmentType').textContent = `Appointment Type: ${userData.appointmentType || 'N/A'}`;
-        document.getElementById('appointmentDate').textContent = `Date of Appointment: ${userData.appointmentDate || 'N/A'}`;
-        document.getElementById('appointmentTime').textContent = `Time of Appointment: ${userData.appointmentTimeStart + "-" + userData.appointmentTimeEnd || 'N/A'}`;
-        document.getElementById('paymentStatus').textContent = `Payment Status: ${userData.paymentStatus || 'N/A'}`;  
-        document.getElementById('appointmentStatus').textContent = `Appointment Status: ${userData.appointmentStatus || 'N/A'}`;  
+            document.getElementById('name').textContent = `Name: ${userData.firstName + " " + userData.middleName + " " + userData.surname || 'N/A'}`; 
+            document.getElementById('appointmentType').textContent = `Type: ${userData.appointmentType || 'N/A'}`;
+            document.getElementById('appointmentDate').textContent = `Date: ${formatDate(userData.appointmentDate) || 'N/A'}`;
+            document.getElementById('appointmentTime').textContent = `Time: from ${formatTime(userData.appointmentTimeStart) + " to " + formatTime(userData.appointmentTimeEnd) || 'N/A'}`;
+            document.getElementById('paymentStatus').textContent = `Payment Status: ${userData.paymentStatus || 'N/A'}`;  
+            document.getElementById('appointmentStatus').textContent = `Status: ${userData.appointmentStatus || 'N/A'}`;  
         
-        const appointmentDate = new Date(userData.appointmentDate);
-        const currentDate = new Date();
-        const threeDaysBefore = new Date(appointmentDate);
-        threeDaysBefore.setDate(appointmentDate.getDate() - 3);
+            const appointmentDate = new Date(userData.appointmentDate);
+            const currentDate = new Date();
+            const threeDaysBefore = new Date(appointmentDate);
+            threeDaysBefore.setDate(appointmentDate.getDate() - 3);
   
-        const twentyFourHoursBefore = new Date(appointmentDate);
-        twentyFourHoursBefore.setDate(appointmentDate.getDate() - 1);
+            const twentyFourHoursBefore = new Date(appointmentDate);
+            twentyFourHoursBefore.setDate(appointmentDate.getDate() - 1);
   
-        const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0));
-        const normalizedThreeDaysBefore = new Date(threeDaysBefore.setHours(0, 0, 0, 0)); 
-        const normalizedTwentyFourHoursBefore = new Date(twentyFourHoursBefore.setHours(0, 0, 0, 0)); 
+            const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0));
+            const normalizedThreeDaysBefore = new Date(threeDaysBefore.setHours(0, 0, 0, 0)); 
+            const normalizedTwentyFourHoursBefore = new Date(twentyFourHoursBefore.setHours(0, 0, 0, 0)); 
   
-        let notification = '';
+            let notification = '';
         
-        console.log("Current Date: ", normalizedCurrentDate);
-        console.log("Three Days Before: ", normalizedThreeDaysBefore);
-        console.log("24 Hours Before: ", normalizedTwentyFourHoursBefore);
+            console.log("Current Date: ", normalizedCurrentDate);
+            console.log("Three Days Before: ", normalizedThreeDaysBefore);
+            console.log("24 Hours Before: ", normalizedTwentyFourHoursBefore);
         
-        if (normalizedCurrentDate.getTime() === normalizedThreeDaysBefore.getTime()) {
-          notification = 'Reminder: Your appointment is in 3 days!';
-        } else if (normalizedCurrentDate.getTime() === normalizedTwentyFourHoursBefore.getTime()) {
-          notification = 'Reminder: Your appointment is in 24 hours!';
+            if (normalizedCurrentDate.getTime() === normalizedThreeDaysBefore.getTime()) {
+                notification = 'Reminder: Your appointment is in 3 days!';
+            } else if (normalizedCurrentDate.getTime() === normalizedTwentyFourHoursBefore.getTime()) {
+                notification = 'Reminder: Your appointment is in 24 hours!';
+            }
+  
+            document.getElementById('appointmentNotif').textContent = notification;
+  
+        } else {
+            console.log("No user found with this email.");
         }
-  
-        document.getElementById('appointmentNotif').textContent = notification;
-  
-      } else {
-        console.log("No user found with this email.");
-      }
     } catch (error) {
-      console.log("Error getting Firestore data:", error);
-      alert("Error getting user data: " + error.message); 
+        console.log("Error getting Firestore data:", error);
+        alert("Error getting user data: " + error.message); 
     }
-  }
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options); 
+}
+
+function formatTime(timeString) {
+    const time = new Date('1970-01-01T' + timeString + 'Z');
+    if (isNaN(time)) {
+        return 'Invalid Time'; 
+    }
+    const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+    return time.toLocaleTimeString('en-US', options); 
+}
 
         const signOutUser = () => {
             signOut(auth)

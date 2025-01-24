@@ -13,6 +13,16 @@
   --destructive: #ff453a;
 }
 
+.bg-image {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/elad.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
 /* Ensure particles.js covers the whole screen */
 #particles-js {
     position: fixed; /* Make it fixed to the screen */
@@ -637,7 +647,21 @@ tr:hover {
   font-size: 1rem;
 }
 
-.admin-info a:hover, .manage-user button:hover, .addel:hover .user-list{
+.user {
+  display: inline-block;
+  background-color: var(--primary);
+  color: #1a1a1a;
+  padding: 0.40rem 0.75rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  margin: 0.5rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.admin-info a:hover, .manage-user button:hover, .addel:hover .user-list, .user:hover .user-list{
   background-color: var(--primary-hover);
   transform: translateY(-2px);
 }
