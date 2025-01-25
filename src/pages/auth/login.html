@@ -126,16 +126,8 @@
                     window.location.href = 'userprofile.html'; 
                     return user; 
                 })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Login error:", errorMessage);
-    
-                    let customMessage = "Invalid email or password. Please try again.";
-                    if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
-                        customMessage = "Invalid email or password. Please try again.";
-                    }
-    
+                .catch(() => {
+                    const customMessage = "Invalid email or password. Please try again.";
                     // Update the message div with the error message
                     const messageElement = document.getElementById('message');
                     if (messageElement) {
@@ -152,8 +144,11 @@
                     console.log("User signed in: ", user);
                     window.location.href = 'userprofile.html'; 
                 })
-                .catch((error) => {
-                    console.error("Error signing in with Google: ", error);
+                .catch(() => {
+                    const messageElement = document.getElementById('message');
+                    if (messageElement) {
+                        messageElement.textContent = "Error signing in with Google. Please try again.";
+                    }
                 });
         };
     
@@ -179,25 +174,13 @@
         const createAccount = (email, password) => {
             console.log("Creating account..."); 
             createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    console.log("Account created:", user); 
+                .then(() => {
                     window.location.href = 'userprofile.html'; 
                 })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error(`Error Code: ${errorCode}, Message: ${errorMessage}`); 
-    
-                    // Handle specific error for weak password
-                    let customMessage = errorMessage;
-                    if (errorCode === 'auth/weak-password') {
-                        customMessage = "Your password must be at least 6 characters.";
-                    }
-    
+                .catch(() => {
                     const messageElement = document.getElementById('signup-message');
                     if (messageElement) {
-                        messageElement.textContent = customMessage;
+                        messageElement.textContent = "There was an issue creating your account. Please try again.";
                     }
                 });
         };
@@ -225,6 +208,7 @@
                 showHideButton.textContent = "Show";
             }
         };
-    </script>       
+    </script>
+    
 </body>
 </html>
