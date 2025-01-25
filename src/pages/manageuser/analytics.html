@@ -53,7 +53,7 @@
           <div class="metric-card">
               <h3>Payment Analytics</h3>
               <div id="paymentStats"></div>
-              <canvas id="paymentStatusChart"></canvas>
+              <canvas id="paymentTypeChart"></canvas>
           </div>
       </div>
   </div>
@@ -104,13 +104,20 @@
 
             updateDashboard(metrics);
             generateCharts(metrics);
+        }, (error) => {
+            console.error("Error fetching appointments: ", error);
         });
     }
 
     async function getUsers() {
-        const usersRef = collection(db, 'users');
-        const usersSnapshot = await getDocs(usersRef);
-        return usersSnapshot.docs.map(doc => doc.data());
+        try {
+            const usersRef = collection(db, 'users');
+            const usersSnapshot = await getDocs(usersRef);
+            return usersSnapshot.docs.map(doc => doc.data());
+        } catch (error) {
+            console.error("Error fetching users: ", error);
+            return [];
+        }
     }
 
     // Function to calculate appointment type metrics
@@ -170,7 +177,6 @@
         };
     }
 
-    // Function to calculate payment metrics
     function calculatePaymentMetrics(appointments) {
         const metrics = {
             status: {
@@ -191,12 +197,18 @@
         };
 
         appointments.forEach(app => {
+            // Count payment status
             if (app.paymentStatus in metrics.status) {
                 metrics.status[app.paymentStatus]++;
             }
 
+            // Count payment types only for "PAID" status
             if (app.paymentStatus === 'PAID' && app.paymentType) {
-                metrics.types[app.paymentType] = (metrics.types[app.paymentType] || 0) + 1;
+                if (app.paymentType in metrics.types) {
+                    metrics.types[app.paymentType]++;
+                } else {
+                    metrics.types.OTHER++; // If an unrecognized type exists, classify as OTHER
+                }
             }
         });
 
@@ -230,9 +242,11 @@
         `;
 
         document.getElementById('paymentStats').innerHTML = `
-            <p>Paid Appointments: ${metrics.payments.status.PAID}</p>
-            <p>Online Payments: ${metrics.payments.types.ONLINE_PAYMENT}</p>
-            <p>Cash Payments: ${metrics.payments.types.CASH}</p>
+            <p>Paid Appointments: ${metrics.payments.status.PAID || 0}</p>
+            <p>Online Payments: ${metrics.payments.types.ONLINE_PAYMENT || 0}</p>
+            <p>Cash Payments: ${metrics.payments.types.CASH || 0}</p>
+            <p>Bank Transfers: ${metrics.payments.types.BANK_TRANSFER || 0}</p>
+            <p>Other Payment Types: ${metrics.payments.types.OTHER || 0}</p>
         `;
     }
 
@@ -284,15 +298,15 @@
             }
         });
 
-        // Payment Status Chart
-        const paymentStatusChartCtx = document.getElementById('paymentStatusChart').getContext('2d');
-        new Chart(paymentStatusChartCtx, {
+        // Payment Type Chart
+        const paymentTypeChartCtx = document.getElementById('paymentTypeChart').getContext('2d');
+        new Chart(paymentTypeChartCtx, {
             type: 'bar',
             data: {
-                labels: Object.keys(metrics.payments.status),
+                labels: Object.keys(metrics.payments.types),
                 datasets: [{
-                    label: 'Payment Status',
-                    data: Object.values(metrics.payments.status),
+                    label: 'Payment Types',
+                    data: Object.values(metrics.payments.types),
                     backgroundColor: 'rgba(255, 159, 64, 0.2)',
                     borderColor: 'rgba(255, 159, 64, 1)',
                     borderWidth: 1
@@ -320,6 +334,7 @@
 
     // Call the analytics functions
     listenToAnalytics();
-  </script>
+</script>
+
 </body>
 </html>
