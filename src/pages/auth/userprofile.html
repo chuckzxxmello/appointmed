@@ -185,6 +185,43 @@
     }
 }
 
+document.addEventListener('DOMContentLoaded', (event) => { 
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            updateDropdownEmail(user);
+            document.getElementById("email").innerHTML = "Email: " + user.email;
+
+            user.reload()
+                .then(() => {
+                    const verifyBtn = document.getElementById('verifyBtn');
+                    if (user.emailVerified) {
+                        verifyBtn.textContent = "Email Verified";
+                        verifyBtn.removeAttribute('href'); 
+                        // Display name and appointment status when email is verified
+                        document.getElementById('name').style.display = 'block';
+                        document.getElementById('appointmentStatus').style.display = 'block';
+                        getUserDataByEmail(user.email);
+                    } else {
+                        verifyBtn.textContent = "Verify E-mail";
+                        verifyBtn.href = "#"; 
+                        // Hide name and appointment status when email is not verified
+                        document.getElementById('name').style.display = 'none';
+                        document.getElementById('appointmentStatus').style.display = 'none';
+                    }
+                })
+                .catch((error) => {
+                    console.log("Error reloading user:", error);
+                    alert("Error reloading user: " + error.message); 
+                });
+
+        } else {
+            console.log("No user is signed in.");
+            window.location.href = 'login.html'; 
+        }
+    });
+});
+
+
 function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
