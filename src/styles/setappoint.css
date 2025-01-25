@@ -600,7 +600,7 @@ button:hover {
 /* Tables */
 table {
   width: 20%;
-  height: 40%;
+  height: auto;
   max-width: 1400px;
   border-collapse: separate;
   border-spacing: 0;

@@ -29,51 +29,58 @@
         </nav>
     </div>
 
-    <div class="login-wrapper">
-        <div class="login-container">
-            <h2>Log-In</h2>
-            <form id="auth">
-                <div class="form-group">
-                    <label for="login-email">Email:</label>
-                    <input id="login-email" type="email" name="email" required />
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password:</label>
-                    <input id="login-password" type="password" name="password" required />
-                    <button type="button" id="show-hide-login-password" style="color: #000000;" onclick="togglePassword('login-password', 'show-hide-login-password')">Show</button>
-                </div>
+        <div class="login-wrapper">
+            <div class="login-container">
+                <h2>Log-In</h2>
+                <form id="auth">
+                    <div class="form-group">
+                        <label for="login-email">Email:</label>
+                        <input id="login-email" type="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password:</label>
+                        <input id="login-password" type="password" name="password" required />
+                        <button type="button" id="show-hide-login-password" style="color: #000000;" onclick="togglePassword('login-password', 'show-hide-login-password')">Show</button>
+                    </div>
 
-                <div id="error-message" style="color: red;"></div>
-                <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
-    
-                <button id="submit" type="submit">Log-in</button>
-                <button type="button" onclick="signInWithGoogle()">Log-in with Google</button>
-            </form>
-            <h2>or</h2>
-            <button id="switchToSignup" onclick="switchToSignup()">Create an Account</button>
+                    <div id="message" style="color: red; margin-top: 10px;"></div>
+                    <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
+        
+                    <button id="submit" type="submit">Log-in</button>
+                    <button type="button" onclick="signInWithGoogle()">Log-in with Google</button>
+                </form>
+                <h2>or</h2>
+                <button id="switchToSignup" onclick="switchToSignup()">Create an Account</button>
+            </div>
+        
+            <div class="signup-container" style="display: none;">
+                <h2>Create your Account</h2>
+                <form id="createAccountForm">
+                    <div class="form-group">
+                        <label for="signup-email">Email:</label>
+                        <input id="signup-email" type="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password:</label>
+                        <input id="signup-password" type="password" name="password" required />
+                        <button type="button" id="show-hide-signup-password" style="color: #000000;" onclick="togglePassword('signup-password', 'show-hide-signup-password')">Show</button>
+                    </div>
+            
+                    <!-- Error message display for signup -->
+                    <div id="signup-message" style="color: red; margin-top: 10px;"></div>
+            
+                    <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
+            
+                    <button type="submit">Create Account</button>
+            
+                    <p id="signup-label" >By creating an account, you agree to our Terms & Service and Privacy Policy.</p>
+                </form>
+                <h2>or</h2>
+                <button id="switchToLogin" onclick="switchToLogin()">Login Instead</button>
+            </div>
+            
+            
         </div>
-    
-        <div class="signup-container" style="display: none;">
-            <h2>Create an Account</h2>
-            <form id="createAccountForm">
-                <div class="form-group">
-                    <label for="signup-email">Email:</label>
-                    <input id="signup-email" type="email" name="email" required />
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Password:</label>
-                    <input id="signup-password" type="password" name="password" required />
-                    <button type="button" id="show-hide-signup-password" style="color: #000000;" onclick="togglePassword('signup-password', 'show-hide-signup-password')">Show</button>
-                </div>
-    
-                <div id="loadingSpinner" class="loading" style="display: none;">Loading...</div>
-    
-                <button type="submit">Create Account</button>
-            </form>
-            <h2>or</h2>
-            <button id="switchToLogin" onclick="switchToLogin()">Login Instead</button>
-        </div>
-    </div>
 
     <div class="footer">
         <div class="social-links">
@@ -104,34 +111,35 @@
         const auth = getAuth(app); 
 
         const handleLogin = (email, password) => {
-            console.log("handleLogin called with:", email, password);
+                console.log("handleLogin called with:", email, password);
 
-            if (email === 'admin.control@mail.com' && password === 'adminXCZ457!@#') {
-                window.location.href = '../manageuser/adminhome.html';
-                return Promise.resolve();
-            }
+                return signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        console.log("User logged in: ", user);
+                        window.location.href = 'userprofile.html'; 
+                        return user; 
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.error("Login error:", errorMessage);
 
-            return signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    console.log("User logged in: ", user);
-                    window.location.href = 'userprofile.html'; 
-                    return user; 
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Login error:", errorMessage);
+                        let customMessage = "Invalid email or password. Please try again.";
+                        if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
+                            customMessage = "Invalid email or password. Please try again.";
+                        } else if (errorCode === 'auth/invalid-login-credentials') {
+                            customMessage = "Invalid login credentials. Please check your email and password.";
+                        }
 
-                    let customMessage = "Invalid email or password. Please try again.";
-                    if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
-                        customMessage = "Invalid email or password. Please try again.";
-                    }
-
-                    document.getElementById("error-message").textContent = customMessage;
-                    throw error;
-                });
-        };
+                        // Update the message div with the error message
+                        const messageElement = document.getElementById('message');
+                        if (messageElement) {
+                            messageElement.textContent = customMessage;
+                        }
+                        throw error;
+                    });
+            };
 
         window.signInWithGoogle = function () {
             const provider = new GoogleAuthProvider();
@@ -182,7 +190,12 @@
         };
 
         const errorHandler = (errorMessage) => {
-            document.getElementById('message').textContent = `Error: ${errorMessage}`;
+            const messageElement = document.getElementById('signup-message');  // Update to 'signup-message'
+            if (messageElement) {
+                messageElement.textContent = `Error: ${errorMessage}`;
+            } else {
+                console.error("Error element not found in the DOM.");
+            }
         };
 
         document.getElementById('createAccountForm').addEventListener('submit', handleSignup);

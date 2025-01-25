@@ -299,6 +299,14 @@ body {
 
 .form-group {
   position: relative;
+   text-align: center;
+}
+
+#createAccountForm #signup-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 200;
+  margin: 0 auto;
 }
 
 #login-password {
@@ -350,6 +358,7 @@ button[type="submit"], button[type="button"] {
 .login-container h2, .signup-container h2 {
   color: var(--foreground);
   font-size: 1.5rem;
+  margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   text-align: center;
 }
