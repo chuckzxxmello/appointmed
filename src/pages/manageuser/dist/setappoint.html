@@ -202,7 +202,6 @@
             <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
             <option value="PENDING">PENDING</option>
             <option value="REFUNDED">REFUNDED</option>
-            <option value="CANCELLED">CANCELLED</option>
             <option value="ON_HOLD">ON_HOLD</option>
           </select>
           
@@ -289,7 +288,6 @@
     <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
     <option value="PENDING">PENDING</option>
     <option value="REFUNDED">REFUNDED</option>
-    <option value="CANCELLED">CANCELLED</option>
     <option value="ON_HOLD">ON_HOLD</option>
   </select>
 
@@ -324,6 +322,11 @@
     </form>
   </div>
 </div>
+
+<div class="manage-user"> 
+  <button type="button" class="user" id="view_users">Users</button>
+  <button type="button" class="user" id="view_appointments">Appointments</button>
+</div>
   
 <table class="view-table" id="appointmentTable" border="3" style="display: none;">
   <thead>
@@ -348,10 +351,7 @@
   </tbody>
 </table>
 
-<div class="manage-user"> 
-  <button type="button" class="user" id="view_users">Users</button>
-  <button type="button" class="user" id="view_appointments">Appointments</button>
-</div>
+
 
     <div class="footer"> 
         <div class="social-links">

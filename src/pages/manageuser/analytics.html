@@ -177,43 +177,48 @@
         };
     }
 
-    function calculatePaymentMetrics(appointments) {
-        const metrics = {
-            status: {
-                PAID: 0,
-                NOT_PAID: 0,
-                PARTIALLY_PAID: 0,
-                PENDING: 0,
-                REFUNDED: 0,
-                CANCELLED: 0,
-                ON_HOLD: 0
-            },
-            types: {
-                ONLINE_PAYMENT: 0,
-                CASH: 0,
-                BANK_TRANSFER: 0,
-                OTHER: 0
-            }
-        };
+    // Function to calculate payment metrics
+function calculatePaymentMetrics(appointments) {
+    const metrics = {
+        status: {
+            PAID: 0,
+            NOT_PAID: 0,
+            PARTIALLY_PAID: 0,
+            PENDING: 0,
+            REFUNDED: 0,
+            CANCELLED: 0,
+            ON_HOLD: 0
+        },
+        types: {
+            ONLINE_PAYMENT: 0,
+            CASH: 0,
+            BANK_TRANSFER: 0,
+            OTHER: 0
+        }
+    };
 
-        appointments.forEach(app => {
-            // Count payment status
-            if (app.paymentStatus in metrics.status) {
-                metrics.status[app.paymentStatus]++;
-            }
+    appointments.forEach(app => {
+        // Count payment status
+        if (app.paymentStatus && metrics.status[app.paymentStatus]) {
+            metrics.status[app.paymentStatus]++;
+        } else {
+            metrics.status['OTHER']++; // If no valid status, classify as OTHER
+        }
 
-            // Count payment types only for "PAID" status
-            if (app.paymentStatus === 'PAID' && app.paymentType) {
-                if (app.paymentType in metrics.types) {
-                    metrics.types[app.paymentType]++;
-                } else {
-                    metrics.types.OTHER++; // If an unrecognized type exists, classify as OTHER
-                }
+        // Count payment types only for "PAID" status
+        if (app.paymentStatus === 'PAID' && app.paymentType) {
+            const paymentType = app.paymentType.toUpperCase().trim(); // Normalize and clean
+            if (metrics.types[paymentType] !== undefined) {
+                metrics.types[paymentType]++;
+            } else {
+                metrics.types['OTHER']++; // Classify any unrecognized type as OTHER
             }
-        });
+        }
+    });
 
-        return metrics;
-    }
+    return metrics;
+}
+
 
     // Function to calculate the rate (percentage)
     function calculateRate(count, total) {
