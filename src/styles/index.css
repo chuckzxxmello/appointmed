@@ -304,8 +304,8 @@ body {
 
 .footer p {
   color: var(--muted);
-  font-size: 0.625rem; /* Further reduced font size */
-  margin: 0; /* Remove any extra spacing */
+  font-size: 0.625rem;
+  margin: 0;
 }
 
 @media (max-width: 1024px) {

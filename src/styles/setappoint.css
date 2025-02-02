@@ -72,6 +72,7 @@ body {
   padding: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, opacity 0.3s ease;
+  z-index: 999;
 }
 
 .header nav {
@@ -566,15 +567,66 @@ button:hover {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+/* Sidebar Styles */
+/* Sidebar Styles */
 .manage-user {
   background-color: var(--card);
   border-radius: var(--radius);
-  margin: 1rem auto;
-  max-width: 1800px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 0; /* Remove margin to make it flush with the screen */
+  width: 250px; /* Fixed width for the sidebar */
+  height: 100vh; /* Full viewport height */
+  position: fixed; /* Fix it to the left side */
+  top: 0;
+  left: 0;
+  box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1); /* Shadow on the right side */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: 999;
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  
+  display: flex;
+  flex-direction: column; /* Align content vertically */
+  justify-content: flex-start; /* Align items to the top */
+  align-items: flex-start; /* Align items to the left */
+}
+
+/* Sidebar Buttons */
+.manage-user button {
+  background-color: var(--card);
+  color: #fff;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%; /* Make buttons take the full width */
+  margin-bottom: 1rem; /* Space between buttons */
+  text-align: left; /* Align text to the left */
+}
+
+.manage-user button:hover {
+  background-color: var(--card);
+  color: #fff;
+}
+
+/* Ensure the header stays fixed and unaffected by the sidebar */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1100; /* Ensure it stays above the sidebar */
+  background-color: #ffffff; /* or your header's background color */
+}
+
+
+.manage-user {
+  margin: 2rem auto;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  max-width: 1800px;
+
+  z-index: 10;
 }
 
 .manage-user input[type="date"],
@@ -906,7 +958,7 @@ input, select, button {
   background-color: var(--card);
   border-radius: var(--radius);
   padding: 1rem;
-  margin: .05rem auto;
+  margin: 2rem auto;
   max-width: 1000px;
   width: 800px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

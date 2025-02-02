@@ -13,6 +13,104 @@
   <link rel="manifest" href="../../assets/images/site.webmanifest">
   
   <link rel="stylesheet" href="../../styles/stylesheet.css">
+  <style>
+    .user-info {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out forwards;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.img img.profile {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.img img.profile:hover {
+    transform: scale(1.05);
+}
+
+.user-info:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+h2, p {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+p:nth-child(2) { animation-delay: 0.2s; }
+p:nth-child(3) { animation-delay: 0.4s; }
+p:nth-child(4) { animation-delay: 0.6s; }
+p:nth-child(5) { animation-delay: 0.8s; }
+p:nth-child(6) { animation-delay: 1.0s; }
+p:nth-child(7) { animation-delay: 1.2s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-info a {
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.user-info a:hover {
+    color: #ffffff;
+}
+
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+  </style>
 
 </head>
 <body>
