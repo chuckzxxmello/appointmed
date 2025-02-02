@@ -56,14 +56,16 @@
 
   <div class="manage-user"> 
     <!-- Unique IDs for each button -->
+    <button type="button" class="user" id="view_users">Users</button>
+    <button type="button" class="user" id="view_appointments">Appointments</button>
+    
     <button class="addel" id="addAppointmentButton">Add Appointment</button>
     <button class="addel" id="updateAppointmentButton">Update Appointment</button>
     <button class="addel" id="deleteAppointmentButton">Delete Appointment</button>
   </div>
 
   <div class="manage-user"> 
-    <button type="button" class="user" id="view_users">Users</button>
-    <button type="button" class="user" id="view_appointments">Appointments</button>
+
   </div>
 
   <div class="col-row-appoint">
@@ -72,15 +74,15 @@
       document.getElementById("addAppointmentButton").addEventListener("click", function () {
           showForm("add");
       });
-  
+    
       document.getElementById("updateAppointmentButton").addEventListener("click", function () {
           showForm("update");
       });
-  
+    
       document.getElementById("deleteAppointmentButton").addEventListener("click", function () {
           showForm("delete");
       });
-  
+    
       // Function to handle the visibility of forms and tables
       function showForm(type) {
           var setForm = document.getElementById("setForm");
@@ -88,57 +90,58 @@
           var deleteForm = document.getElementById("deleteForm");
           var appointmentTable = document.getElementById("appointmentTable");
           var usersTable = document.getElementById("usersTable");
-  
+    
           // Reset all forms and tables to hidden
-          setForm.style.display = "none";
-          updateForm.style.display = "none";
-          deleteForm.style.display = "none";
-          appointmentTable.style.display = "none";
+          if (setForm) setForm.style.display = "none";
+          if (updateForm) updateForm.style.display = "none";
+          if (deleteForm) deleteForm.style.display = "none";
+          if (appointmentTable) appointmentTable.style.display = "none";
           if (usersTable) usersTable.style.display = "none";
-  
+    
           // Show the relevant form and tables based on the action type
           switch (type) {
               case "add":
-                  setForm.style.display = "block";
-                  appointmentTable.style.display = "block"; // Show appointment table only for adding an appointment
+                  if (setForm) setForm.style.display = "block";
+                  // Remove the appointmentTable display line so it stays hidden on add
                   break;
               case "update":
-                  updateForm.style.display = "block";
+                  if (updateForm) updateForm.style.display = "block";
                   if (usersTable) usersTable.style.display = "block"; // Show users table for updating an appointment
                   break;
               case "delete":
-                  deleteForm.style.display = "block";
+                  if (deleteForm) deleteForm.style.display = "block";
                   if (usersTable) usersTable.style.display = "block"; // Show users table for deleting an appointment
                   break;
               default:
                   console.log("Invalid form type");
           }
       }
-  
+    
       // Event listener for "View Users" to show the users table and hide the appointment table
       document.getElementById("view_users").addEventListener("click", function() {
           var appointmentTable = document.getElementById("appointmentTable");
           var usersTable = document.getElementById("usersTable");
-  
+    
           // Hide the appointment table
           if (appointmentTable) appointmentTable.style.display = "none";
-  
+    
           // Show the users table
           if (usersTable) usersTable.style.display = "block";
       });
-  
+    
       // Event listener for "View Appointments" to show the appointment table and hide the users table
       document.getElementById("view_appointments").addEventListener("click", function() {
           var appointmentTable = document.getElementById("appointmentTable");
           var usersTable = document.getElementById("usersTable");
-  
+    
           // Show the appointment table
           if (appointmentTable) appointmentTable.style.display = "block";
-  
+    
           // Hide the users table
           if (usersTable) usersTable.style.display = "none";
       });
-  </script>
+    </script>
+     
   
   
   

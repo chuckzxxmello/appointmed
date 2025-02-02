@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="../../styles/analytics.css">
   <!-- Include Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  
 </head>
 <body>
 
@@ -272,9 +274,27 @@ function calculatePaymentMetrics(appointments) {
                 }]
             },
             options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white' // Set legend text color to white
+                        }
+                    },
+                    tooltip: {
+                        bodyColor: 'white', // Set tooltip text color to white
+                    }
+                },
                 scales: {
                     y: {
+                        ticks: {
+                            color: 'white', // Set y-axis ticks text color to white
+                        },
                         beginAtZero: true
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white', // Set x-axis ticks text color to white
+                        }
                     }
                 }
             }
@@ -295,9 +315,27 @@ function calculatePaymentMetrics(appointments) {
                 }]
             },
             options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white' // Set legend text color to white
+                        }
+                    },
+                    tooltip: {
+                        bodyColor: 'white', // Set tooltip text color to white
+                    }
+                },
                 scales: {
                     y: {
+                        ticks: {
+                            color: 'white', // Set y-axis ticks text color to white
+                        },
                         beginAtZero: true
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white', // Set x-axis ticks text color to white
+                        }
                     }
                 }
             }
@@ -318,9 +356,27 @@ function calculatePaymentMetrics(appointments) {
                 }]
             },
             options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white' // Set legend text color to white
+                        }
+                    },
+                    tooltip: {
+                        bodyColor: 'white', // Set tooltip text color to white
+                    }
+                },
                 scales: {
                     y: {
+                        ticks: {
+                            color: 'white', // Set y-axis ticks text color to white
+                        },
                         beginAtZero: true
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white', // Set x-axis ticks text color to white
+                        }
                     }
                 }
             }

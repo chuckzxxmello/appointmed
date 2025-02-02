@@ -39,8 +39,10 @@ body {
   color: var(--foreground);
   line-height: 1.6;
   min-height: 80vh;
+
   display: flex;
   flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
 }
 
 /* Common header styles for both userprofile.html and login.html */
@@ -66,38 +68,6 @@ body {
   font-size: 1rem;
   font-weight: 600;
   margin: 0;
-  .background-info a {
-    text-decoration: none;
-    font-size: 1.1rem;
-    padding: 10px 20px;
-    margin: 10px;
-    transition: all 0.3s ease-in-out;
-    display: inline-block;
-  }
-  
-  .background-info a:hover {
-    background: #ffc60a;
-    color: #1e1e2f;
-    box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
-    transform: scale(1.05);
-  }
-  
-  .background-info .emailBtn:hover {
-    background: #ffc60a;
-    color: #1e1e2f;
-    box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
-  }
-  
-  @keyframes slideIn {
-    0% {
-      transform: translateY(100px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }-align: left; /* Align text to the left (adjust as needed) */
 }
 
 .header nav ul {
@@ -167,30 +137,42 @@ body {
 }
 
 .background-info {
+  transition: all 0.3s ease-in-out;
+}
+
+.background-info,
+.background-info h1,
+.background-info h2,
+.background-info p,
+.background-info #text,
+.background-info a {
+  transition: all 0.3s ease-in-out;
+}
+
+.background-info {
   max-width: 800px;
-  margin: 6rem 0 4rem 4rem;
+  margin: 2rem 0 auto 2rem;
   padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2rem;
+  gap: .5rem;
   width: 50%;
-
   margin: left auto;
   padding: 2rem;
   background-color: var(--background);
   border-radius: var(--radius);
-  /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  flex-direction: column;
+  backdrop-filter: blur(10px);
+  transform: translateY(100px);
+  animation: slideIn 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 
 }
 
 .background-info h1 {
     text-decoration: none;
-    font-size: 18px;
+    font-size: 22px;
     transition: all 0.3s ease-in-out;
     display: inline-block;
   }
@@ -205,11 +187,11 @@ body {
 }
 
 .background-info p {
-  font-size: 1200;
-  font-weight: 800;
-  color: var(--muted);
-  font-size: 1.125rem;
-  max-width: 36rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 30px;
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
 }
 
 .background-info #text {
@@ -226,26 +208,77 @@ body {
   justify-content: center;
   background-color: var(--primary);
   color: var(--background);
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 0.5rem;
   border-radius: var(--radius);
   font-weight: 500;
   text-decoration: none;
   transition: all 0.2s ease;
   font-size: 1rem;
+  transition: all 0.3s ease-in-out;
 }
 
 .background-info a:hover {
   background-color: var(--primary-hover);
   transform: translateY(-1px);
+  background: #ffc60a;
+  color: #1e1e2f;
+  box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
+  transform: scale(1.05);
+}
+
+.background-info .emailBtn:hover {
+  background: #ffc60a;
+  color: #1e1e2f;
+  box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
+}
+
+.background-info a {
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  margin: 10px;
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+}
+
+.background-info a:hover {
+  background: #ffc60a;
+  color: #1e1e2f;
+  box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
+  transform: scale(1.05);
+}
+
+.background-info .emailBtn:hover {
+  background: #ffc60a;
+  color: #1e1e2f;
+  box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.container {
+  flex: 1; /* This makes the container take up the remaining space */
+  display: flex;
+  padding: 2rem;
+  gap: 2rem;
 }
 
 .footer {
   background-color: var(--card);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 0.2rem 0.5rem; /* Minimal padding */
+  padding: 0.5rem;
   text-align: center;
-  margin-top: auto;
+  margin-top: auto; /* Pushes the footer to the bottom */
 }
 
 .social-links {
@@ -275,75 +308,118 @@ body {
   margin: 0; /* Remove any extra spacing */
 }
 
-
-/* Responsive Design */
 @media (max-width: 1024px) {
   .background-info {
-    margin-top: 6rem;
-    padding: 3rem 2rem;
+    padding: 1.5rem;
+    width: 100%;
+    margin: 2rem auto;
+    text-align: center;
+  }
+
+  .background-info h1 {
+    font-size: 20px;
   }
 
   .background-info h2 {
-    font-size: 2rem;
+    font-size: 1.3rem;
+  }
+
+  .background-info p {
+    font-size: 20px;
+  }
+
+  .background-info #text {
+    font-size: 28px;
+  }
+
+  .background-info a {
+    margin: 1rem auto;
+    display: block;
+    max-width: 220px;
   }
 }
 
 @media (max-width: 768px) {
-  .header nav {
-    padding: 1rem;
-  }
-
-  .header h2 {
-    font-size: 1rem;
-  }
-
   .background-info {
-    margin-top: 5rem;
-    padding: 2rem 1rem;
+    padding: 1rem;
+    width: 90%;
+    margin: 2rem auto;
+  }
+
+  .background-info h1 {
+    font-size: 14px;
   }
 
   .background-info h2 {
-    font-size: 1.75rem;
+    font-size: 1.1rem;
+  }
+
+  .background-info p {
+    font-size: 20px;
   }
 
   .background-info #text {
-    font-size: 1.125rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .header nav {
-    flex-direction: column;
-    height: auto;
-    padding: 1rem;
-    gap: 1rem;
-  }
-
-  .header nav ul {
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-  }
-
-  .header nav ul li {
-    width: 100%;
-  }
-
-  .header nav ul li a {
-    display: block;
-    padding: 0.5rem;
-    text-align: center;
-  }
-
-  .background-info {
-    margin-top: 7rem;
-  }
-
-  .background-info h2 {
-    font-size: 1.5rem;
+    font-size: 24px;
   }
 
   .background-info a {
-    width: 100%;
+    margin: 1rem auto;
+    max-width: 200px;
+    font-size: 0.95rem;
   }
 }
+
+@media (max-width: 480px) {
+  .background-info {
+    padding: 1rem;
+    width: 100%;
+    margin: 0.5rem auto;
+  }
+
+  .background-info h1 {
+    font-size: 1.1rem;
+  }
+
+  .background-info h2 {
+    font-size: 1rem;
+  }
+
+  .background-info p {
+    font-size: 12px;
+  }
+
+  .background-info #text {
+    font-size: 20px;
+  }
+
+  .background-info a {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    margin: 0.5rem auto;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 320px) {
+  .background-info h1 {
+    font-size: 1rem;
+  }
+
+  .background-info h2 {
+    font-size: 0.9rem;
+  }
+
+  .background-info p {
+    font-size: 20px;
+  }
+
+  .background-info #text {
+    font-size: 18px;
+  }
+
+  .background-info a {
+    font-size: 0.8rem;
+    max-width: 160px;
+  }
+}
+

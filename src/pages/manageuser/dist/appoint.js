@@ -39,10 +39,10 @@ onSnapshot(colRef, (snapshot) => {
 })
 
 
-//adding documents
-const addappointForm = document.querySelector('.set')
+// Add Appointment - Submit
+const addappointForm = document.querySelector('.set');
 addappointForm.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
     addDoc(colRef, {
         email: addappointForm.email.value,
         firstName: addappointForm.firstName.value,
@@ -58,47 +58,39 @@ addappointForm.addEventListener('submit', (e) => {
         paymentType: addappointForm.paymentType.value,
         payment: addappointForm.payment.value,
         doctor: addappointForm.doctor.value,
-
     })
         .then(() => {
-            addappointForm.reset()
-            // Added notification for successful addition
+            addappointForm.reset();
+            location.reload(); // Refresh the page after adding
         })
         .catch(error => {
             console.error('Error adding appointment: ', error);
         });
-})
+});
 
-
-
-//delete documents
-const deleteappointForm = document.querySelector('.deleteappoint')
-
+// Delete Appointment - Submit
+const deleteappointForm = document.querySelector('.deleteappoint');
 deleteappointForm.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const docRef = doc(db, 'appointments',
-        deleteappointForm.id.value,
-    )
+    const docRef = doc(db, 'appointments', deleteappointForm.id.value);
     deleteDoc(docRef)
         .then(() => {
-            deleteappointForm.reset()
+            deleteappointForm.reset();
+            location.reload(); // Refresh the page after deletion
         })
         .catch(error => {
             console.error('Error deleting appointment: ', error);
         });
+});
 
-})
-
-
-
-//update documents
+// Update Appointment - Submit
 const updateForm = document.querySelector('.update-form');
 updateForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // Get values from the form
-    const id = updateForm.id.value; // User ID (Document ID)
+    const id = updateForm.id.value;
     const firstName = updateForm.firstName.value;
     const middleName = updateForm.middleName.value;
     const surname = updateForm.surname.value;
@@ -108,7 +100,7 @@ updateForm.addEventListener('submit', async (e) => {
     const appointmentTimeStart = updateForm.appointmentTimeStart.value;
     const appointmentTimeEnd = updateForm.appointmentTimeEnd.value;
     const appointmentType = updateForm.appointmentType.value;
-    const doctor = updateForm.doctor.value; // Make sure this matches your form field name
+    const doctor = updateForm.doctor.value;
     const paymentType = updateForm.paymentType.value;
     const appointmentStatus = updateForm.appointmentStatus.value;
     const paymentStatus = updateForm.paymentStatus.value;
@@ -145,6 +137,7 @@ updateForm.addEventListener('submit', async (e) => {
 
         // Clear the form after update
         updateForm.reset();
+        location.reload(); // Refresh the page after updating
     } catch (error) {
         console.error('Error updating document: ', error);
     }
