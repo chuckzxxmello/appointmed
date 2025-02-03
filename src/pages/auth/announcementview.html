@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements</title>
+
+    <!-- Favicon and app icons -->
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+    <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
+    <link rel="manifest" href="../../assets/images/site.webmanifest">
+
+    <link rel="stylesheet" href="../../styles/stylesheet.css">
+</head>
+<body>
+    <div class="bg-image"></div>
+    <div class="header">
+        <nav>
+          <h2>ELAD School of Potentials Therapy Center</h2>
+          <ul>
+            <div class="dropdown">
+              <a href="userprofile.html">
+                <div id="emailBtn"></div>
+              </a>       
+              <div class="dropdown-content">
+                <a href="../calendar/calendaruser.html">View Calendar</a>
+                <a href="announcementview.html">Announcements</a>
+                <li><a href="../contact.html">Contact Us</a></li>
+                <li><a href="#" id="verifyBtn">Verify E-mail</a></li>
+                <li><a href="#" id="logoutBtn">Logout</a></li>
+              </div>
+            </div>
+          </ul>
+        </nav>
+      </div>
+
+    <div class="form-container">
+        <h1>Announcements</h1>
+
+        <div class="announcement-container" id="announcementContainer">
+            <!-- Announcements will be injected here -->
+        </div>
+    </div>
+
+    <style>
+.form-container {
+  max-width: 600px;
+  width: 100%;
+  background-color: var(--card);
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container h1 {
+  color: var(--primary);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.6s ease-out 0.2s forwards;
+}
+
+.announcement-container {
+  margin-top: 20px;
+}
+
+.announcement-item {
+  color: var(--foreground);
+  background-color: var(--secondary);
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s ease-out forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.announcement-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+.announcement-item button {
+  background-color: var(--destructive);
+  width: 100px;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.announcement-item button:hover {
+  background-color: darkred;
+  transform: scale(1.05);
+}
+
+.announcement-item button:active {
+  transform: scale(0.95);
+}
+
+    </style>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+        authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+        projectId: "appointment-scheduling-s-57d01",
+        storageBucket: "appointment-scheduling-s-57d01.appspot.com",
+        messagingSenderId: "1069885306589",
+        appId: "1:1069885306589:web:b31768194add4087754d34",
+        measurementId: "G-KQ4PQZZZBM"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const announcementContainer = document.getElementById('announcementContainer');
+
+    // Function to format timestamp
+    function formatTimestamp(timestamp) {
+        if (!timestamp) return "Unknown date";
+        const date = timestamp.toDate();
+        return date.toLocaleString('en-US', { 
+            year: 'numeric', month: 'long', day: 'numeric', 
+            hour: '2-digit', minute: '2-digit' 
+        });
+    }
+
+    // Render announcements from Firestore
+    async function renderAnnouncements() {
+        announcementContainer.innerHTML = '';
+        const q = query(collection(db, "announcements"), orderBy("timestamp", "desc"));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((doc) => {
+            const announcementData = doc.data();
+            const formattedDate = announcementData.timestamp ? formatTimestamp(announcementData.timestamp) : "Unknown Date";
+
+            const announcementItem = document.createElement('div');
+            announcementItem.className = 'announcement-item';
+            announcementItem.innerHTML = `
+                <h3>${announcementData.title}</h3>
+                <p><strong>${announcementData.text.replace(/\n/g, '<br>')}</strong></p>
+                <p><em>Posted on: ${formattedDate}</em></p>
+            `;
+            announcementContainer.appendChild(announcementItem);
+        });
+    }
+
+    renderAnnouncements();
+
+    // Function to update email in dropdown
+    function updateDropdownEmail(user) {
+        const emailButton = document.getElementById('emailBtn');
+        if (emailButton) {
+            emailButton.textContent = user ? user.email : 'Guest';
+        }
+    }
+
+    // Listen for authentication state changes
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            updateDropdownEmail(user);
+
+            user.reload().then(() => {
+                const verifyBtn = document.getElementById('verifyBtn');
+                if (user.emailVerified) {
+                    verifyBtn.textContent = "Email Verified";
+                    verifyBtn.removeAttribute('href');
+                } else {
+                    verifyBtn.textContent = "Verify E-mail";
+                    verifyBtn.href = "#";
+                }
+            }).catch((error) => {
+                console.error("Error reloading user:", error);
+            });
+
+        } else {
+            console.log("No user is signed in.");
+            window.location.href = 'login.html';
+        }
+    });
+
+    // Logout user
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        signOut(auth).then(() => {
+            console.log('Signed out successfully');
+            window.location.href = 'login.html';
+        }).catch((error) => {
+            console.error('Error signing out:', error);
+            alert("Error: " + error.message);
+        });
+    });
+
+    // Verify email
+    document.getElementById('verifyBtn').addEventListener('click', () => {
+        const user = auth.currentUser;
+        if (user) {
+            sendEmailVerification(user).then(() => {
+                alert("Verification email sent!");
+            }).catch((error) => {
+                console.error('Error sending verification email:', error);
+                alert("Error: " + error.message);
+            });
+        }
+    });
+</script>
+</body>
+</html>

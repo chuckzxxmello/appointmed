@@ -603,9 +603,26 @@ button:hover {
   margin-bottom: 1rem; /* Space between buttons */
   text-align: left; /* Align text to the left */
 }
+.manage-user a {
+  background-color: var(--card);
+  color: #fff;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%; /* Make buttons take the full width */
+  margin-bottom: 1rem; /* Space between buttons */
+  text-align: left; /* Align text to the left */
+
+}
 
 .manage-user button:hover {
   background-color: var(--card);
+  color: #fff;
+}
+.manage-user a:hover {
+  background-color: #ffc60a;
   color: #fff;
 }
 

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/stylesheet.css">
+    <title>Create an Announcement</title>
+
+    <!-- Favicon and app icons -->
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">  
+    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+    <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
+    <link rel="manifest" href="../../assets/images/site.webmanifest">
+</head>
+<body>
+    <div class="bg-image"></div>
+
+    <div class="header">
+        <nav>
+            <h2>ELAD School of Potentials Therapy Center</h2>
+            <ul>
+                <div class="dropdown-admin">
+                    <div class="dropdown-admin" onclick="window.location.href='adminhome.html';">Admin Dashboard</div>
+                    <div class="dropdown-content-admin">
+                        <li><a href="../manageuser/dist/setappoint.html">Manage Users</a></li>
+                        <li><a href="../calendar/calendaredit.html">View Calendar</a></li>
+                        <li><a href="analytics.html">Analytics</a></li>
+                        <li><a href="#" id="logoutBtn">Logout</a></li>
+                    </div>
+                </div>
+            </ul>
+        </nav>
+    </div>
+
+    <style>
+        .containers {
+            max-width: 600px;
+            width: 100%;
+            background-color: #302d2d;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .containersforlogs {
+            max-width: 800px;
+            width: 100%;
+            background-color: #302d2d;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffc60a;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        .form-container {
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .form-container input, .form-container textarea {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-container textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .form-container button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #38383a;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .form-container a {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #38383a;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .form-container button:hover {
+            background-color: #8e8e93;
+        }
+
+        .form-container a:hover {
+            background-color: #8e8e93;
+        }
+
+        .announcement-container {
+            margin-top: 20px;
+        }
+
+        .announcement-item {
+            color: #302d2d;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            flex-direction: column;
+        }
+
+        .announcement-item button {
+            background-color: #dc3545;
+            width: 100px;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+
+    <div class="containers">
+        <h1>Create an Announcement</h1>
+
+        <div class="form-container">
+            <input type="text" id="announcementTitle" placeholder="Enter title for your announcement..." />
+            <br>
+            <br>
+        
+            <textarea id="announcementInput" placeholder="Write your announcement here..."></textarea>
+            <button id="addAnnouncementBtn">Add Announcement</button>
+            <!-- Add a button to toggle the logs container -->
+            <button id="toggleLogsBtn">Show Announcement Logs</button>
+            <a href="dist/setappoint.html" class="button">Back to Manage User</a>
+        </div>
+    </div>
+
+    <!-- Initially hide the logs container -->
+    <div class="containersforlogs" id="logsContainer" style="display: none;">
+        <div class="announcement-container">
+            <div class="announcement-list" id="announcementList"></div>
+        </div>
+    </div>
+
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, orderBy, query } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
+    authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
+    projectId: "appointment-scheduling-s-57d01",
+    storageBucket: "appointment-scheduling-s-57d01.appspot.com",
+    messagingSenderId: "1069885306589",
+    appId: "1:1069885306589:web:b31768194add4087754d34",
+    measurementId: "G-KQ4PQZZZBM"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const announcementTitle = document.getElementById('announcementTitle');
+const announcementInput = document.getElementById('announcementInput');
+const addAnnouncementBtn = document.getElementById('addAnnouncementBtn');
+const announcementList = document.getElementById('announcementList');
+const toggleLogsBtn = document.getElementById('toggleLogsBtn');
+const logsContainer = document.getElementById('logsContainer');
+
+// Toggle logs container visibility
+toggleLogsBtn.addEventListener('click', () => {
+    if (logsContainer.style.display === 'none') {
+        logsContainer.style.display = 'block';
+        toggleLogsBtn.textContent = 'Hide Announcement Logs';
+    } else {
+        logsContainer.style.display = 'none';
+        toggleLogsBtn.textContent = 'Show Announcement Logs';
+    }
+});
+
+// Render announcements from Firestore
+async function renderAnnouncements() {
+    announcementList.innerHTML = '';
+    const q = query(collection(db, "announcements"), orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((docSnapshot) => {
+        const announcementData = docSnapshot.data();
+        const announcementItem = document.createElement('div');
+        announcementItem.className = 'announcement-item';
+        announcementItem.innerHTML = `
+            <h3>${announcementData.title}</h3>
+            <p>${announcementData.text.replace(/\n/g, '<br>')}</p>
+            <button class="deleteBtn" data-id="${docSnapshot.id}">Delete</button>
+        `;
+        console.log("Rendering announcement with ID:", docSnapshot.id);  // Log the docSnapshot.id
+        announcementList.appendChild(announcementItem);
+
+        // Add event listener to the delete button
+        const deleteBtn = announcementItem.querySelector('.deleteBtn');
+        deleteBtn.addEventListener('click', async () => {
+            const docId = deleteBtn.getAttribute('data-id');
+            console.log("Delete button clicked for docId:", docId);  // Log the docId
+            try {
+                // Attempt to delete the announcement from Firestore
+                await deleteDoc(doc(db, "announcements", docId));
+                console.log(`Announcement with ID ${docId} deleted successfully.`);
+                // Refresh the announcements list after deletion
+                renderAnnouncements();
+            } catch (error) {
+                console.error("Error deleting announcement:", error);
+            }
+        });
+    });
+}
+
+// Add a new announcement
+async function addAnnouncement() {
+    const title = announcementTitle.value.trim();
+    const text = announcementInput.value.trim();
+    if (title === '' || text === '') {
+        alert('Please enter both a title and announcement text.');
+        return;
+    }
+    await addDoc(collection(db, "announcements"), {
+        title: title,
+        text: text,
+        timestamp: serverTimestamp()
+    });
+    announcementTitle.value = '';
+    announcementInput.value = '';
+    renderAnnouncements();
+}
+
+addAnnouncementBtn.addEventListener('click', addAnnouncement);
+renderAnnouncements();
+
+    </script>
+</body>
+</html>
