@@ -50,7 +50,7 @@ body {
   background-color: var(--card);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 0.5rem;
+  padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
@@ -173,23 +173,34 @@ body {
 .background-info h1 {
     text-decoration: none;
     font-size: 22px;
+    font-weight: 400;
     transition: all 0.3s ease-in-out;
     display: inline-block;
+    margin-bottom: 28px;
   }
 
 .background-info h2 {
-  font-size: 2.5rem;
+  font-size: 22px;
   line-height: 1.2;
-  font-weight: 600;
+  margin-bottom: 16px;
+  font-weight: 400;
   letter-spacing: -0.025em;
   color: var(--foreground);
   max-width: 42rem;
 }
 
+.background-info h3 {
+  font-size: 56px;
+  color:var(--muted);
+  margin-bottom: 24px;
+}
+
 .background-info p {
+  color: #ffd60a;
+  margin-bottom: 16px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 30px;
+  font-weight: 400;
+  font-size: 28px;
   transition: all 0.3s ease-in-out;
   display: inline-block;
 }
@@ -313,7 +324,7 @@ body {
     padding: 1.5rem;
     width: 100%;
     margin: 2rem auto;
-    text-align: center;
+    text-align: left;
   }
 
   .background-info h1 {
@@ -326,6 +337,7 @@ body {
 
   .background-info p {
     font-size: 20px;
+    
   }
 
   .background-info #text {
@@ -409,6 +421,10 @@ body {
     font-size: 0.9rem;
   }
 
+  .background-info h3 {
+    font-size: 16px;
+  }
+
   .background-info p {
     font-size: 20px;
   }
@@ -422,4 +438,5 @@ body {
     max-width: 160px;
   }
 }
+
 

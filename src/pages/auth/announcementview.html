@@ -13,6 +13,7 @@
     <link rel="manifest" href="../../assets/images/site.webmanifest">
 
     <link rel="stylesheet" href="../../styles/stylesheet.css">
+
 </head>
 <body>
     <div class="bg-image"></div>
@@ -20,13 +21,13 @@
         <nav>
           <h2>ELAD School of Potentials Therapy Center</h2>
           <ul>
+            <a href="announcementview.html">Announcements</a>
             <div class="dropdown">
               <a href="userprofile.html">
                 <div id="emailBtn"></div>
               </a>       
               <div class="dropdown-content">
                 <a href="../calendar/calendaruser.html">View Calendar</a>
-                <a href="announcementview.html">Announcements</a>
                 <li><a href="../contact.html">Contact Us</a></li>
                 <li><a href="#" id="verifyBtn">Verify E-mail</a></li>
                 <li><a href="#" id="logoutBtn">Logout</a></li>
@@ -45,6 +46,23 @@
     </div>
 
     <style>
+
+.header  {
+  z-index: 999;
+}
+
+.header a {
+          text-decoration: none;
+          color: #ffffff;
+          font-weight: 600;
+}
+
+.header a:hover {
+          text-decoration: none;
+          color: #ffc60a;
+          font-weight: 600;
+}
+      
 .form-container {
   max-width: 600px;
   width: 100%;
@@ -129,6 +147,100 @@
 .announcement-item button:active {
   transform: scale(0.95);
 }
+
+.form-container,
+.form-container h1,
+.form-container h2,
+.form-container p,
+.form-container #text,
+.form-container a {
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 1rem;
+    width: 90%;
+    margin: 2rem auto;
+  }
+
+  .form-container h1 {
+    font-size: 18px;
+  }
+
+  .form-container h2 {
+    font-size: 16px;
+  }
+
+  .form-container p {
+    font-size: 14px;
+  }
+
+  .form-container #text {
+    font-size: 12px;
+  }
+
+  .form-container a {
+    margin: 1rem auto;
+    max-width: 200px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 1rem;
+    width: 100%;
+    margin: 0.5rem auto;
+  }
+
+  .form-container h1 {
+    font-size: 16px;
+  }
+
+  .form-container h2 {
+    font-size: 14px;
+  }
+
+  .form-container p {
+    font-size: 12px;
+  }
+
+  .form-container #text {
+    font-size: 10px;
+  }
+
+  .form-container a {
+    padding: 0.5rem;
+    font-size: 10px;
+    margin: 0.5rem auto;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 320px) {
+  .form-container h1 {
+    font-size: 14px;
+  }
+
+  .form-container h2 {
+    font-size: 12px;
+  }
+
+  .form-container p {
+    font-size: 10px;
+  }
+
+  .form-container #text {
+    font-size: 8px;
+  }
+
+  .form-container a {
+    font-size: 8px;
+    max-width: 160px;
+  }
+}
+
 
     </style>
 

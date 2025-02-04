@@ -15,6 +15,173 @@
 
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+
+  <style>
+.header-cust  {
+  background-color: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  z-index: 999;
+}
+
+.header-cust a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.header a:hover {
+          text-decoration: none;
+          color: #ffc60a;
+          font-weight: 600;
+}
+.header-cust a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+}
+.header-cust a:hover {
+    text-decoration: none;
+    color: #ffc60a;
+    font-weight: 600;
+}
+
+.header nav {
+  max-width: 100%; /* Ensure nav takes full width */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.header nav ul {
+  background-color: var(--primary);
+  color: #1e1e2f; 
+  border-radius: 10px;
+  display: flex;
+  gap: 1.5rem;
+  padding: 0ch 10px; 
+  list-style: none;
+}
+
+.header nav ul li a {
+  color: #1e1e2f; 
+  text-decoration: none;
+  transition: color 0.3s ease;
+  animation: slideIn 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.header nav ul li a:hover {
+  color: var(--primary);
+  color: #ffffff; box-shadow: 0 0 15px #ffc60a, 0 0 30px #ffc60a;
+  transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.contact-details,
+.contact-details h1,
+.contact-details h2,
+.contact-details p,
+.contact-details #text,
+.contact-details a {
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .contact-details {
+    padding: 1rem;
+    width: 90%;
+    margin: 2rem auto;
+  }
+
+  .contact-details h1 {
+    font-size: 18px;
+  }
+
+  .contact-details h2 {
+    font-size: 16px;
+  }
+
+  .contact-details p {
+    font-size: 14px;
+  }
+
+  .contact-details #text {
+    font-size: 12px;
+  }
+
+  .contact-details a {
+    margin: 1rem auto;
+    max-width: 200px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-details {
+    padding: 1rem;
+    width: 100%;
+    margin: 0.5rem auto;
+  }
+
+  .contact-details h1 {
+    font-size: 16px;
+  }
+
+  .contact-details h2 {
+    font-size: 14px;
+  }
+
+  .contact-details p {
+    font-size: 12px;
+  }
+
+  .contact-details #text {
+    font-size: 10px;
+  }
+
+  .contact-details a {
+    padding: 0.5rem;
+    font-size: 10px;
+    margin: 0.5rem auto;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 320px) {
+  .contact-details h1 {
+    font-size: 14px;
+  }
+
+  .contact-details h2 {
+    font-size: 12px;
+  }
+
+  .contact-details p {
+    font-size: 10px;
+  }
+
+  .contact-details #text {
+    font-size: 8px;
+  }
+
+  .contact-details a {
+    font-size: 8px;
+    max-width: 160px;
+  }
+}
+
+  </style>
   
 </head>
 <body>
@@ -23,14 +190,15 @@
   <div class="header-cust">
     <nav>
       <h2>ELAD School of Potentials Therapy Center</h2>
-      <ul>
+      <ul> 
         <div class="dropdown">
           <a href="auth/userprofile.html">
             <div id="emailBtn"></div>
           </a>       
           <div class="dropdown-content">
+            <a href="auth/announcementview.html">Announcements</a> 
             <a href="../pages/calendar/calendaruser.html">View Calendar</a>
-            <li><a href="contact.html">Contact Us</a></li>
+            <a href="contact.html">Contact Us</a>
             <a href="#" id="verifyBtn">Verify E-mail</a> 
             <a href="#" id="logoutBtn">Logout</a> 
           </div>

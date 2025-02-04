@@ -26,6 +26,22 @@
     transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
+.header  {
+  z-index: 999;
+}
+
+.header a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.header a:hover {
+          text-decoration: none;
+          color: #ffc60a;
+          font-weight: 600;
+}
+
 .img img.profile {
     width: 100px;
     height: 100px;
@@ -41,6 +57,8 @@
     transform: translateY(-3px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
+
+
 
 h2, p {
     opacity: 0;
@@ -82,10 +100,6 @@ p:nth-child(7) { animation-delay: 1.2s; }
     transition: color 0.3s ease-in-out;
 }
 
-.user-info a:hover {
-    color: #ffffff;
-}
-
 .loading {
     position: relative;
     overflow: hidden;
@@ -110,6 +124,100 @@ p:nth-child(7) { animation-delay: 1.2s; }
         transform: translateX(100%);
     }
 }
+
+.user-info,
+.user-info h1,
+.user-info h2,
+.user-info p,
+.user-info #text,
+.user-info a {
+  transition: all 0.3s ease-in-out;
+}
+
+
+@media (max-width: 768px) {
+  .user-info {
+    padding: 1rem;
+    width: 90%;
+    margin: 2rem auto;
+  }
+
+  .user-info h1 {
+    font-size: 14px;
+  }
+
+  .user-info h2 {
+    font-size: 1.1rem;
+  }
+
+  .user-info p {
+    font-size: 20px;
+  }
+
+  .user-info #text {
+    font-size: 24px;
+  }
+
+  .user-info a {
+    margin: 1rem auto;
+    max-width: 200px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-info {
+    padding: 1rem;
+    width: 100%;
+    margin: 0.5rem auto;
+  }
+
+  .user-info h1 {
+    font-size: 1.1rem;
+  }
+
+  .user-info h2 {
+    font-size: 1rem;
+  }
+
+  .user-info p {
+    font-size: 12px;
+  }
+
+  .user-info #text {
+    font-size: 20px;
+  }
+
+  .user-info a {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    margin: 0.5rem auto;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 320px) {
+  .user-info h1 {
+    font-size: 1rem;
+  }
+
+  .user-info h2 {
+    font-size: 0.9rem;
+  }
+
+  .user-info p {
+    font-size: 20px;
+  }
+
+  .user-info #text {
+    font-size: 18px;
+  }
+
+  .user-info a {
+    font-size: 0.8rem;
+    max-width: 160px;
+  }
+}
   </style>
 
 </head>
@@ -120,13 +228,13 @@ p:nth-child(7) { animation-delay: 1.2s; }
     <nav>
       <h2>ELAD School of Potentials Therapy Center</h2>
       <ul>
+        <a href="announcementview.html">Announcements</a>   
         <div class="dropdown">
           <a href="userprofile.html">
             <div id="emailBtn"></div>
           </a>       
           <div class="dropdown-content">
             <a href="../calendar/calendaruser.html">View Calendar</a>
-            <a href="announcementview.html">Announcements</a>
             <li><a href="../contact.html">Contact Us</a></li>
             <li><a href="#" id="verifyBtn">Verify E-mail</a></li>
             <li><a href="#" id="logoutBtn">Logout</a></li>

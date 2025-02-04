@@ -50,7 +50,7 @@ body {
   background-color: var(--card);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 0.5rem;
+  padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
@@ -91,7 +91,7 @@ body {
   background-color: var(--card);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 0.5rem;
+  padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, opacity 0.3s ease;
 }
@@ -114,7 +114,7 @@ body {
 
 .header-cust nav ul {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   list-style: none;
 }
 
@@ -122,9 +122,9 @@ body {
   text-decoration: none;
   background-color: var(--primary);
   color: #1a1a1a;
-  padding: 6px 8px;
+  padding: 8px 8px;
   border-radius: var(--radius);
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
@@ -533,24 +533,29 @@ button:hover {
   color: var(--primary);
   font-weight: 600;
   font-size: 48px;
-  margin-top: 1rem;
+  margin-bottom: 24px;
 }
 
 .contact-details p {
   color: var(--primary);
   font-weight: 600;
   font-size: 24px;
-  margin-top: 1rem;
+  margin-bottom: 32px;
 }
 
 .contact-details h2 {
   color: var(--foreground);
-  font-weight: 200;
+  font-weight: 400;
+  margin-bottom: 32px;
 
 }
+.user-info p, h2 {
+  margin-bottom: 24px;
+  font-weight: 400;
+}
 
-.user-info p, .contact-details p {
-  margin-bottom: 0.5rem;
+.user-info h2 {
+  font-weight: 600;
 }
 
 .user-info .img {
@@ -833,5 +838,98 @@ table th {
   100% {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+.contact-details,
+.contact-details h1,
+.contact-details h2,
+.contact-details p,
+.contact-details #text,
+.contact-details a {
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .contact-details {
+    padding: 1rem;
+    width: 90%;
+    margin: 2rem auto;
+  }
+
+  .contact-details h1 {
+    font-size: 18px;
+  }
+
+  .contact-details h2 {
+    font-size: 16px;
+  }
+
+  .contact-details p {
+    font-size: 14px;
+  }
+
+  .contact-details #text {
+    font-size: 12px;
+  }
+
+  .contact-details a {
+    margin: 1rem auto;
+    max-width: 200px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-details {
+    padding: 1rem;
+    width: 100%;
+    margin: 0.5rem auto;
+  }
+
+  .contact-details h1 {
+    font-size: 16px;
+  }
+
+  .contact-details h2 {
+    font-size: 14px;
+  }
+
+  .contact-details p {
+    font-size: 12px;
+  }
+
+  .contact-details #text {
+    font-size: 10px;
+  }
+
+  .contact-details a {
+    padding: 0.5rem;
+    font-size: 10px;
+    margin: 0.5rem auto;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 320px) {
+  .contact-details h1 {
+    font-size: 14px;
+  }
+
+  .contact-details h2 {
+    font-size: 12px;
+  }
+
+  .contact-details p {
+    font-size: 10px;
+  }
+
+  .contact-details #text {
+    font-size: 8px;
+  }
+
+  .contact-details a {
+    font-size: 8px;
+    max-width: 160px;
   }
 }
