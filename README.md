@@ -1,5 +1,7 @@
 <img src="https://readme-typing-svg.herokuapp.com?font=Anaheim&size=32&duration=3000&pause=2000&color=4169E1&width=1000&lines=AppointMED;Medical+Appointment+System" alt="Typing SVG" />
 
+![Homepage](public/preview.png)
+
 ## Project Information
 
 **[Project Technical Documentation](https://drive.google.com/file/d/1duZPLeUfBSGG8Lkq1pIkDqrryg4kzIKJ/view?usp=drive_link)**
