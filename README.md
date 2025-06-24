@@ -2,6 +2,15 @@
 
 ## Project Information
 
+**[Project Technical Documentation](https://drive.google.com/file/d/1duZPLeUfBSGG8Lkq1pIkDqrryg4kzIKJ/view?usp=drive_link)**
+
+### Key Members:
+- **Project Manager**: Jhon Benrick Tasic
+- **Documenter/Tester**: Shaira Mae Buhay
+- **System Analyst**: Nicole Teñoso
+- **System Admin**: Elay Gargarita
+- **Developer/s**: Chuckie Española, Elijah Mariano
+
 ### Tech Stack
 - **Frontend**: Next.js 14+ (App Router)
 - **Styling**: Tailwind CSS
