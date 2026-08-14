@@ -3,399 +3,188 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Analytics</title>
-  
+  <title>AppointMED - Clinic Business & Appointment Analytics</title>
+
   <!-- Favicon and app icons -->
   <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
-  <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
   <link rel="manifest" href="../../assets/images/site.webmanifest">
-  <link rel="stylesheet" href="../../styles/analytics.css">
-  <!-- Include Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Unified Admin Design System -->
+  <link rel="stylesheet" href="../../styles/admin.css">
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <div class="bg-image"></div>    
+  <!-- Navigation Header -->
+  <header class="admin-header">
+    <div class="admin-nav-container">
+      <a href="adminhome.html" class="admin-brand">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" style="margin-right: 0.2rem;"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        <div class="admin-brand-text">
+          <h2>Clinic Analytics</h2>
+          <p>Admin Panel</p>
+        </div>
+      </a>
 
-    <div class="header">
-        <nav>
-            <h2>ELAD School of Potentials Therapy Center</h2>
-            <ul>
-                <li class="dropdown-admin">
-                    <a href="javascript:void(0);" class="dropdown-toggle">Admin Dashboard</a>
-                    <div class="dropdown-content-admin">
-                        <a href="../manageuser/dist/setappoint.html">Manage Users</a>
-                        <a href="../calendar/calendaredit.html">View Calendar</a>
-                        <a href="analytics.html">Analytics</a>
-                        <a href="#" id="logoutBtn">Logout</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+      <div class="admin-nav-actions">
+        <div class="nav-user-badge">
+          Welcome, <strong id="adminDisplayName">Admin</strong>
+        </div>
+
+        <button type="button" id="adminLogoutBtn" class="btn-admin-pill btn-pill-danger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          Sign Out
+        </button>
+
+        <a href="adminhome.html" class="btn-admin-pill btn-pill-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Back to Admin
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="admin-main-container">
+    
+    <!-- Page Header -->
+    <div class="admin-page-header">
+      <h1 class="admin-page-title">Clinic Business Analytics</h1>
+      <p class="admin-page-subtitle">Actionable insights explaining what services patients request, when visits occur, and appointment attendance trends.</p>
     </div>
 
-  <div class="analytics">
-      <h2>Analytics Dashboard</h2>
+    <!-- Clinic Business KPI Cards Grid (Pure Appointment Telemetry) -->
+    <div class="analytics-metrics-grid">
       
-      <div class="dashboard-grid">
-          <div class="metric-card">
-              <h3>Type of Appointment</h3>
-              <div id="appointmentTypeStats"></div>
-              <canvas id="appointmentTypeChart"></canvas>
-          </div>
-          <div class="metric-card">
-              <h3>Appointment Status</h3>
-              <div id="appointmentStats"></div>
-              <canvas id="appointmentStatusChart"></canvas>
-          </div>
-          <div class="metric-card">
-              <h3>Payment Analytics</h3>
-              <div id="paymentStats"></div>
-              <canvas id="paymentTypeChart"></canvas>
-          </div>
+      <!-- Peak Booking Hours Card (Real-Time Firestore) -->
+      <div class="analytics-card">
+        <h3>
+          Peak Booking Hours
+          <span class="latency-badge" style="background-color: #e0f2fe; color: #0369a1;" id="analyticsPeakBadge">Loading</span>
+        </h3>
+        <div class="metric-highlight-value" style="font-size: 1.5rem; white-space: nowrap;" id="analyticsPeakHours">--</div>
+        <p class="metric-subtitle">When is patient appointment demand highest so staff can prepare clinic rooms?</p>
+        <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; gap: 0.5rem; align-items: center;">
+          <span style="white-space: nowrap;" id="analyticsPeakShare">Peak Share: --</span>
+          <strong style="color: #1e3a8a; white-space: nowrap;" id="analyticsPeakPeriod">--</strong>
+        </div>
       </div>
-  </div>
 
-  <div class="footer">
-      <div class="social-links">
-          <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+      <!-- Total Average Appointments per Month (Real-Time) -->
+      <div class="analytics-card">
+        <h3>Total Avg Appointments</h3>
+        <div class="metric-highlight-value" id="avgAppointmentsValue">--</div>
+        <p class="metric-subtitle">Average number of therapy appointments scheduled per month based on Firestore data</p>
+        <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; gap: 0.5rem; align-items: center;">
+          <span style="white-space: nowrap;" id="analyticsMonthlyTotal">Total: --</span>
+          <strong style="color: #15803d; white-space: nowrap;" id="analyticsFlowStatus">--</strong>
+        </div>
       </div>
-      <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
-  </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-    import { getFirestore, collection, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-    import { getAuth, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+      <!-- Completed Therapy Sessions Card (Real-Time) -->
+      <div class="analytics-card">
+        <h3>Completed Therapy Sessions</h3>
+        <div class="metric-highlight-value" style="color: #0369a1;" id="statCompletedSessionsAnalytics">0</div>
+        <p class="metric-subtitle">Total completed therapy sessions recorded across all patient records.</p>
+        <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; gap: 0.5rem; align-items: center;">
+          <span style="white-space: nowrap;" id="analyticsCompletionRate">Completion Rate: --</span>
+          <strong style="color: #0369a1; white-space: nowrap;" id="analyticsCompletionStatus">--</strong>
+        </div>
+      </div>
+    </div>
 
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
-        authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
-        databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "appointment-scheduling-s-57d01",
-        storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
-        messagingSenderId: "1069885306589",
-        appId: "1:1069885306589:web:b31768194add4087754d34",
-        measurementId: "G-KQ4PQZZZBM"
-    };
+    <!-- Charts Grid (2 Columns) -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+      
+      <!-- Chart 1: Total Average Appointments Per Month -->
+      <div class="content-card">
+        <div class="card-title-group" style="margin-bottom: 1.25rem;">
+          <h2>Total Average Appointments Per Month</h2>
+          <p>What is the monthly patient appointment volume trend across the calendar year?</p>
+        </div>
+        <div style="height: 280px; position: relative;">
+          <canvas id="monthlyAvgChart"></canvas>
+        </div>
+      </div>
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getFirestore();
-    const auth = getAuth();
+      <!-- Chart 2: Therapy Services Offered Breakdown -->
+      <div class="content-card">
+        <div class="card-title-group" style="margin-bottom: 1.25rem;">
+          <h2>Therapy Services Distribution</h2>
+          <p>Which specific therapy services (Occupational, Physical, Speech) do patients request most frequently?</p>
+        </div>
+        <div style="height: 280px; position: relative;">
+          <canvas id="typeDistChart"></canvas>
+        </div>
+      </div>
 
-    // Real-time listener for appointments and users collection
-    function listenToAnalytics() {
-        const appointmentsRef = collection(db, 'appointments');
-        onSnapshot(appointmentsRef, async (snapshot) => {
-            const appointments = snapshot.docs.map(doc => doc.data());
-            const users = await getUsers();
+    </div>
 
-            const metrics = {
-                appointmentTypes: calculateAppointmentTypeMetrics(appointments),
-                appointments: calculateAppointmentMetrics(appointments),
-                payments: calculatePaymentMetrics(appointments)
-            };
+    <!-- Secondary Metrics Grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+      
+      <!-- Peak Booking Traffic Hours Chart -->
+      <div class="content-card" style="margin-bottom: 0;">
+        <div class="card-title-group" style="margin-bottom: 1.25rem;">
+          <h2>Hourly Booking Distribution</h2>
+          <p>At what time of day do most patients schedule their clinic visits?</p>
+        </div>
+        <div style="height: 240px; position: relative;">
+          <canvas id="peakHoursChart"></canvas>
+        </div>
+      </div>
 
-            updateDashboard(metrics);
-            generateCharts(metrics);
-        }, (error) => {
-            console.error("Error fetching appointments: ", error);
-        });
-    }
+      <!-- Patient & Clinic Operations Telemetry (Real-Time Firestore) -->
+      <div class="content-card" style="margin-bottom: 0;">
+        <div class="card-title-group" style="margin-bottom: 1.25rem;">
+          <h2>Patient Care & Retention Insights</h2>
+          <p>Live metrics computed from Firestore appointment and user records</p>
+        </div>
 
-    async function getUsers() {
-        try {
-            const usersRef = collection(db, 'users');
-            const usersSnapshot = await getDocs(usersRef);
-            return usersSnapshot.docs.map(doc => doc.data());
-        } catch (error) {
-            console.error("Error fetching users: ", error);
-            return [];
-        }
-    }
+        <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+          <!-- Item 1 -->
+          <div style="background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.85rem 1.15rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+            <div style="flex: 1; min-width: 0;">
+              <strong style="color: var(--text-main); font-size: 0.9rem; display: block;">Average Therapy Session Duration</strong>
+              <span style="font-size: 0.775rem; color: var(--text-muted); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Computed from appointment start/end times in Firestore</span>
+            </div>
+            <strong style="font-size: 1rem; color: #1e3a8a; white-space: nowrap; flex-shrink: 0;" id="analyticsAvgDuration">--</strong>
+          </div>
 
-    // Function to calculate appointment type metrics
-    function calculateAppointmentTypeMetrics(appointments) {
-        const typeCounts = {
-            CONSULTATION: 0,
-            THERAPY: 0,
-            CHECK_UP: 0,
-            TRAINING_SESSION: 0,
-            COACHING: 0,
-            DIAGNOSTIC: 0,
-            TREATMENT: 0,
-            FOLLOW_UP: 0,
-            INTERVIEW: 0,
-            SUPPORT: 0
-        };
+          <!-- Item 2 -->
+          <div style="background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.85rem 1.15rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+            <div style="flex: 1; min-width: 0;">
+              <strong style="color: var(--text-main); font-size: 0.9rem; display: block;">Registered Users</strong>
+              <span style="font-size: 0.775rem; color: var(--text-muted); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Total registered accounts in Firestore users collection</span>
+            </div>
+            <strong style="font-size: 1rem; color: #15803d; white-space: nowrap; flex-shrink: 0;" id="registeredUsersCount">--</strong>
+          </div>
 
-        appointments.forEach(app => {
-            const appointmentType = app.appointmentType ? app.appointmentType.toUpperCase() : 'UNKNOWN';
-            if (appointmentType in typeCounts) {
-                typeCounts[appointmentType]++;
-            }
-        });
+          <!-- Item 3 -->
+          <div style="background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.85rem 1.15rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+            <div style="flex: 1; min-width: 0;">
+              <strong style="color: var(--text-main); font-size: 0.9rem; display: block;">Appointment Attendance Rate</strong>
+              <span style="font-size: 0.775rem; color: var(--text-muted); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Percentage of appointments confirmed or completed vs total</span>
+            </div>
+            <strong style="font-size: 1rem; color: #6b21a8; white-space: nowrap; flex-shrink: 0;" id="analyticsAttendanceRate">--</strong>
+          </div>
+        </div>
+      </div>
 
-        return typeCounts;
-    }
+    </div>
 
-    // Function to calculate appointment status metrics
-    function calculateAppointmentMetrics(appointments) {
-        const statusCounts = {
-            PENDING: 0,
-            ONGOING: 0,
-            FINISHED: 0,
-            CANCELLED: 0,
-            NO_SHOW: 0,
-            RESCHEDULED: 0,
-            CONFIRMED: 0,
-            CONFIRMING: 0,
-            IN_PROGRESS: 0,
-            DECLINED: 0,
-            EXPIRED: 0,
-            OVERDUE: 0
-        };
+  </main>
 
-        appointments.forEach(app => {
-            const status = app.appointmentStatus || 'UNKNOWN';
-            if (status in statusCounts) {
-                statusCounts[status]++;
-            }
-        });
-
-        return {
-            statusCounts,
-            cancellationRate: calculateRate(statusCounts.CANCELLED, appointments.length),
-            noShowRate: calculateRate(statusCounts.NO_SHOW, appointments.length),
-            completionRate: calculateRate(statusCounts.FINISHED, appointments.length)
-        };
-    }
-
-    // Function to calculate payment metrics
-function calculatePaymentMetrics(appointments) {
-    const metrics = {
-        status: {
-            PAID: 0,
-            NOT_PAID: 0,
-            PARTIALLY_PAID: 0,
-            PENDING: 0,
-            REFUNDED: 0,
-            CANCELLED: 0,
-            ON_HOLD: 0
-        },
-        types: {
-            ONLINE_PAYMENT: 0,
-            CASH: 0,
-            BANK_TRANSFER: 0,
-            OTHER: 0
-        }
-    };
-
-    appointments.forEach(app => {
-        // Count payment status
-        if (app.paymentStatus && metrics.status[app.paymentStatus]) {
-            metrics.status[app.paymentStatus]++;
-        } else {
-            metrics.status['OTHER']++; // If no valid status, classify as OTHER
-        }
-
-        // Count payment types only for "PAID" status
-        if (app.paymentStatus === 'PAID' && app.paymentType) {
-            const paymentType = app.paymentType.toUpperCase().trim(); // Normalize and clean
-            if (metrics.types[paymentType] !== undefined) {
-                metrics.types[paymentType]++;
-            } else {
-                metrics.types['OTHER']++; // Classify any unrecognized type as OTHER
-            }
-        }
-    });
-
-    return metrics;
-}
-
-
-    // Function to calculate the rate (percentage)
-    function calculateRate(count, total) {
-        return total > 0 ? ((count / total) * 100).toFixed(1) + '%' : '0%';
-    }
-
-    // Function to update the dashboard
-    function updateDashboard(metrics) {
-        document.getElementById('appointmentTypeStats').innerHTML = `
-            <p>Consultation: ${metrics.appointmentTypes.CONSULTATION}</p>
-            <p>Therapy: ${metrics.appointmentTypes.THERAPY}</p>
-            <p>Check-up: ${metrics.appointmentTypes.CHECK_UP}</p>
-            <p>Training Session: ${metrics.appointmentTypes.TRAINING_SESSION}</p>
-            <p>Coaching: ${metrics.appointmentTypes.COACHING}</p>
-            <p>Diagnostic: ${metrics.appointmentTypes.DIAGNOSTIC}</p>
-            <p>Treatment: ${metrics.appointmentTypes.TREATMENT}</p>
-            <p>Follow-up: ${metrics.appointmentTypes.FOLLOW_UP}</p>
-            <p>Interview: ${metrics.appointmentTypes.INTERVIEW}</p>
-            <p>Support: ${metrics.appointmentTypes.SUPPORT}</p>
-        `;
-
-        document.getElementById('appointmentStats').innerHTML = `
-            <p>TOTAL FINISHED APPOINTMENTS: ${metrics.appointments.statusCounts.FINISHED}</p>
-            <p>Cancellation Rate: ${metrics.appointments.cancellationRate}</p>
-            <p>No-show Rate: ${metrics.appointments.noShowRate}</p>
-        `;
-
-        document.getElementById('paymentStats').innerHTML = `
-            <p>Paid Appointments: ${metrics.payments.status.PAID || 0}</p>
-            <p>Online Payments: ${metrics.payments.types.ONLINE_PAYMENT || 0}</p>
-            <p>Cash Payments: ${metrics.payments.types.CASH || 0}</p>
-            <p>Bank Transfers: ${metrics.payments.types.BANK_TRANSFER || 0}</p>
-            <p>Other Payment Types: ${metrics.payments.types.OTHER || 0}</p>
-        `;
-    }
-
-    // Function to generate the charts
-    function generateCharts(metrics) {
-        // Appointment Type Chart
-        const appointmentTypeChartCtx = document.getElementById('appointmentTypeChart').getContext('2d');
-        new Chart(appointmentTypeChartCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(metrics.appointmentTypes),
-                datasets: [{
-                    label: 'Appointment Types',
-                    data: Object.values(metrics.appointmentTypes),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'white' // Set legend text color to white
-                        }
-                    },
-                    tooltip: {
-                        bodyColor: 'white', // Set tooltip text color to white
-                    }
-                },
-                scales: {
-                    y: {
-                        ticks: {
-                            color: 'white', // Set y-axis ticks text color to white
-                        },
-                        beginAtZero: true
-                    },
-                    x: {
-                        ticks: {
-                            color: 'white', // Set x-axis ticks text color to white
-                        }
-                    }
-                }
-            }
-        });
-
-        // Appointment Status Chart
-        const appointmentStatusChartCtx = document.getElementById('appointmentStatusChart').getContext('2d');
-        new Chart(appointmentStatusChartCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(metrics.appointments.statusCounts),
-                datasets: [{
-                    label: 'Appointment Status',
-                    data: Object.values(metrics.appointments.statusCounts),
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'white' // Set legend text color to white
-                        }
-                    },
-                    tooltip: {
-                        bodyColor: 'white', // Set tooltip text color to white
-                    }
-                },
-                scales: {
-                    y: {
-                        ticks: {
-                            color: 'white', // Set y-axis ticks text color to white
-                        },
-                        beginAtZero: true
-                    },
-                    x: {
-                        ticks: {
-                            color: 'white', // Set x-axis ticks text color to white
-                        }
-                    }
-                }
-            }
-        });
-
-        // Payment Type Chart
-        const paymentTypeChartCtx = document.getElementById('paymentTypeChart').getContext('2d');
-        new Chart(paymentTypeChartCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(metrics.payments.types),
-                datasets: [{
-                    label: 'Payment Types',
-                    data: Object.values(metrics.payments.types),
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    borderColor: 'rgba(255, 159, 64, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'white' // Set legend text color to white
-                        }
-                    },
-                    tooltip: {
-                        bodyColor: 'white', // Set tooltip text color to white
-                    }
-                },
-                scales: {
-                    y: {
-                        ticks: {
-                            color: 'white', // Set y-axis ticks text color to white
-                        },
-                        beginAtZero: true
-                    },
-                    x: {
-                        ticks: {
-                            color: 'white', // Set x-axis ticks text color to white
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    // Logout Function
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-        try {
-            await signOut(auth);
-            window.location.href = "../auth/login.html";
-        } catch (error) {
-            alert('Error logging out: ' + error.message);
-        }
-    });
-
-    // Call the analytics functions
-    listenToAnalytics();
-</script>
-
+  <!-- Firebase & Analytics Scripts -->
+  <script type="module" src="../../scripts/analytics.js"></script>
 </body>
 </html>

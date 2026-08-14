@@ -1,0 +1,366 @@
+/* ==========================================================================
+   1. LOCAL INTER FONT DECLARATIONS
+   ========================================================================== */
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   2. DESIGN SYSTEM VARIABLES (SHARED WITH HOME.CSS)
+   ========================================================================== */
+:root {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --input-bg: #ffffff;
+    --input-border: #cbd5e1;
+    
+    /* Brand Accents */
+    --accent-yellow: #ffd60a;
+    --accent-yellow-hover: #e6c200;
+    --accent-dark: #18181b;
+    --accent-dark-hover: #27272a;
+    
+    --radius: 0.75rem;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   3. BASE RESET & PAGE LAYOUT
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.auth-page-wrapper {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ==========================================================================
+   4. BRANDING HEADER
+   ========================================================================== */
+.auth-header-brand {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.auth-logo-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.auth-header-brand h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
+}
+
+.auth-header-brand p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   5. CARD CONTAINER & FORM STYLES
+   ========================================================================== */
+.login-container,
+.signup-container {
+    width: 100%;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 2.25rem 2rem;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.card-header h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.35rem;
+}
+
+.card-header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Form Groups & Inputs */
+.form-group {
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 0.4rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.925rem;
+    color: var(--text-main);
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input::placeholder {
+    color: #94a3b8;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-dark);
+    box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.1);
+}
+
+/* Password Field with Eye Toggle */
+.input-password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-password-wrapper input {
+    padding-right: 3.25rem;
+}
+
+.btn-toggle-pass {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.775rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease;
+}
+
+.btn-toggle-pass:hover {
+    color: var(--text-main);
+}
+
+/* ==========================================================================
+   6. BUTTONS & DIVIDERS
+   ========================================================================== */
+.btn-auth-primary {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: var(--accent-dark);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.btn-auth-primary:hover {
+    background-color: var(--accent-dark-hover);
+    transform: translateY(-1px);
+}
+
+/* Divider Line */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.divider span {
+    padding: 0 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.725rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* Google Sign-In Button */
+.btn-auth-google {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+    background-color: #ffffff;
+    color: var(--text-main);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.btn-auth-google:hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
+}
+
+/* Switch Form Text Link */
+.card-footer-switch {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.card-footer-switch p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.btn-link-switch {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.btn-link-switch:hover {
+    color: var(--accent-dark);
+}
+
+/* Terms and Privacy Label */
+.terms-text {
+    font-size: 0.775rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 1rem;
+    line-height: 1.4;
+}
+
+/* Back to Home Navigation */
+.back-to-home-link {
+    margin-top: 1.75rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.back-to-home-link:hover {
+    color: var(--text-main);
+}
+
+/* Error Messages & Loading Indicators */
+.error-message {
+    color: #ef4444;
+    font-size: 0.825rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    min-height: 1.2rem;
+}
+
+.loading-spinner {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin: 0.5rem 0;
+}

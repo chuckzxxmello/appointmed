@@ -1,66 +1,370 @@
-
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AppointMED</title>
-  
-  <link rel="icon" href="src/assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="src/assets/images/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="src/assets/images/apple-touch-icon.png">
-  <link rel="icon" sizes="96x96" href="src/assets/images/favicon-96x96.png">
-  <link rel="manifest" href="src/assets/images/site.webmanifest">
-  <meta name="theme-color" content="#ffd60a">
-  <meta name="msapplication-TileImage" content="src/assets/images/web-app-manifest-192x192.png">
-  <meta name="msapplication-TileColor" content="#ffd60a">
+    <title>ELAD School of Potentials Therapy Center</title>
+    <meta name="description"
+        content="ELAD School of Potentials Therapy Center offers Physical, Occupational, Speech, and Language Pathology in Trece Martires City, Cavite.">
 
-  <link rel="stylesheet" href="src/styles/index.css">
+    <!-- Favicons -->
+    <link rel="icon" href="src/assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="src/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="src/assets/images/apple-touch-icon.png">
+    <link rel="manifest" href="src/assets/images/site.webmanifest">
+    <meta name="theme-color" content="#ffd60a">
 
-  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
-
+    <!-- Primary Stylesheet -->
+    <link rel="stylesheet" href="src/styles/home.css">
+    
+    <!-- Carousel Styles -->
+    <link rel="stylesheet" href="src/styles/home-carousel.css">
 </head>
+
 <body>
 
-  <div class="header">
-    <nav>
-      <h2>ELAD School of Potentials Therapy Center</h2>
-      <ul>
-      </ul>
-    </nav>
-  </div>
+    <!-- Navigation Header -->
+    <header class="header-cust">
+        <nav aria-label="Main Navigation">
+            <a href="index.html" class="logo-container">
+                <img src="src/assets/images/apple-touch-icon.png" alt="AppointMED Logo" class="brand-logo-img"
+                    width="36" height="36" decoding="async" />
+                <div class="logo-text">
+                    <h2>ELAD School of Potentials</h2>
+                    <p>Therapy Center</p>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#faq">FAQs</a></li>
+                <li><a href="src/pages/auth/login.html" class="btn-nav-login">Log-in</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <div class="background-info">
-    <h3>Empowering Young Minds. Unlocking Bright Futures.</h3>
-    <p>Our Services</p>
-    <h2>Physical Therapy</h2>
-    <h2>Occupational Therapy</h2>
-    <h2>Speech and Language Therapy</h2>
-    <h2>Mental Health Counseling</h2>
-    <h2>Rehabilitation Services</h2>
-    <h2>Specialized Therapeutic Programs</h2>
-    <br>
-    <p>For Booking Appointments, Please Contact Us First. </p>
-    <h1>Camerino St. Brgy Luciano, Trece Martires City, Cavite</h1>
-    <h1>eladschoolofpotentials@yahoo.com</h1>
-    <h1>+63 947 429 5648</h1>
-    
-    <p>After we verify your info by contacting us, proceed to: </p>
-    <a href="src/pages/auth/login.html">Log-in</a>
-    
-  </div>
+    <!-- Main Content -->
+    <main>
 
-  <div class="footer">
+        <!-- Hero Section -->
+        <section class="hero-wrapper">
+            <div class="pill-badge">
+                <span class="pill-badge-dot"></span>
+                <span>Professional Therapy Services Since 2020</span>
+            </div>
 
-    <div class="social-links">
-      <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
-      <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
-    </div>
+            <h1 class="hero-title">
+                ELAD School of Potentials
+            </h1>
+            <p class="hero-subtitle">
+                Comprehensive therapeutic services including Physical, Occupational, Speech, and Language Pathology.
+                Optimizing fullest potentials.
+            </p>
 
-  </div>
+            <div class="hero-actions">
+                <a href="#schedule" class="btn-primary">Book Appointment Now</a>
+                <a href="#services" class="btn-secondary">Explore Services</a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <h4>Specialized Programs</h4>
+                    <p>Custom therapeutic programs designed for unique pediatric conditions and specialized development goals.</p>
+                </div>
+                <div class="trust-card">
+                    <h4>Early Intervention</h4>
+                    <p>Dedicated therapies focusing on cognitive development, sensory processing, and enhancing daily living skills.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <div class="section-header">
+                <h2>Our Comprehensive Therapy Services</h2>
+                <p>Professional care tailored to individual developmental goals.</p>
+            </div>
+
+            <div class="services-grid">
+                <article class="service-card">
+                    <h3>Physical Therapy</h3>
+                    <p>Comprehensive rehabilitation and movement therapy designed to restore function, improve mobility,
+                        and reduce pain.</p>
+                </article>
+
+                <article class="service-card">
+                    <h3>Occupational Therapy</h3>
+                    <p>Helping patients develop, recover, and improve essential daily living skills and sensory
+                        processing functions.</p>
+                </article>
+
+                <article class="service-card">
+                    <h3>Speech & Language Pathology</h3>
+                    <p>Professional evaluation and treatment for communication disorders, language development, and
+                        speech clarity.</p>
+                </article>
+            </div>
+        </section>
+		
+        <!-- Facebook Reviews Section -->
+            <div id="reviews" style="display: none; width: 100%; max-width: 1400px; margin: 4rem auto 0 auto;">
+                <div class="section-header">
+                    <h2>What Our Patients Say</h2>
+                    <p>Reviews from our Facebook Page.</p>
+                </div>
+                
+                <div class="carousel-wrapper">
+                    <button id="reviewsLeftBtn" class="minimal-arrow left-arrow">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    
+                    <div id="reviewsContainer" class="carousel-container">
+                        <div id="reviewsTrack" class="carousel-track">
+                        </div>
+                    </div>
+
+                    <button id="reviewsRightBtn" class="minimal-arrow right-arrow">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+
+        <!-- Clinic Schedule Section -->
+        <section id="schedule" class="schedule-section">
+            <div class="schedule-container">
+                <div class="schedule-content">
+                    <h2>Clinic Schedule & Appointments</h2>
+                    <p>We are dedicated to providing the best therapy services. Check our standard operating hours below to find a time that works best for your child.</p>
+                    
+                    <div class="operating-hours">
+                        <div class="hours-row">
+                            <span class="day">Monday - Friday</span>
+                            <span class="time">8:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day">Saturday</span>
+                            <span class="time">8:00 AM - 3:00 PM</span>
+                        </div>
+                        <div class="hours-row closed">
+                            <span class="day">Sunday</span>
+                            <span class="time">Closed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-booking-card">
+                    <div class="booking-card-header">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        <h3>Set An Appointment</h3>
+                    </div>
+                    <p class="booking-instructions">To book a specific slot, check availability, or consult with our therapists, please message us directly. Our staff will quickly confirm your schedule!</p>
+                    
+                    <div class="booking-actions">
+                        <a href="https://www.facebook.com/ELADSchoolofPotentials" target="_blank" rel="noopener noreferrer" class="btn-primary btn-full-width" style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.51 3.733 7.185V22l3.422-1.878c.904.25 1.866.386 2.845.386 5.523 0 10-4.145 10-9.25C22 6.145 17.523 2 12 2zm1.003 12.443l-2.548-2.718-4.97 2.718 5.467-5.8 2.607 2.718 4.91-2.718-5.466 5.8z" />
+                            </svg>
+                            Message on Facebook
+                        </a>
+                        <a href="src/pages/auth/login.html" class="btn-secondary btn-full-width" style="display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Log in to Patient Portal
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact, Maps, Location Section -->
+        <section id="contact" class="contact-section">
+            <div class="contact-section-header">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our staff or visit our therapy center in Trece Martires City, Cavite.</p>
+            </div>
+
+            <!-- Inquiry Method Cards -->
+            <div class="landing-contact-grid">
+                <div class="landing-contact-card">
+                    <div class="landing-contact-icon bg-icon-yellow">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3>Contact Us</h3>
+                    <p>Call us for inquiries</p>
+                    <strong>+63 947 429 5648</strong>
+                    <span>Mon-Fri 8AM - 6PM</span>
+                </div>
+
+                <div class="landing-contact-card">
+                    <div class="landing-contact-icon bg-icon-blue">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                            </path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Email Us</h3>
+                    <p>Send us a detailed message</p>
+                    <strong>eladschoolofpotentials@yahoo.com</strong>
+                    <span>Actively Responding</span>
+                </div>
+
+                <div class="landing-contact-card">
+                    <div class="landing-contact-icon bg-icon-purple">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="color: #2563eb;">
+                            <path
+                                d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.51 3.733 7.185V22l3.422-1.878c.904.25 1.866.386 2.845.386 5.523 0 10-4.145 10-9.25C22 6.145 17.523 2 12 2zm1.003 12.443l-2.548-2.718-4.97 2.718 5.467-5.8 2.607 2.718 4.91-2.718-5.466 5.8z" />
+                        </svg>
+                    </div>
+                    <h3>Send us a Message</h3>
+                    <p>Chat us on Facebook Messenger</p>
+                    <div style="margin-top: 0.5rem; width: 100%;">
+                        <a href="https://www.facebook.com/ELADSchoolofPotentials" target="_blank"
+                            rel="noopener noreferrer" class="btn-primary btn-full-width">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.51 3.733 7.185V22l3.422-1.878c.904.25 1.866.386 2.845.386 5.523 0 10-4.145 10-9.25C22 6.145 17.523 2 12 2zm1.003 12.443l-2.548-2.718-4.97 2.718 5.467-5.8 2.607 2.718 4.91-2.718-5.466 5.8z" />
+                            </svg>
+                            Facebook Messenger
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Maps Card -->
+            <div class="map-card-wrapper">
+                <div class="map-card-header">
+                    <div class="map-card-title">
+                        <h3>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Clinic Location
+                        </h3>
+                        <p>ELAD School of Potentials Therapy Center - Camerino St. Brgy. Luciano, Trece Martires, Cavite
+                        </p>
+                    </div>
+                    <a href="https://maps.app.goo.gl/aH8N4q66MQ6toG8N8" target="_blank" rel="noopener noreferrer"
+                        class="btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        Open in Google Maps
+                    </a>
+                </div>
+
+                <!-- Embed Google Maps -->
+                <div class="map-iframe-container">
+                    <iframe title="ELAD School of Potentials Location Map" width="100%" height="100%" style="border:0;"
+                        loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+                        src="https://maps.google.com/maps?q=14.2748745,120.8702112&hl=en&z=18&output=embed">
+                    </iframe>
+                </div>
+
+                <!-- Location Pill -->
+                <div class="map-guide-grid">
+                    <div class="map-guide-pill">
+                        <strong>Street View Guide</strong>
+                        <span>Yellow clinic building along Marcius Ave / Camerino St</span>
+                    </div>
+                    <div class="map-guide-pill">
+                        <strong>Nearby Landmark</strong>
+                        <span>Beside Angel Mae Store & Cavite Provincial Capitol</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQs Section -->
+        <section id="faq" class="faq-section">
+            <div class="faq-card-wrapper">
+                <div class="faq-header-flex">
+                    <div class="faq-title-group">
+                        <h2>Frequently Asked Questions</h2>
+                        <p id="landingFaqSubtitle">Quick answers to common questions</p>
+                    </div>
+
+                    <!-- Toggle language switch -->
+                    <div class="faq-lang-toggle" id="landingFaqLangToggle">
+                        <button type="button" class="lang-btn active" data-lang="eng">ENG</button>
+                        <button type="button" class="lang-btn" data-lang="fil">FIL</button>
+                    </div>
+                </div>
+
+                <div class="faq-grid" id="landingFaqGrid">
+                    <div class="faq-card">
+                        <h4>How do I book an appointment?</h4>
+                        <p>You can view clinic schedule availability on the "Set An Appointment" tab, then contact
+                            our clinic directly via phone or Facebook Messenger to reserve your session.</p>
+                    </div>
+                    <div class="faq-card">
+                        <h4>What should I bring to my appointment?</h4>
+                        <p>Please bring a valid ID, any relevant medical records, developmental evaluations, or
+                            physician referrals for your initial consultation.</p>
+                    </div>
+                    <div class="faq-card">
+                        <h4>Can I reschedule or cancel my appointment?</h4>
+                        <p>Yes. To reschedule or cancel your session, please notify our clinic staff at least 24
+                            hours in advance so we can adjust the schedule.</p>
+                    </div>
+                    <div class="faq-card">
+                        <h4>How long is each therapy session?</h4>
+                        <p>Standard therapy sessions typically last 45 to 60 minutes, tailored to your child's
+                            individualized treatment plan and developmental goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FAQ switch ENGLISH / TAGALOG-->
+    <script src="src/scripts/index-faq.js"></script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="src/assets/images/apple-touch-icon.png" alt="AppointMED Logo" class="footer-logo-img"
+                    width="28" height="28" decoding="async" />
+                <span>ELAD School of Potentials Therapy Center</span>
+            </div>
+
+            <div class="footer-links">
+                <a href="https://www.facebook.com/ELADSchoolofPotentials" target="_blank"
+                    rel="noopener noreferrer">Facebook</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+
+            <p class="footer-copy">&copy; 2026 ELAD School of Potentials Therapy Center. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Announcements -->
+    <script type="module" src="src/scripts/index.js"></script>
 
 </body>
 

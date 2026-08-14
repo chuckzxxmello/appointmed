@@ -1,1 +1,37 @@
-node_modules
+# Dependencies
+node_modules/
+package-lock.json.bak
+yarn-error.log*
+
+# Firebase & Secret Keys (CRITICAL)
+serviceAccountKey.json
+*.pem
+*.key
+*.cert
+.env
+.env.local
+.env.*.local
+
+# Logs & Debugging
+*.log
+dataconnect-debug.log
+firestore-debug.log
+pglite-debug.log
+npm-debug.log*
+yarn-debug.log*
+
+# Test Outputs & Local Binaries
+k6.exe
+tests_output/
+.nyc_output/
+coverage/
+
+# IDE & OS Files
+.DS_Store
+Thumbs.db
+.vscode/
+.vs/
+.idea/
+
+# Temporary / Scratch Files
+scratch/

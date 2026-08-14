@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AppointMED - User Management</title>
+
+  <!-- Favicon and app icons -->
+  <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="../../assets/images/site.webmanifest">
+
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Unified Admin Design System -->
+  <link rel="stylesheet" href="../../styles/admin.css">
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header class="admin-header">
+    <div class="admin-nav-container">
+      <a href="adminhome.html" class="admin-brand">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2"
+          style="margin-right: 0.2rem;">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+        <div class="admin-brand-text">
+          <h2>User Management</h2>
+          <p>Admin Panel</p>
+        </div>
+      </a>
+
+      <div class="admin-nav-actions">
+        <div class="nav-user-badge">
+          Welcome, <strong id="adminDisplayName">Admin</strong>
+        </div>
+
+        <button type="button" id="adminLogoutBtn" class="btn-admin-pill btn-pill-danger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Sign Out
+        </button>
+
+        <a href="adminhome.html" class="btn-admin-pill btn-pill-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Admin
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="admin-main-container">
+
+    <!-- Page Header -->
+    <div class="admin-page-header">
+      <h1 class="admin-page-title">User Management</h1>
+      <p class="admin-page-subtitle">Manage all registered users and their information</p>
+    </div>
+
+    <!-- Stat Cards Grid (4 Columns) -->
+    <div class="admin-stat-grid">
+      <div class="stat-card">
+        <div class="stat-card-info">
+          <h4>Total Users</h4>
+          <div class="stat-card-value" id="statTotalUsers">0</div>
+        </div>
+        <div class="stat-card-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-info">
+          <h4>Verified Users</h4>
+          <div class="stat-card-value" style="color: #15803d;" id="statVerifiedUsers">0</div>
+        </div>
+        <div class="stat-card-icon icon-green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-info">
+          <h4>Admin Users</h4>
+          <div class="stat-card-value" style="color: #b91c1c;" id="statAdminUsers">0</div>
+        </div>
+        <div class="stat-card-icon icon-red">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-info">
+          <h4>Regular Users</h4>
+          <div class="stat-card-value" style="color: #6b21a8;" id="statRegularUsers">0</div>
+        </div>
+        <div class="stat-card-icon icon-purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Users Card & Table -->
+    <div class="content-card">
+      <div class="content-card-header">
+        <div class="card-title-group">
+          <h2>All Users</h2>
+          <p>Manage and view all registered users</p>
+        </div>
+
+        <div class="filter-controls-group">
+          <!-- Bulk Actions & Pagination Tools -->
+          <div class="bulk-actions-container">
+            <select id="userPerPageSelect" class="select-filter" style="width: auto;">
+              <option value="10">10 Rows</option>
+              <option value="50">50 Rows</option>
+              <option value="100">100 Rows</option>
+            </select>
+
+            <button type="button" id="bulkDeleteBtn" class="btn-admin-pill btn-pill-danger" style="display: none;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              Delete (<span id="bulkDeleteCount">0</span>)
+            </button>
+          </div>
+
+          <div class="search-input-wrapper">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="userSearchInput" placeholder="Search users...">
+          </div>
+
+          <select id="roleFilterSelect" class="select-filter">
+            <option value="all">All Roles & Status</option>
+            <option value="admin">Admin</option>
+            <option value="regular">Regular User</option>
+            <option value="verified">Verified Users</option>
+            <option value="unverified">Unverified Users</option>
+          </select>
+
+          <button type="button" id="addUserBtn" class="btn-admin-pill btn-pill-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add User
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align: center;">
+                <input type="checkbox" id="selectAllUsers" class="select-all-checkbox" title="Select All on Page">
+              </th>
+              <th>User / Email</th>
+              <th>Verification Status</th>
+              <th>Role</th>
+              <th>Registration Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading users...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination Nav -->
+      <div class="pagination-controls">
+        <button type="button" class="pagination-btn" id="btnFirstPage" title="First Page">&laquo;</button>
+        <button type="button" class="pagination-btn" id="btnPrevPage" title="Previous Page">&lsaquo;</button>
+        <span class="page-info">Page <span id="currentPageDisplay">1</span> of <span
+            id="totalPagesDisplay">1</span></span>
+        <button type="button" class="pagination-btn" id="btnNextPage" title="Next Page">&rsaquo;</button>
+        <button type="button" class="pagination-btn" id="btnLastPage" title="Last Page">&raquo;</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- User Modal (Add / Edit User) -->
+  <div class="admin-modal-backdrop" id="userFormModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h2 id="userModalTitle">Add New User</h2>
+        <button class="admin-modal-close" id="closeUserModalBtn">&times;</button>
+      </div>
+      <form id="userForm">
+        <input type="hidden" id="userModalId">
+        <div class="form-group-admin">
+          <label>First Name</label>
+          <input type="text" id="userModalFirstName" placeholder="e.g. Jhon" required>
+        </div>
+        <div class="form-group-admin">
+          <label>Last Name</label>
+          <input type="text" id="userModalLastName" placeholder="e.g. Doe" required>
+        </div>
+        <div class="form-group-admin">
+          <label>Email Address</label>
+          <input type="email" id="userModalEmail" placeholder="e.g. user@example.com" required>
+        </div>
+        <div class="form-group-admin">
+          <label>Role</label>
+          <select id="userModalRole">
+            <option value="regular">Regular User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="form-group-admin">
+          <label>Verification Status</label>
+          <select id="userModalVerified">
+            <option value="true">Verified</option>
+            <option value="false">Unverified</option>
+          </select>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn-admin-pill btn-pill-secondary" id="cancelUserModalBtn">Cancel</button>
+          <button type="submit" class="btn-admin-pill btn-pill-primary">Save User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase & Admin Script -->
+  <script type="module" src="../../scripts/manageusers.js"></script>
+</body>
+
+</html>

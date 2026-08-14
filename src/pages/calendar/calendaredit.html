@@ -1,307 +1,567 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    
-    <link rel="stylesheet" href="../../styles/stylesheet.css">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>View Calendar</title>
-  
-    <!-- Favicon and app icons -->
-    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
-    <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
-    <link rel="manifest" href="../../assets/images/site.webmanifest">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AppointMED - Appointment Calendar</title>
 
-    <!-- vkurko links -->
-    <link rel="stylesheet" href="event-calendar.css">
-    <script src="event-calendar.js"></script>
+  <!-- Favicon and app icons -->
+  <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="../../assets/images/site.webmanifest">
 
-    <style>
-        /* Light Mode Custom Styles */
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- Unified Admin Design System -->
+  <link rel="stylesheet" href="../../styles/admin.css">
 
-        /* Style for main content area */
-        main.row {
-            padding: 20px;
-            background-color: #38383a;
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        
-
-        /* Custom styling for the calendar container */
-        #ec {
-            background-color: #38383a;
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Style for calendar events */
-        .fc-event {
-            background-color: #007bff; /* Blue color for events */
-            color: #38383a; 
-            border-radius: 5px;
-            padding: 5px;
-        }
-
-        .fc-event:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-        }
-    </style>
-
-    
-
-    <!-- Firebase SDK (with ES Modules) -->
-    <script type="module">
-        // Import Firebase SDK modules
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
-        import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
-
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
-            authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
-            databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "appointment-scheduling-s-57d01",
-            storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
-            messagingSenderId: "1069885306589",
-            appId: "1:1069885306589:web:b31768194add4087754d34",
-            measurementId: "G-KQ4PQZZZBM"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        async function getAppointments() {
-        const querySnapshot = await getDocs(collection(db, 'appointments'));
-        let events = [];
-        
-        // Define a map to store doctor names and their associated colors
-        let doctorColorMap = {};
-
-        // Define a list of colors to use (you can expand this list if needed)
-        const availableColors = [
-            "#FF5733", "#FFC107", "#28A745", "#007BFF", "#DC3545", "#6F42C1", "#FF6F61", "#6B8E23", "#FF8C00", "#20B2AA",
-            "#8A2BE2", "#D2691E", "#00CED1", "#A52A2A", "#5F9EA0", "#C71585", "#FF1493", "#00BFFF", "#1E90FF", "#FF4500",
-            "#2E8B57", "#800080", "#4B0082", "#8B0000", "#228B22", "#FFD700", "#B22222", "#FF6347", "#FF8C00", "#7CFC00",
-            "#00FF7F", "#0000FF", "#800000", "#808000", "#ADFF2F", "#FF00FF", "#32CD32", "#00FA9A", "#FFFF00", "#A9A9A9",
-            "#D3D3D3", "#A52A2A", "#FF69B4", "#E9967A", "#8B4513", "#20B2AA", "#A52A2A", "#A9A9A9", "#F08080", "#90EE90",
-            "#FF6347", "#6A5ACD", "#8A2BE2", "#5F9EA0", "#7FFF00", "#FF1493", "#3CB371", "#D2691E", "#000080", "#800080",
-            "#4682B4", "#FF4500", "#FF6347", "#808080", "#E0E0E0", "#6A5ACD", "#D2691E", "#FF8C00", "#8B0000", "#ADFF2F",
-            "#8B0000", "#00FA9A", "#FFF5EE", "#98FB98", "#7CFC00", "#A9A9A9", "#D3D3D3", "#FFD700", "#E0FFFF", "#F5FFFA",
-            "#FFD700", "#98FB98", "#B8860B", "#C71585", "#FA8072", "#D2691E", "#FF1493", "#ADFF2F", "#F0E68C", "#F4A460",
-            "#00008B", "#BDB76B", "#228B22", "#FF4500", "#A52A2A", "#FF69B4", "#C71585", "#2E8B57", "#800000", "#0000FF",
-            "#4B0082", "#6A5ACD", "#FF6347", "#8B4513", "#20B2AA", "#DC143C", "#8A2BE2", "#9ACD32", "#3CB371", "#F0E68C",
-            "#D3D3D3", "#32CD32", "#8B0000", "#00FA9A", "#FFD700", "#C71585", "#B22222", "#FF4500", "#0000FF", "#8A2BE2"
-        ];
-        let colorIndex = 0; // Start with the first color in the list
-
-        querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            const doctorName = data.doctor;  // Assuming the doctor field is named 'doctor'
-
-            // Check if the doctor already has a color assigned, if not, assign a new one
-            let eventColor;
-            if (doctorColorMap[doctorName]) {
-                eventColor = doctorColorMap[doctorName];  // Use the existing color
-            } else {
-                eventColor = availableColors[colorIndex];  // Assign a new color
-                doctorColorMap[doctorName] = eventColor;  // Store the color for future use
-                colorIndex = (colorIndex + 1) % availableColors.length;  // Cycle through the colors
-            }
-
-            // Push the event to the array with the assigned color
-            events.push({
-                start: data.appointmentDate + " " + data.appointmentTimeStart,
-                end: data.appointmentDate + " " + data.appointmentTimeEnd,
-                title: `${data.firstName} ${data.surname} - ${doctorName}`,
-                resourceId: 1,
-                color: eventColor
-            });
-        });
-
-        return events;
-        }
-
-        const ec = new EventCalendar(document.getElementById('ec'), {
-            view: 'timeGridWeek',
-            headerToolbar: {
-                start: 'prev,next',
-                center: 'title',
-                end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-            },
-            resources: [
-                {id: 1, title: 'Resource A'},
-                {id: 2, title: 'Resource B'}
-            ],
-            scrollTime: '09:00:00',
-            events: [],
-            views: {
-                timeGridWeek: {pointer: true}
-            },
-            dayMaxEvents: true,
-            nowIndicator: true,
-            selectable: true
-        });
-
-        async function loadAppointments() {
-        try {
-            const events = await getAppointments();
-            // Add events one by one if `setEvents` isn't available
-            events.forEach(event => {
-                ec.addEvent(event);
-            });
-        } catch (error) {
-            console.error("Error loading appointments: ", error);
-        }
+  <style>
+    /* Calendar Grid & Drag-Drop Styles */
+    .calendar-container-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
     }
 
+    .cal-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
 
-        // Load appointments when the page is ready
-        window.onload = loadAppointments;
-    </script>
+    .cal-month-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .cal-nav-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .cal-nav-btn {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .cal-nav-btn:hover {
+      background-color: var(--bg-main);
+    }
+
+    .cal-grid-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .cal-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-auto-rows: 140px;
+      gap: 1px;
+      background-color: var(--border-color);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .cal-cell {
+      background-color: #ffffff;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.15s ease;
+      overflow: hidden;
+    }
+
+    .cal-cell:hover {
+      background-color: #f8fafc;
+    }
+
+    .cal-cell.other-month {
+      background-color: #fafafa;
+      color: #cbd5e1;
+    }
+
+    .cal-cell.is-selected {
+      background-color: #dbeafe !important;
+    }
+
+    .cal-cell-num {
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .cal-cell.other-month .cal-cell-num {
+      color: #cbd5e1;
+    }
+
+    .cal-evt-pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      background-color: #1e3a8a;
+      color: #ffffff;
+      padding: 0.2rem 0.45rem;
+      border-radius: 0.35rem;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid transparent;
+    }
+
+    .cal-evt-pill:hover {
+      filter: brightness(0.95);
+    }
+
+    .cal-evt-pill.status-pending {
+      background-color: #fef9c3;
+      color: #854d0e;
+      border-color: #fef08a;
+    }
+
+    .cal-evt-pill.status-confirmed {
+      background-color: #dcfce7;
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+
+    .cal-evt-pill.status-completed {
+      background-color: #e0f2fe;
+      color: #075985;
+      border-color: #bae6fd;
+    }
+
+    .cal-evt-pill.status-cancelled {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border-color: #fecaca;
+    }
+
+    .cal-view-control {
+      display: flex;
+      background-color: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .cal-view-btn {
+      background: none;
+      border: none;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .cal-view-btn:hover {
+      background-color: #f1f5f9;
+    }
+
+    .cal-view-btn.active {
+      background-color: #1e3a8a;
+      color: #ffffff;
+    }
+
+    .cal-day-slot {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.85rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.15s ease;
+    }
+
+    .cal-day-slot:hover {
+      background-color: #f8fafc;
+    }
+
+    .cal-day-slot.drag-over {
+      background-color: #dbeafe;
+      border-color: #3b82f6;
+    }
+
+    .drag-delete-zone {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 80px;
+      background-color: #fee2e2;
+      border: 2px dashed #ef4444;
+      border-radius: 1.5rem 1.5rem 0 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ef4444;
+      font-weight: 700;
+      font-size: 1.1rem;
+      z-index: 2000;
+      transition: bottom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s, color 0.2s, height 0.2s;
+      pointer-events: none;
+      box-shadow: 0 -4px 15px rgba(239, 68, 68, 0.2);
+    }
+
+    .drag-delete-zone.visible {
+      bottom: 0;
+      pointer-events: auto;
+    }
+
+    .drag-delete-zone.drag-over {
+      background-color: #ef4444;
+      color: #ffffff;
+      border-color: #dc2626;
+      height: 100px;
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="header">
-        <nav>
-            <h2>ELAD School of Potentials Therapy Center</h2>
-            <ul>
-                <div class="dropdown-admin">
-                    <div class="dropdown-admin" onclick="window.location.href='../manageuser/adminhome.html';">Admin Dashboard</div>
-                    <div class="dropdown-content-admin">
-                        <li><a href="../manageuser/dist/setappoint.html">Manage Users</a></li>
-                        <li><a href="calendaredit.html">View Calendar</a></li>
-                        <li><a href="../manageuser/analytics.html">Analytics</a></li>
-                        <li><a href="#" id="logoutBtn">Logout</a></li>
-                    </div>
-                </div>
-            </ul> 
-        </nav>
-    </div>
-
-    <main class="row">
-        <div id="ec" class="col"></div>
-    </main>
-
-    <div class="footer">
-        <div class="social-links">
-            <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+  <!-- Navigation Header -->
+  <header class="admin-header">
+    <div class="admin-nav-container">
+      <a href="../manageuser/adminhome.html" class="admin-brand">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2"
+          style="margin-right: 0.2rem;">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+        <div class="admin-brand-text">
+          <h2>Calendar View</h2>
+          <p>Admin Panel</p>
         </div>
-        <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
+      </a>
+
+      <div class="admin-nav-actions">
+        <div class="nav-user-badge">
+          Welcome, <strong id="adminDisplayName">Admin</strong>
+        </div>
+
+        <button type="button" id="adminLogoutBtn" class="btn-admin-pill btn-pill-danger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Sign Out
+        </button>
+
+        <a href="../manageuser/adminhome.html" class="btn-admin-pill btn-pill-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Admin
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="admin-main-container">
+
+    <!-- Page Header with Add Appointment Button -->
+    <div class="admin-page-header"
+      style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 class="admin-page-title">Appointment Calendar</h1>
+        <p class="admin-page-subtitle">Drag clients to calendar days to schedule, or click Add Appointment to create a
+          session directly.</p>
+      </div>
+
+      <button type="button" id="openAddApptModalBtn" class="btn-admin-pill btn-pill-primary"
+        style="padding: 0.55rem 1.15rem; font-weight: 700; font-size: 0.875rem;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          style="margin-right: 0.35rem;">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Add Appointment
+      </button>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-        import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
-    
-        const firebaseConfig = {
-          apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
-          authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
-          databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
-          projectId: "appointment-scheduling-s-57d01",
-          storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
-          messagingSenderId: "1069885306589",
-          appId: "1:1069885306589:web:b31768194add4087754d34",
-          measurementId: "G-KQ4PQZZZBM"
-        };
-    
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-    
-        function updateDropdownEmail(user) {
-          const emailButton = document.getElementById('emailBtn');
-          const userDropdown = document.getElementById('userDropdown');
-          if (user) {
-            emailButton.textContent = user.email;
-            emailButton.onclick = () => { 
-              if (userDropdown.style.display === 'block') {
-                userDropdown.style.display = 'none';
-              } else {
-                userDropdown.style.display = 'block';
-              }
-            };
-          } else {
-            emailButton.textContent = "Login";
-            emailButton.onclick = () => {
-              window.location.href = '../login.html';
-            };
-          }
-        }
-    
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            updateDropdownEmail(user);
-    
-            user.reload()
-              .then(() => {
-                const verifyBtn = document.getElementById('verifyBtn');
-                if (user.emailVerified) {
-                  verifyBtn.textContent = "Email Verified";
-                  verifyBtn.removeAttribute('href');
-                } else {
-                  verifyBtn.textContent = "Verify E-mail";
-                  verifyBtn.href = "#";
-                }
-    
-                console.log("Logged in:", user.email);
-                console.log("Verified:", user.emailVerified);
-              })
-              .catch((error) => {
-                console.log("Error reloading user:", error);
-              });
-    
-          } else {
-            updateDropdownEmail(null); 
-          }
-        });
-    
-        const signOutUser = () => {
-          signOut(auth)
-            .then(() => {
-              console.log('Signed out successfully');
-              window.location.href = '../auth/login.html'; 
-            })
-            .catch((error) => {
-              console.log('Error signing out:', error);
-              alert("Error: " + error.message);
-            });
-        };
-    
-        const verifyEmail = () => {
-          const user = auth.currentUser;
-          if (user) {
-            sendEmailVerification(user)
-              .then(() => {
-                alert("Verification email sent!");
-              })
-              .catch((error) => {
-                console.log('Error sending verification email:', error);
-                alert("Error: " + error.message); 
-              });
-          }
-        };
-    
-        document.getElementById('logoutBtn').addEventListener('click', signOutUser);
-        document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
-    
-        const loginBtn = document.getElementById('loginBtn');
-        loginBtn.onclick = () => {
-          const user = auth.currentUser; 
-          if (user) {
-            window.location.href = 'auth/userprofile.html'; 
-          } else {
-            window.location.href = 'auth/login.html'; 
-          }
-        };
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start;">
 
-        
-      </script>
+      <!-- Left Calendar Grid -->
+      <div class="calendar-container-card">
+        <div class="cal-header-bar">
+          <h2 class="cal-month-title" id="calMonthTitle">August 2026</h2>
+          <div class="cal-nav-group">
+            <div class="cal-view-control">
+              <button type="button" class="cal-view-btn active" data-view="month">Month</button>
+              <button type="button" class="cal-view-btn" data-view="week">Week</button>
+              <button type="button" class="cal-view-btn" data-view="day">Day</button>
+            </div>
+            <button type="button" class="cal-nav-btn" id="calPrevBtn">&lt;</button>
+            <button type="button" class="cal-nav-btn" id="calTodayBtn">Today</button>
+            <button type="button" class="cal-nav-btn" id="calNextBtn">&gt;</button>
+          </div>
+        </div>
 
+        <div id="calGridHeader" class="cal-grid-header">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
+
+        <div id="calDaysGrid">
+          <!-- Calendar rendered dynamically by JS based on view type -->
+        </div>
+      </div>
+
+      <!-- Right Sidebar Cards -->
+      <div>
+        <!-- Draggable Clients List Card -->
+        <div class="content-card" style="margin-bottom: 1.5rem;">
+          <div class="card-title-group" style="margin-bottom: 0.75rem;">
+            <h2>Drag to Schedule</h2>
+            <p style="font-size: 0.8rem;">Drag a client onto a calendar day to set appointment</p>
+          </div>
+
+          <div id="draggableClientsList">
+            <!-- Rendered dynamically from registered users -->
+            <div style="padding: 1rem; text-align: center; color: var(--text-muted); font-size: 0.85rem;">Loading
+              clients...</div>
+          </div>
+        </div>
+
+        <!-- Quick Stats Card -->
+        <div class="content-card" style="margin-bottom: 1.5rem;">
+          <div class="card-title-group" style="margin-bottom: 1rem;">
+            <h2>Quick Stats</h2>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.9rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Total Appointments</span>
+              <strong id="sideTotalCount" style="color: #1e3a8a;">0</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">This Month</span>
+              <strong id="sideMonthCount" style="color: #15803d;">0</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Today</span>
+              <strong id="sideTodayCount" style="color: #6b21a8;">0</strong>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+  </main>
+
+  <!-- Schedule / Edit Appointment Modal -->
+  <div class="admin-modal-backdrop" id="calApptModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h2 id="calModalTitle">Schedule Appointment</h2>
+        <button class="admin-modal-close" id="closeCalModalBtn">&times;</button>
+      </div>
+      <form id="calApptForm">
+        <input type="hidden" id="calModalId">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group-admin">
+            <label>First Name <span
+                style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+            <input type="text" id="calModalFirstName" placeholder="Patient First Name">
+          </div>
+          <div class="form-group-admin">
+            <label>Last Name <span
+                style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+            <input type="text" id="calModalLastName" placeholder="Patient Last Name">
+          </div>
+        </div>
+        <div class="form-group-admin">
+          <label>Email Address <span
+              style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+          <input type="email" id="calModalEmail" placeholder="patient@example.com">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group-admin">
+            <label>Phone Number <span style="color: #dc2626;">*</span></label>
+            <input type="tel" id="calModalPhone" placeholder="e.g. 09171234567" required>
+          </div>
+          <div class="form-group-admin">
+            <label>Facebook Account/Link<span
+                style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(max 20 chars)</span></label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="text" id="calModalFacebook" maxlength="20" placeholder="Name or fb.com/link"
+                style="width: 100%; padding-right: 2rem;">
+              <button type="button" id="clearCalFbBtn"
+                style="display: none; position: absolute; right: 0.5rem; background: none; border: none; font-size: 1.1rem; color: #64748b; cursor: pointer; line-height: 1; padding: 0.2rem;"
+                title="Clear Facebook field">&times;</button>
+            </div>
+            <div id="calFbBadgePreview" style="display: none; margin-top: 0.35rem;">
+              <span
+                style="display: inline-flex; align-items: center; gap: 0.35rem; background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 0.25rem 0.65rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+                <a id="calFbBadgeLink" href="#" target="_blank" style="color: #1d4ed8; text-decoration: underline;">FB
+                  Link</a>
+                <span id="calFbBadgeClearBtn"
+                  style="cursor: pointer; font-size: 0.9rem; margin-left: 0.35rem; color: #1e40af; font-weight: bold;"
+                  title="Clear link">&times;</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group-admin">
+            <label>Date</label>
+            <input type="date" id="calModalDate" required>
+          </div>
+          <div class="form-group-admin">
+            <label>Start Time</label>
+            <input type="time" id="calModalStart" value="09:00" required>
+          </div>
+          <div class="form-group-admin">
+            <label>End Time</label>
+            <input type="time" id="calModalEnd" value="10:00" required>
+          </div>
+        </div>
+        <div class="form-group-admin">
+          <label>Therapy Service Type</label>
+          <select id="calModalType">
+            <option value="CONSULTATION">Consultation</option>
+            <option value="OCCUPATIONAL THERAPY">Occupational Therapy</option>
+            <option value="PHYSICAL THERAPY">Physical Therapy</option>
+            <option value="SPEECH PATHOLOGY">Speech Pathology</option>
+          </select>
+        </div>
+        <div class="form-group-admin">
+          <label>Doctor / Specialist <span style="color: #dc2626;">*</span></label>
+          <input type="text" id="calModalDoctor" placeholder="Enter doctor or specialist name" required>
+        </div>
+        <div class="form-group-admin">
+          <label>Appointment Status</label>
+          <select id="calModalStatus">
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+          <button type="button" class="btn-admin-pill btn-pill-danger" id="deleteCalApptBtn"
+            style="display: none;">Delete</button>
+          <div style="display: flex; gap: 0.75rem; margin-left: auto;">
+            <button type="button" class="btn-admin-pill btn-pill-secondary" id="cancelCalModalBtn">Cancel</button>
+            <button type="submit" class="btn-admin-pill btn-pill-primary">Save Schedule</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+  <!-- Day Appointments Modal (For overflowing calendar days) -->
+  <div id="dayAppointmentsModal" class="admin-modal-backdrop" style="z-index: 1000;">
+    <div class="admin-modal-card"
+      style="max-width: 500px; padding: 1.5rem; max-height: 80vh; display: flex; flex-direction: column;">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+        <h2 id="dayModalTitle" style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin: 0;">
+          Appointments</h2>
+        <button type="button" id="closeDayModalBtn"
+          style="background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.25rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div id="dayModalList"
+        style="overflow-y: auto; flex: 1; padding-right: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteConfirmModal" class="admin-modal-backdrop" style="z-index: 2100;">
+    <div class="admin-modal-card" style="max-width: 400px; text-align: center; padding: 2rem;">
+      <div
+        style="width: 60px; height: 60px; background-color: #fee2e2; color: #dc2626; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 1.5rem auto;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+      </div>
+      <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">Delete
+        Appointment?</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Are you sure you want to delete this
+        appointment? This action cannot be undone.</p>
+
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <button type="button" class="btn-admin-pill btn-pill-secondary" id="cancelDeleteConfirmBtn"
+          style="flex: 1;">No</button>
+        <button type="button" class="btn-admin-pill btn-pill-danger" id="confirmDeleteApptBtn"
+          style="flex: 1;">Yes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drag to Delete Zone -->
+  <div id="dragDeleteZone" class="drag-delete-zone">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      style="margin-right: 0.5rem;">
+      <polyline points="3 6 5 6 21 6"></polyline>
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    </svg>
+    Drop here to delete
+  </div>
+
+  <!-- Firebase & Calendar Script -->
+  <script type="module" src="../../scripts/calendaredit.js"></script>
 </body>
+
 </html>

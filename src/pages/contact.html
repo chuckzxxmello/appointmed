@@ -262,7 +262,7 @@
       } else {
         emailButton.textContent = "Login";
         emailButton.onclick = () => {
-          window.location.href = 'auth/login.html';
+          window.location.href = './auth/login.html';
         };
       }
     }
@@ -298,7 +298,7 @@
       signOut(auth)
         .then(() => {
           console.log('Signed out successfully');
-          window.location.href = 'auth/login.html'; 
+          window.location.href = './auth/login.html'; 
         })
         .catch((error) => {
           console.log('Error signing out:', error);

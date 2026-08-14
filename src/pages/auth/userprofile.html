@@ -1,482 +1,961 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
-  
+  <title>AppointMED - Patient Dashboard</title>
+
   <!-- Favicon and app icons -->
   <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
   <link rel="icon" sizes="96x96" href="../../assets/images/favicon-96x96.png">
   <link rel="manifest" href="../../assets/images/site.webmanifest">
-  
-  <link rel="stylesheet" href="../../styles/stylesheet.css">
-  <style>
-    .user-info {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease-out forwards;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-}
 
-.header  {
-  z-index: 999;
-}
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-.header a {
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-.header a:hover {
-          text-decoration: none;
-          color: #ffc60a;
-          font-weight: 600;
-}
-
-.img img.profile {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    transition: transform 0.3s ease-in-out;
-}
-
-.img img.profile:hover {
-    transform: scale(1.05);
-}
-
-.user-info:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-}
-
-
-
-h2, p {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: slideIn 0.5s ease-out forwards;
-}
-
-p:nth-child(2) { animation-delay: 0.2s; }
-p:nth-child(3) { animation-delay: 0.4s; }
-p:nth-child(4) { animation-delay: 0.6s; }
-p:nth-child(5) { animation-delay: 0.8s; }
-p:nth-child(6) { animation-delay: 1.0s; }
-p:nth-child(7) { animation-delay: 1.2s; }
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.user-info a {
-    text-decoration: none;
-    transition: color 0.3s ease-in-out;
-}
-
-.loading {
-    position: relative;
-    overflow: hidden;
-}
-
-.loading::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-    animation: shimmer 1.5s infinite linear;
-}
-
-@keyframes shimmer {
-    from {
-        transform: translateX(-100%);
-    }
-    to {
-        transform: translateX(100%);
-    }
-}
-
-.user-info,
-.user-info h1,
-.user-info h2,
-.user-info p,
-.user-info #text,
-.user-info a {
-  transition: all 0.3s ease-in-out;
-}
-
-
-@media (max-width: 768px) {
-  .user-info {
-    padding: 1rem;
-    width: 90%;
-    margin: 2rem auto;
-  }
-
-  .user-info h1 {
-    font-size: 14px;
-  }
-
-  .user-info h2 {
-    font-size: 1.1rem;
-  }
-
-  .user-info p {
-    font-size: 20px;
-  }
-
-  .user-info #text {
-    font-size: 24px;
-  }
-
-  .user-info a {
-    margin: 1rem auto;
-    max-width: 200px;
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .user-info {
-    padding: 1rem;
-    width: 100%;
-    margin: 0.5rem auto;
-  }
-
-  .user-info h1 {
-    font-size: 1.1rem;
-  }
-
-  .user-info h2 {
-    font-size: 1rem;
-  }
-
-  .user-info p {
-    font-size: 12px;
-  }
-
-  .user-info #text {
-    font-size: 20px;
-  }
-
-  .user-info a {
-    padding: 0.5rem;
-    font-size: 0.875rem;
-    margin: 0.5rem auto;
-    max-width: 180px;
-  }
-}
-
-@media (max-width: 320px) {
-  .user-info h1 {
-    font-size: 1rem;
-  }
-
-  .user-info h2 {
-    font-size: 0.9rem;
-  }
-
-  .user-info p {
-    font-size: 20px;
-  }
-
-  .user-info #text {
-    font-size: 18px;
-  }
-
-  .user-info a {
-    font-size: 0.8rem;
-    max-width: 160px;
-  }
-}
-  </style>
-
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../../styles/home.css">
+  <link rel="stylesheet" href="../../styles/userprofile.css">
 </head>
-<body>
-  <div class="bg-image"></div>
 
-  <div class="header">
+<body>
+
+  <!-- Navigation Header -->
+  <header class="header-cust">
     <nav>
-      <h2>ELAD School of Potentials Therapy Center</h2>
-      <ul>
-        <a href="announcementview.html">Announcements</a>   
-        <div class="dropdown">
-          <a href="userprofile.html">
-            <div id="emailBtn"></div>
-          </a>       
-          <div class="dropdown-content">
-            <a href="../calendar/calendaruser.html">View Calendar</a>
-            <li><a href="../contact.html">Contact Us</a></li>
-            <li><a href="#" id="verifyBtn">Verify E-mail</a></li>
-            <li><a href="#" id="logoutBtn">Logout</a></li>
+      <a href="userprofile.html" class="logo-container">
+        <img src="../../assets/images/favicon.svg" alt="AppointMED Logo" class="brand-logo-img"
+          onerror="this.src='../../assets/images/login_profile.png'">
+        <div class="logo-text">
+          <h2>AppointMED</h2>
+          <p>Patient Portal</p>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#" class="nav-tab active" data-tab="dashboard">Dashboard</a></li>
+        <li><a href="#" class="nav-tab" data-tab="book-appointment">Set An Appointment</a></li>
+        <li><a href="#" class="nav-tab" data-tab="upcoming-appointments">Clinic Schedule</a></li>
+        <li><a href="#" class="nav-tab" data-tab="contact">Contact Us</a></li>
+      </ul>
+
+      <!-- User Profile Dropdown Pill -->
+      <div class="user-menu-container">
+        <button id="profileDropdownBtn" class="profile-pill-btn" aria-haspopup="true" aria-expanded="false">
+          <div class="avatar-circle" id="navAvatarCircle">C</div>
+          <span id="headerUserName">Chuckz</span>
+          <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+
+        <div id="profileDropdownMenu" class="dropdown-popover hidden">
+          <div class="dropdown-user-header">
+            <p id="dropdownFullName" class="dropdown-user-name">Loading...</p>
+            <p id="dropdownEmail" class="dropdown-user-email">loading@email.com</p>
+            <div style="margin-top: 0.4rem;">
+              <span id="emailVerifiedBadge" class="status-badge status-pending">Checking Email...</span>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <ul class="dropdown-list">
+            <li>
+              <a href="#" class="dropdown-item nav-tab" data-tab="profile-settings">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                  </path>
+                </svg>
+                Profile Settings
+              </a>
+            </li>
+            <li>
+              <a href="#" id="verifyBtn" class="dropdown-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                Verify E-mail
+              </a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li>
+              <a href="#" id="logoutBtn" class="dropdown-item text-danger">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main View Container -->
+  <main class="main-container">
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 1: DASHBOARD TAB -->
+    <!-- ========================================================================= -->
+    <section id="tab-dashboard" class="tab-content">
+      <div class="page-header">
+        <h1 class="page-title">Welcome back, <span id="welcomeUserName">Patient</span>!</h1>
+        <p class="page-subtitle">Manage your appointments and health information with AppointMED.</p>
+      </div>
+
+      <!-- Quick Action Cards Section -->
+      <div style="margin-bottom: 1.25rem;">
+        <h2
+          style="font-size: 1.35rem; font-weight: 700; color: var(--text-main); line-height: 1.3; margin: 0; padding: 0;">
+          Quick Actions</h2>
+        <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.35rem;">Frequently used tools and quick
+          navigation shortcuts</p>
+      </div>
+
+      <div class="dashboard-actions-grid">
+        <div class="action-card nav-tab" data-tab="book-appointment">
+          <div class="action-icon-bubble bubble-yellow">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <div class="action-card-text">
+            <h3>Book Appointment</h3>
+            <p>Schedule a new appointment</p>
           </div>
         </div>
-      </ul>
-    </nav>
+
+        <div class="action-card nav-tab" data-tab="upcoming-appointments">
+          <div class="action-icon-bubble bubble-blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div class="action-card-text">
+            <h3>Clinic Schedule</h3>
+            <p>View full clinic appointments</p>
+          </div>
+        </div>
+
+        <div class="action-card nav-tab" data-tab="profile-settings">
+          <div class="action-icon-bubble bubble-purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="action-card-text">
+            <h3>Profile Settings</h3>
+            <p>Update your information</p>
+          </div>
+        </div>
+
+        <div class="action-card nav-tab" data-tab="contact">
+          <div class="action-icon-bubble bubble-orange">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+          </div>
+          <div class="action-card-text">
+            <h3>Contact Us</h3>
+            <p>Get help and support</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Patient Portal Alerts (Dynamically Populated) -->
+      <div id="portalAlertsWrapper" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+      </div>
+
+      <!-- Health Tips Section (Clean 4 Reminders) -->
+      <div class="content-card">
+        <div class="content-card-header">
+          <div class="card-title-group">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="color: #2563eb;">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              Health Tips
+            </h2>
+            <p>Reminders for therapy and child development</p>
+          </div>
+        </div>
+
+        <div class="health-tips-grid">
+          <div class="tip-card">
+            <svg class="tip-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div class="tip-content">
+              <h4>Consistent Home Practice</h4>
+              <p>Reinforce therapy exercises and strategies at home daily to accelerate developmental milestone
+                progress.</p>
+            </div>
+          </div>
+
+          <div class="tip-card">
+            <svg class="tip-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div class="tip-content">
+              <h4>Sensory Downtime</h4>
+              <p>Provide calm, quiet sensory breaks between learning activities to prevent sensory overload and
+                emotional
+                stress.</p>
+            </div>
+          </div>
+
+          <div class="tip-card">
+            <svg class="tip-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div class="tip-content">
+              <h4>Speech & Language Play</h4>
+              <p>Dedicate 15 minutes daily to interactive reading, storytelling, and conversational play to encourage
+                verbal expression.</p>
+            </div>
+          </div>
+
+          <div class="tip-card">
+            <svg class="tip-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div class="tip-content">
+              <h4>Parent-Therapist Teamwork</h4>
+              <p>Maintain active communication with your therapy team to align home activities with weekly clinical
+                goals.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- All Appointments List Section -->
+      <div class="content-card">
+        <div class="content-card-header">
+          <div class="card-title-group">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="color: var(--accent-dark);">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+              All Appointments
+            </h2>
+            <p>Filter and search through your appointments</p>
+          </div>
+          <div>
+            <button class="btn-primary nav-tab" data-tab="book-appointment">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="margin-right: 0.4rem;">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              Book New Appointment
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Buttons (Horizontal Inline Chips) -->
+        <div class="filter-chips-group" id="allAppointmentsFilterGroup" style="margin-bottom: 1.5rem;">
+          <button class="filter-chip active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="pending">Pending</button>
+          <button class="filter-chip" data-filter="confirmed">Confirmed</button>
+          <button class="filter-chip" data-filter="completed">Completed</button>
+          <button class="filter-chip" data-filter="cancelled">Cancelled</button>
+        </div>
+
+        <!-- Appointments Dynamic Container -->
+        <div id="allAppointmentsContainer">
+          <div class="empty-state">
+            <div class="empty-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <h3>No appointments found</h3>
+            <p>You haven't scheduled any appointments yet</p>
+            <button class="btn-primary nav-tab" data-tab="book-appointment">
+              Book Your First Appointment
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Upcoming Appointments Calendar Section (Placed under All Appointments section) -->
+      <div class="content-card">
+        <div class="content-card-header">
+          <div class="card-title-group">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="color: #2563eb;">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              My Appointments
+            </h2>
+            <p>Calendar view of your personal appointments and therapy sessions</p>
+          </div>
+        </div>
+        <div class="custom-calendar-container" id="userDashboardCalendarContainer"></div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 2: SET AN APPOINTMENT TAB (CLEAN CLINIC CALENDAR + CONTACT PANEL) -->
+    <!-- ========================================================================= -->
+    <section id="tab-book-appointment" class="tab-content hidden">
+      <div class="page-header">
+        <h1 class="page-title">Set An Appointment</h1>
+        <p class="page-subtitle">Schedule an appointment or update your appointment details.</p>
+      </div>
+
+      <div class="calendar-layout-grid">
+        <!-- Clinic Full Calendar View -->
+        <div class="calendar-wrapper-card">
+          <div class="custom-calendar-container" id="clinicCalendarContainer"></div>
+        </div>
+
+        <!-- Sidebar Contact Info Panel -->
+        <aside>
+          <!-- Live Status Card -->
+          <div class="sidebar-card"
+            style="background-color: var(--medical-blue-subtle); border-color: var(--medical-blue-border);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span class="status-badge status-confirmed" style="font-size: 0.75rem;">Clinic Open Today</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">8:00 AM - 6:00 PM</span>
+            </div>
+            <p style="font-size: 0.825rem; color: var(--text-main); line-height: 1.4;">
+              Staff is currently available to assist you with booking or rescheduling therapy sessions.
+            </p>
+          </div>
+
+          <!-- Contact Details Card -->
+          <div class="sidebar-card">
+            <h3>Contact Clinic to Book</h3>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              Appointments, modifications, and cancellations are managed directly by our clinic staff.
+            </p>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              To set an appointment, check our clinic schedule and contact us for scheduling an appointment.
+            </p>
+
+            <div class="info-list-item">
+              <span class="info-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </span>
+              <div class="info-content">
+                <strong>Clinic Address</strong>
+                <p>Camerino St. Brgy. Luciano, Trece Martires, Philippines</p>
+              </div>
+            </div>
+
+            <div class="info-list-item">
+              <span class="info-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                  </path>
+                </svg>
+              </span>
+              <div class="info-content">
+                <strong>Phone Number</strong>
+                <p><a href="tel:+639474295648">+63 947 429 5648</a></p>
+              </div>
+            </div>
+
+            <div class="info-list-item">
+              <span class="info-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </span>
+              <div class="info-content">
+                <strong>Email Address</strong>
+                <p><a href="mailto:eladschoolofpotentials@yahoo.com">eladschoolofpotentials@yahoo.com</a></p>
+              </div>
+            </div>
+
+            <div class="info-list-item">
+              <span class="info-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </span>
+              <div class="info-content">
+                <strong>Operating Hours</strong>
+                <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+              </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1.25rem 0;">
+
+            <a href="https://www.facebook.com/ELADSchoolofPotentials" target="_blank" class="btn-primary btn-full-width"
+              style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.51 3.733 7.185V22l3.422-1.878c.904.25 1.866.386 2.845.386 5.523 0 10-4.145 10-9.25C22 6.145 17.523 2 12 2zm1.003 12.443l-2.548-2.718-4.97 2.718 5.467-5.8 2.607 2.718 4.91-2.718-5.466 5.8z" />
+              </svg>
+              Facebook Messenger
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 3: CLINIC SCHEDULE TAB (ALL CLINIC APPOINTMENTS) -->
+    <!-- ========================================================================= -->
+    <section id="tab-upcoming-appointments" class="tab-content hidden">
+      <div class="page-header">
+        <h1 class="page-title">Clinic Schedule</h1>
+        <p class="page-subtitle">View all clinic appointments and schedule availability.</p>
+      </div>
+
+      <div class="calendar-layout-grid">
+        <!-- Clinic Schedule Calendar View (Shows All Clinic Appointments) -->
+        <div class="calendar-wrapper-card">
+          <div class="custom-calendar-container" id="userCalendarContainer"></div>
+        </div>
+
+        <!-- Sidebar Filters & Clinic Upcoming List -->
+        <aside>
+          <!-- Filter Appointments Card -->
+          <div class="sidebar-card">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="margin-right: 0.35rem;">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              Filter Appointments
+            </h4>
+            <div class="filter-group" style="flex-direction: column; gap: 0.4rem;">
+              <button class="btn-filter active user-filter" data-user-filter="all">
+                <span>All Appointments</span>
+                <span class="filter-count-badge" id="count-all">0</span>
+              </button>
+              <button class="btn-filter user-filter" data-user-filter="pending">
+                <span>Pending</span>
+                <span class="filter-count-badge" id="count-pending">0</span>
+              </button>
+              <button class="btn-filter user-filter" data-user-filter="confirmed">
+                <span>Confirmed</span>
+                <span class="filter-count-badge" id="count-confirmed">0</span>
+              </button>
+              <button class="btn-filter user-filter" data-user-filter="completed">
+                <span>Completed</span>
+                <span class="filter-count-badge" id="count-completed">0</span>
+              </button>
+              <button class="btn-filter user-filter" data-user-filter="cancelled">
+                <span>Cancelled</span>
+                <span class="filter-count-badge" id="count-cancelled">0</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Available Open Schedule Slots -->
+          <div class="sidebar-card">
+            <h4>Available Open Slots</h4>
+
+            <div id="upcomingListContainer">
+              <p style="font-size: 0.875rem; color: var(--text-muted); text-align: center; padding: 1.5rem 0;">Checking
+                open schedule slots...</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 4: CONTACT US TAB -->
+    <!-- ========================================================================= -->
+    <section id="tab-contact" class="tab-content hidden">
+      <div class="page-header" style="text-align: center; max-width: 600px; margin: 0 auto 2.5rem;">
+        <h1 class="page-title">Contact Us</h1>
+        <p class="page-subtitle">Need help? We're here to assist you with any questions or concerns about your
+          healthcare journey.</p>
+      </div>
+
+      <!-- Top 3 Contact Method Cards (Phone, Email, Facebook Messenger) -->
+      <div class="contact-top-grid">
+        <div class="contact-method-card">
+          <div class="contact-icon-bubble bg-icon-yellow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+          </div>
+          <h3>Contact Us</h3>
+          <p>Call us for inquiries</p>
+          <strong>+63 947 429 5648</strong>
+          <span style="font-size: 0.775rem; color: var(--text-muted); display: block; margin-top: 0.25rem;">Mon-Fri 8AM
+            - 6PM</span>
+        </div>
+
+        <div class="contact-method-card">
+          <div class="contact-icon-bubble bg-icon-blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <h3>Email Us</h3>
+          <p>Send us a detailed message</p>
+          <strong>eladschoolofpotentials@yahoo.com</strong>
+          <span style="font-size: 0.775rem; color: var(--text-muted); display: block; margin-top: 0.25rem;">Responding
+            Actively</span>
+        </div>
+
+        <div class="contact-method-card">
+          <div class="contact-icon-bubble bg-icon-purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color: #2563eb;">
+              <path
+                d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.51 3.733 7.185V22l3.422-1.878c.904.25 1.866.386 2.845.386 5.523 0 10-4.145 10-9.25C22 6.145 17.523 2 12 2zm1.003 12.443l-2.548-2.718-4.97 2.718 5.467-5.8 2.607 2.718 4.91-2.718-5.466 5.8z" />
+            </svg>
+          </div>
+          <h3>Send us a Message</h3>
+          <p>Chat us on Facebook Messenger</p>
+          <div style="margin-top: 0.75rem; width: 100%;">
+            <a href="https://www.facebook.com/ELADSchoolofPotentials" target="_blank" class="btn-primary"
+              style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.5rem 1rem; width: 100%; font-size: 0.85rem; border-radius: 0.5rem; text-decoration: none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.51 3.733 7.185V22l3.422-1.878c.904.25 1.866.386 2.845.386 5.523 0 10-4.145 10-9.25C22 6.145 17.523 2 12 2zm1.003 12.443l-2.548-2.718-4.97 2.718 5.467-5.8 2.607 2.718 4.91-2.718-5.466 5.8z" />
+              </svg>
+              Facebook Messenger
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Maps Guide & Interactive Map View Card -->
+      <div class="content-card" style="margin-bottom: 2.5rem;">
+        <div class="content-card-header" style="margin-bottom: 1.25rem;">
+          <div class="card-title-group">
+            <h2>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              Clinic Location
+            </h2>
+            <p>ELAD School of Potentials Therapy Center - Camerino St. Brgy. Luciano, Trece Martires, Cavite</p>
+          </div>
+          <a href="https://maps.app.goo.gl/aH8N4q66MQ6toG8N8" target="_blank" class="btn-secondary"
+            style="font-size: 0.85rem; padding: 0.45rem 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            Open in Google Maps
+          </a>
+        </div>
+
+        <!-- Embedded Google Maps iFrame Container (Pinpointed to Exact Clinic Coordinates) -->
+        <div
+          style="width: 100%; height: 380px; border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); position: relative; margin-bottom: 1.25rem;">
+          <iframe title="ELAD School of Potentials Exact Location Map" width="100%" height="100%"
+            style="border:0; display:block;" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=14.2748745,120.8702112&t=&z=17&ie=UTF8&iwloc=&output=embed">
+          </iframe>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.25rem;">
+          <div
+            style="background-color: var(--bg-main); padding: 0.85rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border-color); font-size: 0.825rem;">
+            <strong style="color: var(--text-main); display: block; margin-bottom: 0.15rem;">Street View Guide</strong>
+            <span style="color: var(--text-muted);">Yellow clinic building along Marcius Ave / Camerino St</span>
+          </div>
+          <div
+            style="background-color: var(--bg-main); padding: 0.85rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border-color); font-size: 0.825rem;">
+            <strong style="color: var(--text-main); display: block; margin-bottom: 0.15rem;">Nearby Landmark</strong>
+            <span style="color: var(--text-muted);">Beside Angel Mae Store & Cavite Provincial Capitol</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="content-card" style="margin-top: 2rem;">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div class="card-title-group">
+            <h2
+              style="font-size: 1.35rem; font-weight: 700; color: var(--text-main); line-height: 1.3; margin: 0; padding: 0;">
+              Frequently Asked Questions</h2>
+            <p id="userFaqSubtitle"
+              style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.35rem; line-height: 1.4;">Quick
+              answers to common questions</p>
+          </div>
+
+          <!-- ENG / FIL Language Switcher Toggle -->
+          <div class="faq-lang-toggle" id="userFaqLangToggle">
+            <button type="button" class="lang-btn active" data-lang="eng">ENG</button>
+            <button type="button" class="lang-btn" data-lang="fil">FIL</button>
+          </div>
+        </div>
+
+        <div class="faq-grid" id="userFaqGrid">
+          <div class="faq-card">
+            <h4>How do I book an appointment?</h4>
+            <p>You can view clinic schedule availability on the "Set An Appointment" tab, then contact our clinic
+              directly via phone or Facebook Messenger to reserve your session.</p>
+          </div>
+          <div class="faq-card">
+            <h4>What should I bring to my appointment?</h4>
+            <p>Please bring a valid ID, any relevant medical records, developmental evaluations, or physician referrals
+              for your initial consultation.</p>
+          </div>
+          <div class="faq-card">
+            <h4>Can I reschedule or cancel my appointment?</h4>
+            <p>Yes. To reschedule or cancel your session, please notify our clinic staff at least 24 hours in advance so
+              we can adjust the schedule.</p>
+          </div>
+          <div class="faq-card">
+            <h4>How long is each therapy session?</h4>
+            <p>Standard therapy sessions typically last 45 to 60 minutes, tailored to your child's individualized
+              treatment plan and developmental goals.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 5: PROFILE SETTINGS TAB -->
+    <!-- ========================================================================= -->
+    <section id="tab-profile-settings" class="tab-content hidden">
+      <div class="page-header">
+        <h1 class="page-title">Profile Settings</h1>
+        <p class="page-subtitle">Manage your personal information and account details.</p>
+      </div>
+
+      <div class="profile-layout-grid">
+        <!-- Left Profile Summary Card -->
+        <div class="profile-summary-card">
+          <div class="profile-avatar-lg" id="profileAvatarLg">C</div>
+          <h3 id="profileFullNameDisplay">User Name</h3>
+          <div style="margin: 0.5rem 0 1rem;">
+            <span id="profileVerifiedStatus" class="status-badge status-pending">Email Verification Status</span>
+          </div>
+          <p id="profileEmailDisplay"
+            style="font-size: 0.85rem; color: var(--text-muted); word-break: break-all; margin-bottom: 0.4rem;">
+            user@example.com</p>
+          <p id="profileMemberSince" style="font-size: 0.775rem; color: var(--text-muted);">Member since --/--/----</p>
+        </div>
+
+        <!-- Right Personal Information Edit Form -->
+        <div class="content-card" style="margin-bottom: 0;">
+          <div class="card-title-group" style="margin-bottom: 1.5rem;">
+            <h2>Personal Information</h2>
+            <p>Update your profile details and contact information</p>
+          </div>
+
+          <form id="profileForm">
+            <div class="form-group full-width">
+              <label for="profileEmailInput">Email Address</label>
+              <input type="email" id="profileEmailInput" class="form-input" disabled>
+              <span id="profileFormEmailNote"
+                style="font-size: 0.75rem; color: #15803d; font-weight: 600; display: inline-block; margin-top: 0.25rem;">Verified
+                Account</span>
+            </div>
+
+            <div class="form-group-grid">
+              <div class="form-group">
+                <label for="firstNameInput">First Name <span
+                    style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+                <input type="text" id="firstNameInput" class="form-input" placeholder="Enter first name">
+              </div>
+
+              <div class="form-group">
+                <label for="lastNameInput">Last Name <span
+                    style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+                <input type="text" id="lastNameInput" class="form-input" placeholder="Enter last name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="middleNameInput">Middle Name <span
+                  style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+              <input type="text" id="middleNameInput" class="form-input" placeholder="Enter middle name">
+            </div>
+
+            <div class="form-group-grid">
+              <div class="form-group">
+                <label for="phoneInput">Phone Number <span style="color: #dc2626;">*</span></label>
+                <input type="tel" id="phoneInput" class="form-input" placeholder="Enter phone number">
+              </div>
+
+              <div class="form-group">
+                <label for="ageInput">Age <span
+                    style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+                <input type="number" id="ageInput" class="form-input" placeholder="Enter age" min="1" max="120">
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="addressInput">Address <span
+                  style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+              <input type="text" id="addressInput" class="form-input" placeholder="Enter your full address">
+            </div>
+
+            <div class="form-group full-width">
+              <label for="facebookInput">Facebook Account/Link <span style="color: #dc2626;">*</span> <span
+                  style="font-size: 0.7rem; color: var(--text-muted); font-weight: normal;">(max 50
+                  chars)</span></label>
+              <div style="position: relative; display: flex; align-items: center;">
+                <input type="text" id="facebookInput" class="form-input" maxlength="50"
+                  placeholder="Name or fb.com/link" style="width: 100%; padding-right: 2rem;">
+                <button type="button" id="clearFbBtn"
+                  style="display: none; position: absolute; right: 0.5rem; background: none; border: none; font-size: 1.1rem; color: #64748b; cursor: pointer; line-height: 1; padding: 0.2rem;"
+                  title="Clear Facebook field">&times;</button>
+              </div>
+              <div id="fbBadgePreview" style="display: none; margin-top: 0.5rem;">
+                <span
+                  style="display: inline-flex; align-items: center; gap: 0.35rem; background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 0.25rem 0.65rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                  <a id="fbBadgeLink" href="#" target="_blank" style="color: #1d4ed8; text-decoration: underline;">FB
+                    Link</a>
+                  <span id="fbBadgeClearBtn"
+                    style="cursor: pointer; font-size: 0.9rem; margin-left: 0.35rem; color: #1e40af; font-weight: bold;"
+                    title="Remove Link">&times;</span>
+                </span>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+              <button type="submit" id="saveProfileBtn" class="btn-primary btn-full-width">
+                Update Profile
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Danger Zone: Account Deletion -->
+      <div class="content-card" style="margin-top: 2rem; border-color: #fca5a5;">
+        <div class="card-title-group" style="margin-bottom: 1rem;">
+          <h2 style="color: #b91c1c;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2"
+              style="margin-right: 0.3rem;">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            Danger Zone
+          </h2>
+          <p>Irreversible actions that permanently affect your account</p>
+        </div>
+
+        <div
+          style="background-color: #fef2f2; border: 1px solid #fecaca; border-radius: 0.5rem; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px;">
+            <strong style="font-size: 0.9rem; color: #b91c1c; display: block;">Delete My Account Permanently</strong>
+            <p style="font-size: 0.8rem; color: #991b1b; margin-top: 0.25rem;">This will permanently delete your
+              account, all your appointments, and all personal data. This action cannot be undone.</p>
+          </div>
+          <button type="button" id="deleteAccountBtn"
+            style="background-color: #dc2626; color: #ffffff; border: none; padding: 0.55rem 1.25rem; border-radius: 0.5rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background-color 0.2s;">
+            Delete My Account
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Delete Account Confirmation Modal -->
+  <div id="deleteAccountModal" class="modal-overlay hidden"
+    style="position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 1100; display: none; align-items: center; justify-content: center; padding: 1rem;">
+    <div
+      style="background-color: var(--bg-card); border: 1px solid #fca5a5; border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow-lg); overflow: hidden; animation: fadeIn 0.2s ease-out;">
+      <div
+        style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #fecaca; display: flex; justify-content: space-between; align-items: center; background-color: #fef2f2;">
+        <h3
+          style="font-size: 1.1rem; font-weight: 700; color: #b91c1c; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          Confirm Account Deletion
+        </h3>
+        <button id="closeDeleteModalBtn"
+          style="background: none; border: none; font-size: 1.25rem; color: var(--text-muted); cursor: pointer; padding: 0.2rem; line-height: 1;"
+          title="Close">&times;</button>
+      </div>
+
+      <div style="padding: 1.5rem;">
+        <p style="font-size: 0.9rem; color: var(--text-main); margin-bottom: 1rem; line-height: 1.5;">Are you absolutely
+          sure you want to delete your account? This will permanently remove:</p>
+        <ul
+          style="font-size: 0.85rem; color: var(--text-muted); padding-left: 1.25rem; margin-bottom: 1.25rem; line-height: 1.7;">
+          <li>Your profile and personal information</li>
+          <li>All of your scheduled clinic appointments</li>
+        </ul>
+        <p style="font-size: 0.825rem; color: #b91c1c; font-weight: 600; margin-bottom: 1.25rem;">⚠ This action is
+          irreversible and cannot be undone.</p>
+
+        <div id="deleteAccountReauthSection" style="display: none; margin-bottom: 1rem;">
+          <label
+            style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.4rem;">Enter
+            your password to confirm:</label>
+          <input type="password" id="deleteAccountPassword" class="form-input" placeholder="Enter your password"
+            style="width: 100%;">
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+          <button type="button" id="cancelDeleteBtn" class="btn-secondary"
+            style="flex: 1; padding: 0.55rem;">Cancel</button>
+          <button type="button" id="confirmDeleteBtn"
+            style="flex: 1; background-color: #dc2626; color: #ffffff; border: none; padding: 0.55rem; border-radius: 0.5rem; font-size: 0.85rem; font-weight: 700; cursor: pointer;">
+            Yes, Delete Everything
+          </button>
+        </div>
+        <p id="deleteAccountStatus"
+          style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 0.75rem;"></p>
+      </div>
+    </div>
   </div>
 
-  <div class="user-info">
+  <!-- Interactive Appointment Details Modal (Privacy Safeguarded) -->
+  <div id="appointmentDetailModal" class="modal-overlay hidden"
+    style="position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1rem;">
+    <div
+      style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow-lg); overflow: hidden; animation: fadeIn 0.2s ease-out;">
+      <div
+        style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background-color: var(--bg-main);">
+        <h3
+          style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Appointment Details
+        </h3>
+        <button id="closeApptModalBtn"
+          style="background: none; border: none; font-size: 1.25rem; color: var(--text-muted); cursor: pointer; padding: 0.2rem; line-height: 1;"
+          title="Close">&times;</button>
+      </div>
 
-    <div class="img"><img src='../../assets/images/login_profile.png' class="profile">  </div>
-    <strong>
-    <h2>Personal Info</h2>
-    <p id="email"></p>
-    <p id="id"></p>
-    <p id="name"></p>
-    <br>
-    <h2>Appointment Status</h2>
-    <p id="appointmentStatus"></p>
-    <p id="appointmentType"></p>
-    <p id="appointmentDate"></p>
-    <p id="appointmentTime"></p>
-    <p id="paymentStatus"></p>
-    <p id="appointmentNotif"></p>
-    </strong>
-    <br><br>
-    <p>If you want to set up a new Appointment, please <a href="../contact.html">Contact Us</a>.</p>
+      <div style="padding: 1.5rem;">
+        <div style="margin-bottom: 1.25rem;">
+          <span id="modalApptStatusBadge" class="status-badge status-pending"
+            style="margin-bottom: 0.5rem; display: inline-block;">Pending</span>
+          <h4 id="modalApptService" style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 0;">--
+          </h4>
+        </div>
 
-</div>
+        <div
+          style="display: flex; flex-direction: column; gap: 0.85rem; background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="color: var(--text-muted);">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <div>
+              <span style="font-size: 0.725rem; color: var(--text-muted); display: block;">Scheduled Date</span>
+              <strong id="modalApptDate" style="font-size: 0.875rem; color: var(--text-main);">--</strong>
+            </div>
+          </div>
 
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="color: var(--text-muted);">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <div>
+              <span style="font-size: 0.725rem; color: var(--text-muted); display: block;">Time Window & Duration</span>
+              <strong id="modalApptTime" style="font-size: 0.875rem; color: var(--text-main);">--</strong>
+            </div>
+          </div>
 
-<div class="footer"> 
-  <div class="social-links">
-    <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="color: var(--text-muted);">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <div>
+              <span style="font-size: 0.725rem; color: var(--text-muted); display: block;">Assigned Doctor /
+                Specialist</span>
+              <strong id="modalApptDoctor" style="font-size: 0.875rem; color: var(--text-main);">--</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
-</div>
+  </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-  import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
-  import { getFirestore, collection, doc, getDocs, query, where, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+  <!-- Day Appointments Modal (For overflowing calendar days) -->
+  <div id="dayAppointmentsModal" style="position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 1100; display: none; align-items: center; justify-content: center; padding: 1rem;">
+    <div style="background-color: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); width: 100%; max-width: 500px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; max-height: 85vh;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding: 1.25rem 1.5rem;">
+        <h2 id="dayModalTitle" style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin: 0;">Appointments</h2>
+        <button type="button" id="closeDayModalBtn" style="background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.25rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div id="dayModalList" style="overflow-y: auto; flex: 1; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
-    authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
-    databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "appointment-scheduling-s-57d01",
-    storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
-    messagingSenderId: "1069885306589",
-    appId: "1:1069885306589:web:b31768194add4087754d34",
-    measurementId: "G-KQ4PQZZZBM"
-  };
-  const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app); 
-        const db = getFirestore();
-    
-    
-
-        
-        function updateDropdownEmail(user) {
-            const emailButton = document.getElementById('emailBtn'); 
-            if (user) {
-                emailButton.textContent = user.email;
-            } else {
-                emailButton.textContent = 'Guest'; 
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', (event) => { 
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    updateDropdownEmail(user);
-                    document.getElementById("email").innerHTML = "Email: " + user.email; 
-
-                    user.reload()
-                        .then(() => {
-                            const verifyBtn = document.getElementById('verifyBtn');
-                            if (user.emailVerified) {
-                                verifyBtn.textContent = "Email Verified";
-                                verifyBtn.removeAttribute('href'); 
-                            } else {
-                                verifyBtn.textContent = "Verify E-mail";
-                                verifyBtn.href = "#"; 
-                            }
-                            getUserDataByEmail(user.email);
-                        })
-                        .catch((error) => {
-                            console.log("Error reloading user:", error);
-                            alert("Error reloading user: " + error.message); 
-                        });
-
-                } else {
-                    console.log("No user is signed in.");
-                    window.location.href = 'login.html'; 
-                }
-            });
-        }); 
-  
-
-        async function getUserDataByEmail(email) {
-    try {
-        const usersRef = collection(db, 'appointments');
-        const q = query(usersRef, where("email", "==", email));
-        const querySnapshot = await getDocs(q); 
-  
-        if (!querySnapshot.empty) {
-            const userData = querySnapshot.docs[0].data(); 
-            console.log("User Data from Firestore:", userData);
-  
-            document.getElementById('name').textContent = `Name: ${userData.firstName + " " + userData.middleName + " " + userData.surname || 'N/A'}`; 
-            document.getElementById('appointmentType').textContent = `Type: ${userData.appointmentType || 'N/A'}`;
-            document.getElementById('appointmentDate').textContent = `Date: ${formatDate(userData.appointmentDate) || 'N/A'}`;
-            document.getElementById('appointmentTime').textContent = `Time: from ${formatTime(userData.appointmentTimeStart) + " to " + formatTime(userData.appointmentTimeEnd) || 'N/A'}`;
-            document.getElementById('paymentStatus').textContent = `Payment Status: ${userData.paymentStatus || 'N/A'}`;  
-            document.getElementById('appointmentStatus').textContent = `Status: ${userData.appointmentStatus || 'N/A'}`;  
-        
-            const appointmentDate = new Date(userData.appointmentDate);
-            const currentDate = new Date();
-
-            // Ensure both dates are at midnight to ignore time components
-            const normalizedCurrentDate = new Date(currentDate.setHours(0, 0, 0, 0)); 
-            const normalizedAppointmentDate = new Date(appointmentDate.setHours(0, 0, 0, 0)); 
-
-            // Create dates for reminders: 3 days before and 1 day before
-            const threeDaysBefore = new Date(normalizedAppointmentDate);
-            threeDaysBefore.setDate(normalizedAppointmentDate.getDate() - 3);
-  
-            const twentyFourHoursBefore = new Date(normalizedAppointmentDate);
-            twentyFourHoursBefore.setDate(normalizedAppointmentDate.getDate() - 1);
-
-            console.log("Normalized Current Date: ", normalizedCurrentDate);
-            console.log("Normalized Appointment Date: ", normalizedAppointmentDate);
-            console.log("Three Days Before: ", threeDaysBefore);
-            console.log("24 Hours Before: ", twentyFourHoursBefore);
-
-            let notification = '';
-        
-            // Compare dates only based on the day
-            if (normalizedCurrentDate.getTime() === threeDaysBefore.getTime()) {
-                notification = 'Reminder: Your appointment is in 3 days!';
-            } else if (normalizedCurrentDate.getTime() === twentyFourHoursBefore.getTime()) {
-                notification = 'Reminder: Your appointment is in 24 hours!';
-            }
-  
-            document.getElementById('appointmentNotif').textContent = notification;
-  
-        } else {
-            console.log("No user found with this email.");
-        }
-    } catch (error) {
-        console.log("Error getting Firestore data:", error);
-        alert("Error getting user data: " + error.message); 
-    }
-}
-
-document.addEventListener('DOMContentLoaded', (event) => { 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            updateDropdownEmail(user);
-            document.getElementById("email").innerHTML = "Email: " + user.email;
-
-            user.reload()
-                .then(() => {
-                    const verifyBtn = document.getElementById('verifyBtn');
-                    if (user.emailVerified) {
-                        verifyBtn.textContent = "Email Verified";
-                        verifyBtn.removeAttribute('href'); 
-                        // Display name and appointment status when email is verified
-                        document.getElementById('name').style.display = 'block';
-                        document.getElementById('appointmentStatus').style.display = 'block';
-                        getUserDataByEmail(user.email);
-                    } else {
-                        verifyBtn.textContent = "Verify E-mail";
-                        verifyBtn.href = "#"; 
-                        // Hide name and appointment status when email is not verified
-                        document.getElementById('name').style.display = 'none';
-                        document.getElementById('appointmentStatus').style.display = 'none';
-                    }
-                })
-                .catch((error) => {
-                    console.log("Error reloading user:", error);
-                    alert("Error reloading user: " + error.message); 
-                });
-
-        } else {
-            console.log("No user is signed in.");
-            window.location.href = 'login.html'; 
-        }
-    });
-});
-
-
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options); 
-}
-
-function formatTime(timeString) {
-    const time = new Date('1970-01-01T' + timeString + 'Z');
-    if (isNaN(time)) {
-        return 'Invalid Time'; 
-    }
-    const options = { hour: '2-digit', minute: '2-digit', hour12: true };
-    return time.toLocaleTimeString('en-US', options); 
-}
-
-
-        const signOutUser = () => {
-            signOut(auth)
-                .then(() => {
-                    console.log('Signed out successfully');
-                    window.location.href = 'login.html'; 
-                })
-                .catch((error) => {
-                    console.log('Error signing out:', error);
-                    alert("Error: " + error.message); 
-                });
-        };
-
-        const verifyEmail = () => {
-            const user = auth.currentUser;
-            if (user) {
-                sendEmailVerification(user)
-                    .then(() => {
-                        alert("Verification email sent!");
-                    })
-                    .catch((error) => {
-                        console.log('Error sending verification email:', error);
-                        alert("Error: " + error.message); 
-                    });
-            }
-        };
-
-        document.getElementById('logoutBtn').addEventListener('click', signOutUser);
-        document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
-    </script>
+  <!-- Firebase & User Profile Script -->
+  <script type="module" src="../../scripts/userprofile.js?v=2"></script>
 </body>
+
 </html>
-
-
-
-  

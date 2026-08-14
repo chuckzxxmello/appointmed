@@ -1,0 +1,87 @@
+/* Smooth Snapping Carousel */
+.carousel-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 1rem 0;
+    position: relative;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+.carousel-container::-webkit-scrollbar {
+    height: 0px; /* Chrome/Safari */
+}
+
+.carousel-track {
+    display: flex;
+    gap: 2.5rem;
+    width: max-content;
+    /* Removed 30vw padding, infinite scroll handles edges natively */
+}
+
+/* Mask to fade edges */
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+}
+.carousel-wrapper::before,
+.carousel-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 120px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+.carousel-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #f8fafc, transparent);
+}
+.carousel-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #f8fafc, transparent);
+}
+
+.review-card {
+    flex: 0 0 auto; 
+    width: 500px;
+    scroll-snap-align: center;
+    transition: transform 0.3s ease;
+}
+.review-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Minimal Floating Arrows */
+.minimal-arrow {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #334155;
+    opacity: 0.3;
+    transition: all 0.2s ease;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 1rem;
+}
+.minimal-arrow:hover {
+    opacity: 1;
+    color: #2563eb;
+    transform: translateY(-50%) scale(1.2);
+}
+.minimal-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+.left-arrow {
+    left: 1rem;
+}
+.right-arrow {
+    right: 1rem;
+}

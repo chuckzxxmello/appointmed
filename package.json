@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
-    "firebase": "^11.0.2"
+    "firebase": "^11.0.2",
+    "firebase-admin": "^14.2.0"
   },
   "devDependencies": {
     "@nightwatch/mobile-helper": "^2.0.0",

@@ -1,616 +1,270 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Appointment</title>
-
-    <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="../../../assets/images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="../../../assets/images/apple-touch-icon.png">
-    <link rel="icon" sizes="96x96" href="../../../assets/images/favicon-96x96.png">
-    <link rel="manifest" href="../../../assets/images/site.webmanifest">
-      
-    <meta name="theme-color" content="#ffd60a">
-    <meta name="msapplication-TileImage" content="src/assets/images/web-app-manifest-192x192.png">
-    <meta name="msapplication-TileColor" content="#ffd60a">
-
-</head>
-<body>
-    
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AppointMED - Appointment Management</title>
 
-<!-- title -->    <title>Login</title>
+  <!-- Favicon and app icons -->
+  <link rel="icon" href="../../../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="../../../assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="../../../assets/images/site.webmanifest">
 
-<link rel="stylesheet" href="../../../styles/setappoint.css">
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script> 
+  <!-- Unified Admin Design System -->
+  <link rel="stylesheet" href="../../../styles/admin.css">
 </head>
 
 <body>
 
-  <div class="bg-image"></div>
-
-  <div class="header">
-    <nav>
-        <h2>ELAD School of Potentials Therapy Center</h2>
-        <ul>
-          <div class="dropdown-admin">
-            <div class="dropdown-admin" onclick="window.location.href='../adminhome.html';">Admin Dashboard</div>
-            <div class="dropdown-content-admin">
-                <li><a href="setappoint.html">Manage Users</a></li>
-                <li><a href="../../calendar/calendaredit.html">View Calendar</a></li>
-                <li><a href="../analytics.html">Analytics</a></li>
-                <li><a href="#" id="logoutBtn">Logout</a></li>
-            </div>
+  <!-- Navigation Header -->
+  <header class="admin-header">
+    <div class="admin-nav-container">
+      <a href="../adminhome.html" class="admin-brand">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2"
+          style="margin-right: 0.2rem;">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+        <div class="admin-brand-text">
+          <h2>Appointment Management</h2>
+          <p>Admin Panel</p>
         </div>
-        </ul> 
-    </nav>
-  </div>  
+      </a>
 
-
-  <div class="manage-user"> 
-    <!-- Unique IDs for each button -->
-    <a href="../announcement.html" class="user button">Create Announcement</a>
-    <button type="button" class="user" id="view_users">View Users</button>
-    <button type="button" class="user" id="view_appointments">View Appointments</button>
-    <button class="addel" id="addAppointmentButton">Add Appointment</button>
-    <button class="addel" id="updateAppointmentButton">Update Appointment</button>
-    <button class="addel" id="deleteAppointmentButton">Delete Appointment</button>
-  </div>
-
-  <div class="col-row-appoint">
-    <script>
-      // Event listeners for buttons to show respective forms
-      document.getElementById("addAppointmentButton").addEventListener("click", function () {
-          showForm("add");
-      });
-    
-      document.getElementById("updateAppointmentButton").addEventListener("click", function () {
-          showForm("update");
-      });
-    
-      document.getElementById("deleteAppointmentButton").addEventListener("click", function () {
-          showForm("delete");
-      });
-    
-      // Function to handle the visibility of forms and tables
-      function showForm(type) {
-          var setForm = document.getElementById("setForm");
-          var updateForm = document.getElementById("updateForm");
-          var deleteForm = document.getElementById("deleteForm");
-          var appointmentTable = document.getElementById("appointmentTable");
-          var usersTable = document.getElementById("usersTable");
-    
-          // Reset all forms and tables to hidden
-          if (setForm) setForm.style.display = "none";
-          if (updateForm) updateForm.style.display = "none";
-          if (deleteForm) deleteForm.style.display = "none";
-          if (appointmentTable) appointmentTable.style.display = "none";
-          if (usersTable) usersTable.style.display = "none";
-    
-          // Show the relevant form and tables based on the action type
-          switch (type) {
-              case "add":
-                  if (setForm) setForm.style.display = "block";
-                  // Remove the appointmentTable display line so it stays hidden on add
-                  break;
-              case "update":
-                  if (updateForm) updateForm.style.display = "block";
-                  if (usersTable) usersTable.style.display = "block"; // Show users table for updating an appointment
-                  break;
-              case "delete":
-                  if (deleteForm) deleteForm.style.display = "block";
-                  if (usersTable) usersTable.style.display = "block"; // Show users table for deleting an appointment
-                  break;
-              default:
-                  console.log("Invalid form type");
-          }
-      }
-    
-      // Event listener for "View Users" to show the users table and hide the appointment table
-      document.getElementById("view_users").addEventListener("click", function() {
-          var appointmentTable = document.getElementById("appointmentTable");
-          var usersTable = document.getElementById("usersTable");
-    
-          // Hide the appointment table
-          if (appointmentTable) appointmentTable.style.display = "none";
-    
-          // Show the users table
-          if (usersTable) usersTable.style.display = "block";
-      });
-    
-      // Event listener for "View Appointments" to show the appointment table and hide the users table
-      document.getElementById("view_appointments").addEventListener("click", function() {
-          var appointmentTable = document.getElementById("appointmentTable");
-          var usersTable = document.getElementById("usersTable");
-    
-          // Show the appointment table
-          if (appointmentTable) appointmentTable.style.display = "block";
-    
-          // Hide the users table
-          if (usersTable) usersTable.style.display = "none";
-      });
-    </script>
-     
-  
-  
-  
-    <form class="set" id="setForm" style="display:none;">
-      <h2>Add an Appointment Schedule</h2>
-      
-      <div class="form-container">
-        <!-- Left Column -->
-        <div class="form-column">
-          <label for="appointmentDate">Full Name of Client:</label>
-          <input type="text" id="firstName" name="firstName" required placeholder="First Name">
-          <input type="text" id="middleName" name="middleName" required placeholder="Middle Name">
-          <input type="text" id="surname" name="surname" required placeholder="Last Name">
-          
-          <label for="email">Email</label>
-          <input type="text" id="email" name="email" required placeholder="john.doe@gmail.com">
-          
-          <label for="contact">Phone Number</label>
-          <input type="text" id="contact" name="contact" required placeholder="+63-XXX-XXXX-XXX">
-          
-          <label for="appointType">Type of Appointment</label>
-          <select name="appointmentType">
-            <option value=""></option>
-            <option value="CONSULTATION">CONSULTATION</option>
-            <option value="THERAPY">THERAPY</option>
-            <option value="CHECK_UP">CHECK-UP</option>
-            <option value="TRAINING_SESSION">TRAINING SESSION</option>
-            <option value="COACHING">COACHING</option>
-            <option value="DIAGNOSTIC">DIAGNOSTIC</option>
-            <option value="TREATMENT">TREATMENT</option>
-            <option value="FOLLOW_UP">FOLLOW-UP</option>
-            <option value="INTERVIEW">INTERVIEW</option>
-            <option value="SUPPORT">SUPPORT</option>
-          </select>
+      <div class="admin-nav-actions">
+        <div class="nav-user-badge">
+          Welcome, <strong id="adminDisplayName">Admin</strong>
         </div>
-    
-        <!-- Right Column -->
-        <div class="form-column">
-          <label for="doctor">Doctor</label>
-          <input type="text" name="doctor" placeholder="Doctor's Name">    
-          
-          <label for="appointmentDate">Select Date:</label>
-          <input type="date" id="appointmentDate" name="appointmentDate" required>
-          
-          <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
-          <input type="time" id="appointmentTime" name="appointmentTimeStart" required>
-          <input type="time" id="appointmentTime" name="appointmentTimeEnd" required>
-          
-          <label for="paymentType">Payment Method</label>
-          <select name="paymentType" required>
-            <option value=""></option>
-            <option value="BANK_TRANSFER">BANK_TRANSFER</option>
-            <option value="ONLINE_PAYMENT">ONLINE_PAYMENT</option>
-            <option value="CASH">CASH</option>
-            <option value="OTHER">OTHER</option>
-          </select>
-          
-          <label for="payment">Cost of Appointment</label>
-          <input type="number" name="payment" required placeholder="Amount in PHP">
-          
-          <label for="paymentStatus">Payment Status</label>
-          <select name="paymentStatus" required>
-            <option value=""></option>
-            <option value="PAID">PAID</option>
-            <option value="NOT_PAID">NOT_PAID</option>
-            <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
-            <option value="PENDING">PENDING</option>
-            <option value="REFUNDED">REFUNDED</option>
-            <option value="ON_HOLD">ON_HOLD</option>
-          </select>
-          
-          <label for="appointmentStatus">Appointment Status</label>
-          <select name="appointmentStatus" required>
-            <option value=""></option>
-            <option value="PENDING">PENDING</option>
-            <option value="FINISHED">FINISHED</option>
-            <option value="CANCELLED">CANCELLED</option>
-            <option value="NO_SHOW">NO_SHOW</option>
-            <option value="RESCHEDULED">RESCHEDULED</option>
-            <option value="CONFIRMING">CONFIRMING</option>
-            <option value="OVERDUE">OVERDUE</option>
-          </select>
-        </div>
+
+        <button type="button" id="adminLogoutBtn" class="btn-admin-pill btn-pill-danger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Sign Out
+        </button>
+
+        <a href="../adminhome.html" class="btn-admin-pill btn-pill-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Admin
+        </a>
       </div>
-    
-      <br>
-      <button class="roundedbutton">Add Appointment</button>
-    </form>
+    </div>
+  </header>
 
-<!-- Update Appointment Form -->
-<form class="update-form" id="updateForm" style="display:none;"> <!-- UPDATE -->
-  <h2>Update Appointment Schedule</h2>
+  <!-- Main Content Container -->
+  <main class="admin-main-container">
 
-  <div class="form-container">
-    <div class="form-column">
-      <label for="appointmentDate">User UID:</label>
-  <input type="text" name="id" required placeholder="Appointment ID">
-  <label for="appointmentDate">Full Name of Client:</label>
-  <input type="text" id="firstName" name="firstName" placeholder="First Name">
-  <input type="text" id="middleName" name="middleName" placeholder="Middle Name">
-  <input type="text" id="surname" name="surname" placeholder="Last Name" >
-  <label for="email">Email</label>
-  <input type="text" id="email" name="email"  placeholder="john.doe@gmail.com">
-  <label for="contact">Phone Number</label>
-  <input type="text" id="contact" name="contact"  placeholder="+63-XXX-XXXX-XXX">
-
-  <!-- Dropdown for Type of Appointment -->
-  <label for="appointType">Type of Appointment</label>
-  <select name="appointmentType" >
-    <option value=""></option>
-    <option value="CONSULTATION">CONSULTATION</option>
-    <option value="THERAPY">THERAPY</option>
-    <option value="CHECK_UP">CHECK-UP</option>
-    <option value="TRAINING_SESSION">TRAINING_SESSION</option>
-    <option value="COACHING">COACHING</option>
-    <option value="DIAGNOSTIC">DIAGNOSTIC</option>
-    <option value="TREATMENT">TREATMENT</option>
-    <option value="FOLLOW_UP">FOLLOW_UP</option>
-    <option value="INTERVIEW">INTERVIEW</option>
-    <option value="SUPPORT">SUPPORT</option>
-  </select>
-</div>
-
-<div class="form-column">
-  <label for="doctor">Doctor</label>
-  <input type="text" name="doctor" placeholder="Doctor's Name">
-  <label for="appointmentDate">Select Date:</label>
-  <input type="date" id="appointmentDate" name="appointmentDate" >
-  <label for="appointmentTime">Select Time: (Start to End of Appointment)</label>
-  <input type="time" id="appointmentTime" name="appointmentTimeStart" >
-  <input type="time" id="appointmentTime" name="appointmentTimeEnd" >
-
-  <!-- Dropdown for Payment Method -->
-  <label for="paymentType">Payment Method</label>
-  <select name="paymentType" >
-    <option value=""></option>
-    <option value="BANK_TRANSFER">BANK_TRANSFER</option>
-    <option value="ONLINE_PAYMENT">ONLINE_PAYMENT</option>
-    <option value="CASH">CASH</option>
-    <option value="OTHER">OTHER</option>
-  </select>
-
-  <label for="payment">Cost of Appointment</label>
-  <input type="number" name="payment"  placeholder="Amount in PHP">
-
-  <!-- Dropdown for Payment Status -->
-  <label for="paymentStatus">Payment Status</label>
-  <select name="paymentStatus" >
-    <option value=""></option>
-    <option value="PAID">PAID</option>
-    <option value="NOT_PAID">NOT_PAID</option>
-    <option value="PARTIALLY_PAID">PARTIALLY_PAID</option>
-    <option value="PENDING">PENDING</option>
-    <option value="REFUNDED">REFUNDED</option>
-    <option value="ON_HOLD">ON_HOLD</option>
-  </select>
-
-  <!-- Dropdown for Appointment Status -->
-  <label for="appointmentStatus">Appointment Status</label>
-  <select name="appointmentStatus" >
-    <option value=""></option>
-    <option value="PENDING">PENDING</option>
-    <option value="FINISHED">FINISHED</option>
-    <option value="CANCELLED">CANCELLED</option>
-    <option value="NO_SHOW">NO_SHOW</option>
-    <option value="RESCHEDULED">RESCHEDULED</option>
-    <option value="CONFIRMING">CONFIRMING</option>
-    <option value="OVERDUE">OVERDUE</option>
-  </select>
-</div>
-  <br><br>
-  <button class="roundedbutton">Update</button>
-</form>
-
-
-</div>
-
-    <!-- Delete Appointment Form -->
-    <form class="deleteappoint" id="deleteForm" style="display:none;"> <!-- DELETE -->
-      <h2>Delete Appointment from Database</h2>
-      
-      <label for="id">Appointment ID</label>
-      <input type="text" name="id">
-      <br><br>
-      <button class="deletes">Delete from Database</button>
-    </form>
-  </div>
-</div>
-  
-<table class="view-table" id="appointmentTable" border="3" style="display: none;">
-  <thead>
-      <tr>
-          <th>ID</th>
-          <th>Email</th>
-          <th>Full Name</th>
-          <th>Phone Number</th>
-          <th>Date</th>
-          <th>TimeStart</th>
-          <th>TimeEnd</th>
-          <th>Type of Appointment</th>
-          <th>Type of Payment</th>
-          <th>Appointment Status</th>
-          <th>Payment Status</th>
-          <th>Cost</th>
-          <th>Doctor</th>
-      </tr>
-  </thead>
-  <tbody>
-      <!-- Appointment data rows will be inserted here -->
-  </tbody>
-</table>
-
-
-
-    <div class="footer"> 
-        <div class="social-links">
-            <a href="https://www.facebook.com/ELADSchoolofPotentials" class="footer-style-button">Facebook</a>
-        </div>
-        <p>&copy; 2025 ELAD School of Potentials Therapy Center</p>
+    <!-- Page Header -->
+    <div class="admin-page-header">
+      <h1 class="admin-page-title">Appointment Management</h1>
+      <p class="admin-page-subtitle">Manage all appointments and scheduling</p>
     </div>
 
+    <!-- Stat Cards Grid (4 Columns) -->
+    <div class="admin-stat-grid">
+      <div class="stat-card">
+        <div class="stat-card-info">
+          <h4>Total Appointments</h4>
+          <div class="stat-card-value" id="statTotalAppts">0</div>
+        </div>
+        <div class="stat-card-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+      </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-        import { getAuth, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"; 
-    
-        const firebaseConfig = {
-          apiKey: "AIzaSyCZfi1aIc3zDdZD7NR7kN2Jm4hnCtPHWcQ",
-          authDomain: "appointment-scheduling-s-57d01.firebaseapp.com",
-          databaseURL: "https://appointment-scheduling-s-57d01-default-rtdb.asia-southeast1.firebasedatabase.app",
-          projectId: "appointment-scheduling-s-57d01",
-          storageBucket: "appointment-scheduling-s-57d01.firebasestorage.app",
-          messagingSenderId: "1069885306589",
-          appId: "1:1069885306589:web:b31768194add4087754d34",
-          measurementId: "G-KQ4PQZZZBM"
-        };
-    
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-    
-        function updateDropdownEmail(user) {
-          const emailButton = document.getElementById('emailBtn');
-          const userDropdown = document.getElementById('userDropdown');
-          if (user) {
-            emailButton.textContent = user.email;
-            emailButton.onclick = () => { 
-              if (userDropdown.style.display === 'block') {
-                userDropdown.style.display = 'none';
-              } else {
-                userDropdown.style.display = 'block';
-              }
-            };
-          } else {
-            emailButton.textContent = "Login";
-            emailButton.onclick = () => {
-              window.location.href = '../login.html';
-            };
-          }
-        }
-    
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            updateDropdownEmail(user);
-    
-            user.reload()
-              .then(() => {
-                const verifyBtn = document.getElementById('verifyBtn');
-                if (user.emailVerified) {
-                  verifyBtn.textContent = "Email Verified";
-                  verifyBtn.removeAttribute('href');
-                } else {
-                  verifyBtn.textContent = "Verify E-mail";
-                  verifyBtn.href = "#";
-                }
-    
-                console.log("Logged in:", user.email);
-                console.log("Verified:", user.emailVerified);
-              })
-              .catch((error) => {
-                console.log("Error reloading user:", error);
-              });
-    
-          } else {
-            updateDropdownEmail(null); 
-          }
-        });
-    
-        const signOutUser = () => {
-          signOut(auth)
-            .then(() => {
-              console.log('Signed out successfully');
-              window.location.href = '../../../pages/auth/login.html'; 
-            })
-            .catch((error) => {
-              console.log('Error signing out:', error);
-              alert("Error: " + error.message);
-            });
-        };
-    
-        const verifyEmail = () => {
-          const user = auth.currentUser;
-          if (user) {
-            sendEmailVerification(user)
-              .then(() => {
-                alert("Verification email sent!");
-              })
-              .catch((error) => {
-                console.log('Error sending verification email:', error);
-                alert("Error: " + error.message); 
-              });
-          }
-        };
-    
-        document.getElementById('logoutBtn').addEventListener('click', signOutUser);
-        document.getElementById('verifyBtn').addEventListener('click', verifyEmail); 
-    
-        const loginBtn = document.getElementById('loginBtn');
-        loginBtn.onclick = () => {
-          const user = auth.currentUser; 
-          if (user) {
-            window.location.href = 'auth/userprofile.html'; 
-          } else {
-            window.location.href = 'auth/login.html'; 
-          }
-        };
+      <div class="stat-card">
+        <div class="stat-card-info">
+          <h4>Pending Requests</h4>
+          <div class="stat-card-value" style="color: #a16207;" id="statPendingAppts">0</div>
+        </div>
+        <div class="stat-card-icon icon-yellow">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+      </div>
 
-        
-      </script>
+      <div class="stat-card">
+        <div class="stat-card-info">
+          <h4>Confirmed Sessions</h4>
+          <div class="stat-card-value" style="color: #15803d;" id="statConfirmedAppts">0</div>
+        </div>
+        <div class="stat-card-icon icon-green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+      </div>
 
-<script type="module">
-  // Function to convert 24-hour time format to 12-hour format
-  function convertTo12HourFormat(time24) {
-    if (!time24) return '';
-    const [hours, minutes] = time24.split(':');
-    const hour = parseInt(hours, 10);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hour12 = hour % 12 || 12;
-    return `${hour12}:${minutes} ${ampm}`;
-  }
+      <div class="stat-card">
+        <div class="stat-card-info">
+          <h4>Completed Sessions</h4>
+          <div class="stat-card-value" style="color: #0369a1;" id="statCompletedAppts">0</div>
+        </div>
+        <div class="stat-card-icon icon-purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
 
-  // Function to toggle columns visibility in the table
-  function toggleColumns(columnsToShow) {
-    const table = document.getElementById('appointmentTable');
-    const headerRow = table.querySelector('thead tr');
-    const bodyRows = table.querySelectorAll('tbody tr');
+    <!-- All Appointments Table Card -->
+    <div class="content-card">
+      <div class="content-card-header">
+        <div class="card-title-group">
+          <h2>All Appointments</h2>
+          <p>Manage and view all appointments</p>
+        </div>
 
-    const headers = Array.from(headerRow.querySelectorAll('th'));
+        <div class="filter-controls-group">
+          <div class="search-input-wrapper">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="apptSearchInput" placeholder="Search appointments...">
+          </div>
 
-    // Reset all columns to visible
-    headers.forEach((header, index) => {
-        header.style.display = '';
-        bodyRows.forEach(row => {
-            row.querySelectorAll('td')[index].style.display = '';
-        });
-    });
+          <select id="statusFilterSelect" class="select-filter">
+            <option value="all">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
 
-    // If no specific columns are specified, show all
-    if (columnsToShow.length === 0) return;
+          <button type="button" id="refreshApptsBtn" class="btn-admin-pill btn-pill-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            Refresh
+          </button>
 
-    // Hide columns not in the specified list
-    headers.forEach((header, index) => {
-        if (!columnsToShow.some(col => header.textContent.trim().toLowerCase().includes(col.toLowerCase()))) {
-            header.style.display = 'none';
-            bodyRows.forEach(row => {
-                row.querySelectorAll('td')[index].style.display = 'none';
-            });
-        }
-    });
-  }
+          <button type="button" id="addApptBtn" class="btn-admin-pill btn-pill-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add Appointment
+          </button>
+        </div>
+      </div>
 
-  // Event listener for viewing users
-  document.getElementById('view_users').addEventListener('click', () => {
-    toggleColumns(['ID', 'Email', 'Full Name', 'Phone Number']);
-    
-    // Get the appointment table element by its ID
-    const appointmentTable = document.getElementById('appointmentTable');
-    
-    // Change its display property to "block"
-    if (appointmentTable) {
-        appointmentTable.style.display = 'block';
-    }
-  });
-
-  // Show the update form first, if needed
-  document.getElementById('updateForm').style.display = 'block';
-
-  // Fixing the typo here, changing ddocument to document
-  document.getElementById('view_appointments').addEventListener('click', () => {
-    toggleColumns([
-        'name', 
-        'date', 
-        'timestart', 
-        'timeend', 
-        'type of appointment', 
-        'appointment status', 
-        'doctor',
-        'type of payment',
-        'payment status',
-        'cost'
-    ]);
-
-    const appointmentTable = document.getElementById('appointmentTable');
-    if (appointmentTable) {
-        appointmentTable.style.display = 'block';
-    }
-  });
-
-  // Function to print the table with appointment data
-  function printTable(appointments) {
-    const table = document.getElementById('appointmentTable');
-    const tbody = table.querySelector('tbody');
-    tbody.innerHTML = '';
-
-    appointments.forEach((data) => {
-        const fullName = `${data.firstName || ''} ${data.middleName || ''} ${data.surname || ''}`.trim();
-        const row = `
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
             <tr>
-                <td>${data.id || ''}</td>
-                <td>${data.email || ''}</td>
-                <td>${fullName}</td>
-                <td>${data.contact || ''}</td>
-                <td>${data.appointmentDate || ''}</td>
-                <td>${convertTo12HourFormat(data.appointmentTimeStart) || ''}</td>
-                <td>${convertTo12HourFormat(data.appointmentTimeEnd) || ''}</td>
-                <td>${data.appointmentType || ''}</td>
-                <td>${data.paymentType || ''}</td>
-                <td>${data.appointmentStatus || ''}</td>
-                <td>${data.paymentStatus || ''}</td>
-                <td>${data.payment || ''}</td>
-                <td>${data.doctor || ''}</td>
-            </tr>`;
-        tbody.innerHTML += row;
-    });
+              <th>Patient</th>
+              <th>Date & Time</th>
+              <th>Type</th>
+              <th>Doctor</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="apptsTableBody">
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading
+                appointments...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    // Ensure all relevant columns are shown by default for appointments view
-    toggleColumns([
-        'name', 
-        'date', 
-        'timestart', 
-        'timeend', 
-        'type of appointment', 
-        'appointment status', 
-        'doctor'
-    ]);
-  }
+  </main>
 
-  // Sample appointments data (just an example)
-  const appointments = [
-      {
-          id: '1',
-          email: 'john.doe@example.com',
-          firstName: 'John',
-          middleName: 'Doe',
-          surname: 'Smith',
-          contact: '123-456-7890',
-          appointmentDate: '2025-01-26',
-          appointmentTimeStart: '14:00',
-          appointmentTimeEnd: '15:00',
-          appointmentType: 'Consultation',
-          paymentType: 'Credit Card',
-          appointmentStatus: 'Confirmed',
-          paymentStatus: 'Paid',
-          payment: '$100',
-          doctor: 'Dr. Alice'
-      },
-      // More appointment objects can go here...
-  ];
+  <!-- Appointment Form Modal (Add / Edit Appointment) -->
+  <div class="admin-modal-backdrop" id="apptFormModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h2 id="apptModalTitle">Add Appointment</h2>
+        <button class="admin-modal-close" id="closeApptModalBtn">&times;</button>
+      </div>
+      <form id="apptForm">
+        <input type="hidden" id="apptModalId">
+        <div class="form-group-admin">
+          <label>First Name</label>
+          <input type="text" id="apptModalFirstName" placeholder="Patient First Name" required>
+        </div>
+        <div class="form-group-admin">
+          <label>Last Name</label>
+          <input type="text" id="apptModalLastName" placeholder="Patient Last Name" required>
+        </div>
+        <div class="form-group-admin">
+          <label>Email Address</label>
+          <input type="email" id="apptModalEmail" placeholder="patient@example.com" required>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group-admin">
+            <label>Date</label>
+            <input type="date" id="apptModalDate" required>
+          </div>
+          <div class="form-group-admin">
+            <label>Start Time</label>
+            <input type="time" id="apptModalStart" value="09:00" required>
+          </div>
+          <div class="form-group-admin">
+            <label>End Time</label>
+            <input type="time" id="apptModalEnd" value="10:00" required>
+          </div>
+        </div>
+        <div class="form-group-admin">
+          <label>Therapy Service Type</label>
+          <select id="apptModalType">
+            <option value="CONSULTATION">Consultation</option>
+            <option value="OCCUPATIONAL THERAPY">Occupational Therapy</option>
+            <option value="PHYSICAL THERAPY">Physical Therapy</option>
+            <option value="SPEECH PATHOLOGY">Speech Pathology</option>
+          </select>
+        </div>
+        <div class="form-group-admin">
+          <label>Doctor / Specialist</label>
+          <input type="text" id="apptModalDoctor" placeholder="e.g. Dr. Randy Orton" required>
+        </div>
+        <div class="form-group-admin">
+          <label>Appointment Status</label>
+          <select id="apptModalStatus">
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn-admin-pill btn-pill-secondary" id="cancelApptModalBtn">Cancel</button>
+          <button type="submit" class="btn-admin-pill btn-pill-primary">Save Appointment</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-  // Print the sample appointments to the table
-  printTable(appointments);
-</script>
-
-<script type="module" src="appoint.js"></script>
-
+  <!-- Firebase & Appointment Management Script -->
+  <script type="module" src="../../../scripts/setappoint.js"></script>
 </body>
+
 </html>
