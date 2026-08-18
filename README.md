@@ -3,7 +3,7 @@
 AppointMED is a cloud-based, Streamlined Appointment Scheduling developed for ELAD School of Potentials Therapy Center clinic operations. Built on a Google Firebase serverless NoSQL architecture via Firebase Firestore and Firebase Authentication, it provides an interactive drag-and-drop calendar matrix, strict Role-Based Access Control (RBAC), and instantaneous multi-client real-time synchronization.
 
 
-**[Project Technical Documentation](https://drive.google.com/file/d/1duZPLeUfBSGG8Lkq1pIkDqrryg4kzIKJ/view?usp=drive_link)**
+**[Project Software Engineering Documentations](https://drive.google.com/drive/folders/10VKNhB6Xm5Xf3gIkAs-ZSNXHRM_NzoTZ?usp=sharing)**
 
 ### Key Members:
 - **Project Manager**: Jhon Benrick Tasic
