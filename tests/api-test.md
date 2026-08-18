@@ -5,7 +5,7 @@ AppointMED runs on a **Serverless BaaS Architecture via Firebase Firestore**. In
 This guide provides instructions for testing the **Firestore REST API** to validate authentication, authorization rules, and data payloads.
 
 > [!TIP]
-> **We highly recommend using Postman** as your primary API testing tool for this project. The setup instructions below are tailored for Postman using Environment Variables (`{{base_url}}` and `{{jwt_token}}`) for the fastest workflow. Alternative instructions for cURL and Insomnia are provided at the end.
+> **We highly recommend using Postman** as your primary API testing tool for this project. The setup instructions below are tailored for Postman using Environment Variables (`{{base_url}}` and `{{jwt_token}}`) for the fastest workflow. Alternative instructions for Swagger UI and cURL are provided beneath each scenario.
 
 ---
 
@@ -40,94 +40,143 @@ You can now use `{{base_url}}` for your request URLs and `{{jwt_token}}` in the 
 
 ---
 
-## 3. REST API Test Endpoints & Scenarios
+## 3. How to Find a Document ID (`<DOCUMENT_ID>`)
+
+When you see `<DOCUMENT_ID>` in the testing scenarios below (such as `PATCH` or `DELETE` requests), you must replace it with a real Firestore document ID.
+
+To find a Document ID:
+1. Run a `GET` request to list the documents (e.g., `GET {{base_url}}/appointments`).
+2. Look at the `"name"` property in the response:
+   ```json
+   "name": "projects/.../databases/(default)/documents/appointments/B58qSpCx14g4ZpEZxCIB"
+   ```
+3. The alphanumeric string at the very end (`B58qSpCx14g4ZpEZxCIB`) is the Document ID.
+4. Replace `<DOCUMENT_ID>` in your URL with that string.
+
+---
+
+## 4. REST API Test Endpoints & Scenarios
 
 ### A. List All Appointments
 * **HTTP Method:** `GET`
-* **URL:** `{{base_url}}/appointments`
+* **URL:** `/appointments`
 * **Headers:** `Authorization: Bearer <ADMIN_OR_PATIENT_JWT>`
 * **Expected Response:** `200 OK`
-* **Sample Response Body:**
-  ```json
-  {
-    "documents": [
-      {
-        "name": "projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments/doc123",
-        "fields": {
-          "firstName": { "stringValue": "Jane" },
-          "lastName": { "stringValue": "Doe" },
-          "email": { "stringValue": "jane.doe@example.com" },
-          "appointmentDate": { "stringValue": "2026-08-20" },
-          "appointmentTimeStart": { "stringValue": "10:00" },
-          "appointmentTimeEnd": { "stringValue": "11:00" },
-          "appointmentType": { "stringValue": "Physical Therapy" },
-          "doctor": { "stringValue": "Dr. Smith" },
-          "appointmentStatus": { "stringValue": "Confirmed" }
-        },
-        "createTime": "2026-08-14T02:30:00.000000Z",
-        "updateTime": "2026-08-14T02:30:00.000000Z"
-      }
-    ]
-  }
+
+#### Example Tests
+* **Postman:**
+  - Method: `GET`
+  - URL: `{{base_url}}/appointments`
+  - Auth Tab: Bearer Token -> `{{jwt_token}}`
+  - Click **Send**.
+* **Swagger UI:**
+  - Open Swagger UI via `tests/openapi.yaml`.
+  - Click **Authorize** and paste your JWT token.
+  - Expand `GET /appointments`, click **Try it out**, then **Execute**.
+* **cURL:**
+  ```bash
+  curl -X GET "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments" \
+    -H "Authorization: Bearer YOUR_FIREBASE_JWT"
   ```
 
 ---
 
 ### B. Create a New Clinic Appointment
 * **HTTP Method:** `POST`
-* **URL:** `{{base_url}}/appointments`
-* **Headers:**
-  - `Authorization: Bearer <JWT_TOKEN>`
-  - `Content-Type: application/json`
-* **JSON Body:**
-  ```json
-  {
-    "fields": {
-      "firstName": { "stringValue": "Carlos" },
-      "lastName": { "stringValue": "Mendez" },
-      "email": { "stringValue": "carlos.mendez@example.com" },
-      "phone": { "stringValue": "09171234567" },
-      "appointmentDate": { "stringValue": "2026-08-25" },
-      "appointmentTimeStart": { "stringValue": "14:00" },
-      "appointmentTimeEnd": { "stringValue": "15:00" },
-      "appointmentType": { "stringValue": "Occupational Therapy" },
-      "doctor": { "stringValue": "Dr. Lee" },
-      "appointmentStatus": { "stringValue": "Pending" },
-      "createdAt": { "stringValue": "2026-08-14T11:00:00.000Z" }
-    }
-  }
+* **URL:** `/appointments`
+* **Headers:** `Authorization: Bearer <JWT_TOKEN>` | `Content-Type: application/json`
+* **Expected Response:** `200 OK`
+
+#### Example Tests
+* **Postman:**
+  - Method: `POST`
+  - URL: `{{base_url}}/appointments`
+  - Auth Tab: Bearer Token -> `{{jwt_token}}`
+  - Body Tab: Select `raw` and `JSON`, then paste the JSON body below.
+  - Click **Send**.
+* **Swagger UI:**
+  - Expand `POST /appointments`, click **Try it out**.
+  - Swagger pre-fills the JSON body. Click **Execute**.
+* **cURL:**
+  ```bash
+  curl -X POST "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments" \
+    -H "Authorization: Bearer YOUR_FIREBASE_JWT" \
+    -H "Content-Type: application/json" \
+    -d '{ "fields": { "firstName": { "stringValue": "Carlos" }, "appointmentStatus": { "stringValue": "Pending" } } }'
   ```
-* **Expected Response:** `200 OK` with the newly created document metadata.
+**JSON Body for Postman:**
+```json
+{
+  "fields": {
+    "firstName": { "stringValue": "Carlos" },
+    "lastName": { "stringValue": "Mendez" },
+    "appointmentStatus": { "stringValue": "Pending" }
+  }
+}
+```
 
 ---
 
 ### C. Update Appointment Status (Admin Action)
 * **HTTP Method:** `PATCH`
-* **URL:** `{{base_url}}/appointments/<DOCUMENT_ID>?updateMask.fieldPaths=appointmentStatus`
-* **Headers:**
-  - `Authorization: Bearer <ADMIN_JWT>`
-  - `Content-Type: application/json`
-* **JSON Body:**
-  ```json
-  {
-    "fields": {
-      "appointmentStatus": { "stringValue": "Completed" }
-    }
-  }
-  ```
+* **URL:** `/appointments/<DOCUMENT_ID>?updateMask.fieldPaths=appointmentStatus`
+* **Headers:** `Authorization: Bearer <ADMIN_JWT>` | `Content-Type: application/json`
 * **Expected Response:** `200 OK`
+
+#### Example Tests
+* **Postman:**
+  - Method: `PATCH`
+  - URL: `{{base_url}}/appointments/<DOCUMENT_ID>?updateMask.fieldPaths=appointmentStatus` (replace `<DOCUMENT_ID>`)
+  - Auth Tab: Bearer Token -> `{{jwt_token}}` (Must be an Admin token)
+  - Body Tab: Select `raw` and `JSON`, then paste the JSON body below.
+  - Click **Send**.
+* **Swagger UI:**
+  - Expand `PATCH /appointments/{documentId}`, click **Try it out**.
+  - Enter the Document ID in the `documentId` field, and `appointmentStatus` in the `updateMask.fieldPaths` field.
+  - Swagger pre-fills the JSON body. Click **Execute**.
+* **cURL:**
+  ```bash
+  curl -X PATCH "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments/<DOCUMENT_ID>?updateMask.fieldPaths=appointmentStatus" \
+    -H "Authorization: Bearer YOUR_ADMIN_JWT" \
+    -H "Content-Type: application/json" \
+    -d '{ "fields": { "appointmentStatus": { "stringValue": "Completed" } } }'
+  ```
+**JSON Body for Postman:**
+```json
+{
+  "fields": {
+    "appointmentStatus": { "stringValue": "Completed" }
+  }
+}
+```
 
 ---
 
 ### D. Delete Appointment (Admin / Owner Action)
 * **HTTP Method:** `DELETE`
-* **URL:** `{{base_url}}/appointments/<DOCUMENT_ID>`
+* **URL:** `/appointments/<DOCUMENT_ID>`
 * **Headers:** `Authorization: Bearer <ADMIN_OR_OWNER_JWT>`
-* **Expected Response:** `200 OK` (Empty response object `{}`)
+* **Expected Response:** `200 OK`
+
+#### Example Tests
+* **Postman:**
+  - Method: `DELETE`
+  - URL: `{{base_url}}/appointments/<DOCUMENT_ID>` (replace `<DOCUMENT_ID>`)
+  - Auth Tab: Bearer Token -> `{{jwt_token}}`
+  - Click **Send**.
+* **Swagger UI:**
+  - Expand `DELETE /appointments/{documentId}`, click **Try it out**.
+  - Enter the Document ID in the `documentId` field.
+  - Click **Execute**.
+* **cURL:**
+  ```bash
+  curl -X DELETE "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments/<DOCUMENT_ID>" \
+    -H "Authorization: Bearer YOUR_FIREBASE_JWT"
+  ```
 
 ---
 
-## 4. Security Rules & Negative Testing (RBAC Verification)
+## 5. Security Rules & Negative Testing (RBAC Verification)
 
 Use these tests to verify that Firestore Security Rules strictly block unauthorized access:
 
@@ -138,36 +187,3 @@ Use these tests to verify that Firestore Security Rules strictly block unauthori
 | **Patient Modifying Other's Profile** | `PATCH {{base_url}}/users/<OTHER_UID>` with **Patient JWT** | `403 Forbidden` | Enforces `isOwner(userId)` restriction |
 | **Patient Deleting Own Profile** | `DELETE {{base_url}}/users/<OWN_UID>` with **Owner JWT** | `200 OK` | Confirms self-service deletion allowed |
 | **Admin Deleting Any User** | `DELETE {{base_url}}/users/<ANY_UID>` with **Admin JWT** | `200 OK` | Confirms admin role override |
-
----
-
-## 5. Quick Test: Public vs Protected Routes in Postman
-
-**Test Public Announcement Fetch (Unauthenticated):**
-* **Method:** `GET`
-* **URL:** `{{base_url}}/announcements`
-* **Auth Tab:** No Auth
-* **Result:** You should see `200 OK` and the announcements list.
-
-**Test Protected Appointments List (Authenticated):**
-* **Method:** `GET`
-* **URL:** `{{base_url}}/appointments`
-* **Auth Tab:** Bearer Token -> `{{jwt_token}}`
-* **Result:** You should see `200 OK` (if admin) or a `403 Forbidden`/`401 Unauthorized` if blocked by security rules.
-
----
-
-## 6. Alternative Tools (cURL / Insomnia)
-
-If you prefer testing via the terminal or other REST clients, you can adapt the endpoints above by manually passing the Bearer token.
-
-### Test Public Announcement Fetch (Unauthenticated):
-```bash
-curl -X GET "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/announcements/portal_announcement"
-```
-
-### Test Protected Appointments List (Authenticated):
-```bash
-curl -X GET "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments" \
-  -H "Authorization: Bearer YOUR_FIREBASE_JWT"
-```
