@@ -14,24 +14,21 @@ jobs:
     
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
 
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
-      - name: Start Live Server
-        run: npx live-server --port=5500 --no-browser &
-        
-      - name: Wait for server to be ready
-        run: sleep 3
-        
-      - name: Run Nightwatch Tests (Headless)
-        run: npx nightwatch tests/loginTest.js --env chrome
+      - name: Start Live Server and Run Tests
+        run: |
+          npx live-server --port=5500 --no-browser &
+          sleep 5
+          npx nightwatch tests/loginTest.js --env chrome --headless
         env:
           NIGHTWATCH_HEADLESS: 1
