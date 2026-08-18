@@ -30,7 +30,7 @@ jobs:
 
       - name: Start Live Server and Run Tests
         run: |
-          npx http-server . -p 5500 -s &
+          npx live-server --port=5500 --no-browser &
           sleep 5
           npx nightwatch tests/loginTest.js --env chrome --headless
         env:
