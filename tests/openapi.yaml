@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: AppointMED Firestore REST API
+  description: OpenAPI Specification for AppointMED's Firebase Firestore database. Use this to test RBAC and Security Rules directly from Swagger.
+  version: 1.0.0
+servers:
+  - url: https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents
+    description: Firebase Firestore Production API
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Paste your Firebase ID Token here (extracted from DevTools console).
+security:
+  - BearerAuth: []
+paths:
+  /announcements:
+    get:
+      summary: Get all announcements
+      description: Fetches all announcements. This is a public route, so it does not require authentication.
+      security: []
+      responses:
+        '200':
+          description: Successful response
+  /appointments:
+    get:
+      summary: List appointments
+      description: Fetches appointments. Requires Patient or Admin JWT.
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden (Security Rules blocked the request)
+    post:
+      summary: Create an appointment
+      description: Creates a new appointment document.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fields:
+                  type: object
+                  properties:
+                    firstName: { type: object, properties: { stringValue: { type: string, example: "Carlos" } } }
+                    lastName: { type: object, properties: { stringValue: { type: string, example: "Mendez" } } }
+                    appointmentStatus: { type: object, properties: { stringValue: { type: string, example: "Pending" } } }
+      responses:
+        '200':
+          description: Successfully created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /appointments/{documentId}:
+    patch:
+      summary: Update an appointment status
+      description: Admin-only action to update the status of an appointment.
+      parameters:
+        - in: path
+          name: documentId
+          required: true
+          schema:
+            type: string
+          description: The alphanumeric Firestore Document ID
+        - in: query
+          name: updateMask.fieldPaths
+          required: true
+          schema:
+            type: string
+            example: appointmentStatus
+          description: The field you are updating
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fields:
+                  type: object
+                  properties:
+                    appointmentStatus:
+                      type: object
+                      properties:
+                        stringValue:
+                          type: string
+                          example: "Completed"
+      responses:
+        '200':
+          description: Successfully updated
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    delete:
+      summary: Delete an appointment
+      description: Admin or Document Owner action to delete an appointment.
+      parameters:
+        - in: path
+          name: documentId
+          required: true
+          schema:
+            type: string
+          description: The alphanumeric Firestore Document ID
+      responses:
+        '200':
+          description: Successfully deleted
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
