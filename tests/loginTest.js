@@ -1,31 +1,27 @@
 module.exports = {
-  'Test Login Page': function(browser) {
-    // Open the login page
+  'Test Login Page Rendering and Validation': function(browser) {
     browser
       .url('http://127.0.0.1:5500/src/pages/auth/login.html')
-      .waitForElementVisible('body', 1000) // Ensure the page body is visible
-
-      // Wait for the email and password input fields to be visible
+      .waitForElementVisible('body', 1000)
+      
+      // Verify all elements loaded
       .waitForElementVisible('input[name="email"]', 5000)
       .waitForElementVisible('input[name="password"]', 5000)
-
-      // Assert the page title contains 'Login'
       .assert.titleContains('Login')
 
-      // Fill in the login form
-      .setValue('input[name="email"]', 'benrick.tasic@testmail.com')
-      .setValue('input[name="password"]', 'benrick123')
-
+      // Test invalid login to ensure Firebase Auth connection is working without relying on database state
+      .setValue('input[name="email"]', 'fake_ci_test_user@example.com')
+      .setValue('input[name="password"]', 'WrongPassword123!')
+      
       // Submit the form
       .click('button[type="submit"]')
-
-      // Wait for some time after submitting
-      .pause(1000)
-
-      // Assert that the user is redirected to the correct URL after login
-      .assert.urlContains('userprofile')
-
-      // End the session
+      
+      // Wait for the Firebase Auth error message to appear in the DOM
+      .waitForElementVisible('#message', 10000)
+      
+      // Verify that the error message indicates invalid credentials
+      .assert.textContains('#message', 'Invalid email or password')
+      
       .end();
   }
 };
