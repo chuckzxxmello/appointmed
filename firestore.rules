@@ -1,0 +1,96 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Role-based Access Control (RBAC)
+    function isAdmin() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+
+    // Boundary & Input Limit Checks
+    function isValidString(text, maxLength) {
+      return text == null || (text is string && text.size() <= maxLength);
+    }
+    
+    function isEmailValid(email) {
+      return email == null || (email is string && email.size() <= 100);
+    }
+
+    // --- USERS COLLECTION ---
+    match /users/{userId} {
+      // Admins have full access. Owners can read their own data.
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Creation: Must be authenticated and acting as themselves.
+      // Privilege Escalation Prevention: User cannot set their own role to admin during sign up.
+      allow create: if isAuthenticated() 
+                   && isOwner(userId)
+                   && (!('role' in request.resource.data) || request.resource.data.role != 'admin')
+                   && isValidString(request.resource.data.firstName, 50)
+                   && isValidString(request.resource.data.lastName, 50)
+                   && isEmailValid(request.resource.data.email)
+                   && isValidString(request.resource.data.phone, 15)
+                   && isValidString(request.resource.data.address, 150)
+                   && isValidString(request.resource.data.facebook, 50);
+
+      // Updating: Owner can update, but cannot change their role.
+      allow update: if isAdmin() || (
+                      isOwner(userId)
+                      && (!('role' in request.resource.data) || request.resource.data.role == resource.data.role)
+                      && isValidString(request.resource.data.firstName, 50)
+                      && isValidString(request.resource.data.lastName, 50)
+                      && isEmailValid(request.resource.data.email)
+                      && isValidString(request.resource.data.phone, 15)
+                      && isValidString(request.resource.data.address, 150)
+                      && isValidString(request.resource.data.facebook, 50)
+                    );
+                    
+      // Only admins can delete user documents
+      allow delete: if isAdmin();
+    }
+
+    // --- APPOINTMENTS COLLECTION ---
+    match /appointments/{apptId} {
+      // Patients can only see their own appointments (using email as reference, or userId).
+      allow read: if isAdmin() || (
+        isAuthenticated() && (
+          (resource.data.email == request.auth.token.email) ||
+          (resource.data.userId == request.auth.uid)
+        )
+      );
+      
+      allow create: if isAdmin() || (
+                   isAuthenticated()
+                   && isValidString(request.resource.data.firstName, 50)
+                   && isValidString(request.resource.data.lastName, 50)
+                   && isEmailValid(request.resource.data.email)
+                   && isValidString(request.resource.data.phone, 15)
+                   && isValidString(request.resource.data.doctor, 50)
+                   && isValidString(request.resource.data.facebook, 50)
+                   && isValidString(request.resource.data.type, 50)
+                   && isValidString(request.resource.data.status, 20)
+                   );
+
+      // Only admins can update or delete appointments. 
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // --- ANNOUNCEMENTS COLLECTION ---
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

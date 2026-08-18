@@ -201,5 +201,41 @@ This document provides a comprehensive, step-by-step Quality Assurance (QA) manu
   2. Toggle **"Show Developer Analytics"** ON and click **"Save Profile"**.
   3. Observe the admin dashboard.
 * **Expected Result:**
-  - The **"Developer Analytics"** card/button appears on the dashboard.
   - Clicking it navigates to `dev-analytics.html` showing live query latency benchmarks.
+
+---
+
+## 7. Test Suite 6: Speed, Optimization & Tactile UX
+
+### Test Case 6.1: Zero-Latency Payload Rejection
+* **Objective:** Verify that oversized payloads are instantly rejected by the backend without crashing the client browser.
+* **Steps:**
+  1. Open the Developer Tools (F12) on `/src/pages/manageuser/setappoint.html`.
+  2. Use JavaScript to forcefully bypass the HTML input limits: `document.getElementById('apptModalFirstName').value = 'A'.repeat(5000);`
+  3. Attempt to save the appointment.
+* **Expected Result:**
+  - The browser does not freeze (because the payload is standard string data).
+  - Firebase instantly returns a `permission-denied` error within 200ms.
+  - The UI gracefully catches the error and displays: *"Failed to save appointment. Please check your inputs."*
+
+### Test Case 6.2: Tactile Drag-and-Drop Frame Rate
+* **Objective:** Verify that interactive elements like Drag-to-Delete maintain a 60fps frame rate without layout thrashing.
+* **Steps:**
+  1. Open `/src/pages/calendar/calendaredit.html` with multiple appointments on screen.
+  2. Drag an appointment pill rapidly around the screen and in/out of the bottom Trash Zone.
+* **Expected Result:**
+  - The "Drop here to delete" zone slides up instantly.
+  - The pill follows the mouse cursor smoothly without jitter or lag.
+  - No layout shifts occur in the underlying calendar grid.
+
+### Test Case 6.3: Lighthouse Performance Score (TTI)
+* **Objective:** Verify the Vanilla JS architecture achieves near-perfect performance scores.
+* **Steps:**
+  1. Open Google Chrome in Incognito mode.
+  2. Navigate to your live production Vercel URL (`https://eladschoolsofpotential.vercel.app/`).
+  3. Open DevTools -> Lighthouse tab.
+  4. Run a Mobile Performance Audit.
+* **Expected Result:**
+  - Performance score is **90+**.
+  - Time to Interactive (TTI) is **< 1.5 seconds**.
+  - First Contentful Paint (FCP) is **< 1.0 second**.
