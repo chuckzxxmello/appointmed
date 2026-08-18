@@ -28,9 +28,9 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Start Live Server and Run Tests
+      - name: Start HTTP Server and Run Tests
         run: |
-          npx live-server --port=5500 --no-browser &
+          python3 -m http.server 5500 &
           sleep 5
           npx nightwatch tests/loginTest.js --env chrome --headless
         env:
