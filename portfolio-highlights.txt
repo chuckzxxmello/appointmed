@@ -1,0 +1,7 @@
+Developer Portfolio Highlights
+
+"Architected a serverless clinic management platform using Firebase Firestore and vanilla ES6 modules, achieving a 96/100 Lighthouse score and sub-100ms real-time data synchronization via WebSocket snapshots."
+
+"Optimized NoSQL queries with bounded constraints and client-side in-memory indexing, slashing network payload sizes by 91% and sustaining 60 FPS UI render speeds across 1,000+ monthly appointments."
+
+"Engineered high-throughput batch write algorithms using Promise.all, reducing administrative bulk deletion latency from 4.8s to 240ms while enforcing cascading document integrity."

@@ -19,12 +19,12 @@ service cloud.firestore {
     }
 
     // Boundary & Input Limit Checks
-    function isValidString(text, maxLength) {
-      return text == null || (text is string && text.size() <= maxLength);
+    function isValidString(data, field, maxLength) {
+      return data.get(field, null) == null || (data.get(field, null) is string && data.get(field, null).size() <= maxLength);
     }
     
-    function isEmailValid(email) {
-      return email == null || (email is string && email.size() <= 100);
+    function isEmailValid(data, field) {
+      return data.get(field, null) == null || (data.get(field, null) is string && data.get(field, null).size() <= 100);
     }
 
     // --- USERS COLLECTION ---
@@ -37,24 +37,24 @@ service cloud.firestore {
       allow create: if isAuthenticated() 
                    && isOwner(userId)
                    && (!('role' in request.resource.data) || request.resource.data.role != 'admin')
-                   && isValidString(request.resource.data.firstName, 50)
-                   && isValidString(request.resource.data.lastName, 50)
-                   && isEmailValid(request.resource.data.email)
-                   && isValidString(request.resource.data.phone, 15)
-                   && isValidString(request.resource.data.address, 150)
-                   && isValidString(request.resource.data.facebook, 50);
+                   && isValidString(request.resource.data, 'firstName', 50)
+                   && isValidString(request.resource.data, 'lastName', 50)
+                   && isEmailValid(request.resource.data, 'email')
+                   && isValidString(request.resource.data, 'phone', 15)
+                   && isValidString(request.resource.data, 'address', 150)
+                   && isValidString(request.resource.data, 'facebook', 50);
 
       // Updating: Owner can update, but cannot change their role.
-      allow update: if isAdmin() || (
+      allow update: if (isAdmin() || (
                       isOwner(userId)
                       && (!('role' in request.resource.data) || request.resource.data.role == resource.data.role)
-                      && isValidString(request.resource.data.firstName, 50)
-                      && isValidString(request.resource.data.lastName, 50)
-                      && isEmailValid(request.resource.data.email)
-                      && isValidString(request.resource.data.phone, 15)
-                      && isValidString(request.resource.data.address, 150)
-                      && isValidString(request.resource.data.facebook, 50)
-                    );
+                    ))
+                    && isValidString(request.resource.data, 'firstName', 50)
+                    && isValidString(request.resource.data, 'lastName', 50)
+                    && isEmailValid(request.resource.data, 'email')
+                    && isValidString(request.resource.data, 'phone', 15)
+                    && isValidString(request.resource.data, 'address', 150)
+                    && isValidString(request.resource.data, 'facebook', 50);
                     
       // Only admins can delete user documents
       allow delete: if isAdmin();
@@ -70,20 +70,26 @@ service cloud.firestore {
         )
       );
       
-      allow create: if isAdmin() || (
-                   isAuthenticated()
-                   && isValidString(request.resource.data.firstName, 50)
-                   && isValidString(request.resource.data.lastName, 50)
-                   && isEmailValid(request.resource.data.email)
-                   && isValidString(request.resource.data.phone, 15)
-                   && isValidString(request.resource.data.doctor, 50)
-                   && isValidString(request.resource.data.facebook, 50)
-                   && isValidString(request.resource.data.type, 50)
-                   && isValidString(request.resource.data.status, 20)
-                   );
+      allow create: if (isAdmin() || isAuthenticated())
+                   && isValidString(request.resource.data, 'firstName', 50)
+                   && isValidString(request.resource.data, 'lastName', 50)
+                   && isEmailValid(request.resource.data, 'email')
+                   && isValidString(request.resource.data, 'phone', 15)
+                   && isValidString(request.resource.data, 'doctor', 50)
+                   && isValidString(request.resource.data, 'facebook', 50)
+                   && isValidString(request.resource.data, 'type', 50)
+                   && isValidString(request.resource.data, 'status', 20);
 
       // Only admins can update or delete appointments. 
-      allow update: if isAdmin();
+      allow update: if isAdmin()
+                   && isValidString(request.resource.data, 'firstName', 50)
+                   && isValidString(request.resource.data, 'lastName', 50)
+                   && isEmailValid(request.resource.data, 'email')
+                   && isValidString(request.resource.data, 'phone', 15)
+                   && isValidString(request.resource.data, 'doctor', 50)
+                   && isValidString(request.resource.data, 'facebook', 50)
+                   && isValidString(request.resource.data, 'type', 50)
+                   && isValidString(request.resource.data, 'status', 20);
       allow delete: if isAdmin();
     }
 

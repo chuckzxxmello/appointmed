@@ -1,7 +1,7 @@
 module.exports = {
   'Test Login Page Rendering and Validation': function(browser) {
     browser
-      .url('http://127.0.0.1:5500/src/pages/auth/login.html')
+      .url('http://127.0.0.1:8080/src/pages/auth/login.html')
       .waitForElementVisible('body', 1000)
       
       // Verify all elements loaded

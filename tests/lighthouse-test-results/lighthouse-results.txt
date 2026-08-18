@@ -1,0 +1,18 @@
+Lighthouse Audit Results
+Tested: August 18, 2026
+Engine: Lighthouse 13.4.0
+Browser: Chrome 151 (Desktop, Navigation Mode)
+
+Page                        Performance  Accessibility  Best Practices  SEO
+Admin Analytics (1)         100          96             100             91
+Admin Analytics (2)         100          96             100             91
+Admin Announcements         84           90             100             91
+Admin Calendar              99           62             100             91
+Admin Dashboard             96           97             100             92
+Admin Appointments          87           78             100             91
+Admin User Management       87           78             100             91
+Homepage                    88           82             100             100
+Login                       100          96             100             92
+User Profile                80           93             100             92
+
+Average                     92           87             100             92

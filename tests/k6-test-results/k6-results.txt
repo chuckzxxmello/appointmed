@@ -1,0 +1,106 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: loadtest.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 100 max VUs, 10m30s max duration (incl. graceful stop):
+              * default: 10000 iterations shared among 100 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+time="2026-08-18T19:31:41+08:00" level=info msg="Setup complete: User created in emulator (Status 400)" source=console
+
+running (00m01.0s), 100/100 VUs, 571 complete and 0 interrupted iterations
+default   [   6% ] 100 VUs  00m01.0s/10m0s  00571/10000 shared iters
+
+running (00m02.0s), 100/100 VUs, 1056 complete and 0 interrupted iterations
+default   [  11% ] 100 VUs  00m02.0s/10m0s  01056/10000 shared iters
+
+running (00m03.0s), 100/100 VUs, 1523 complete and 0 interrupted iterations
+default   [  15% ] 100 VUs  00m03.0s/10m0s  01523/10000 shared iters
+
+running (00m04.0s), 100/100 VUs, 1922 complete and 0 interrupted iterations
+default   [  19% ] 100 VUs  00m04.0s/10m0s  01922/10000 shared iters
+
+running (00m05.0s), 100/100 VUs, 2190 complete and 0 interrupted iterations
+default   [  22% ] 100 VUs  00m05.0s/10m0s  02190/10000 shared iters
+
+running (00m06.0s), 100/100 VUs, 2388 complete and 0 interrupted iterations
+default   [  24% ] 100 VUs  00m06.0s/10m0s  02388/10000 shared iters
+
+running (00m07.0s), 100/100 VUs, 2645 complete and 0 interrupted iterations
+default   [  26% ] 100 VUs  00m07.0s/10m0s  02645/10000 shared iters
+
+running (00m08.0s), 100/100 VUs, 2857 complete and 0 interrupted iterations
+default   [  29% ] 100 VUs  00m08.0s/10m0s  02857/10000 shared iters
+
+running (00m09.0s), 100/100 VUs, 3002 complete and 0 interrupted iterations
+default   [  30% ] 100 VUs  00m09.0s/10m0s  03002/10000 shared iters
+
+running (00m10.0s), 100/100 VUs, 3230 complete and 0 interrupted iterations
+default   [  32% ] 100 VUs  00m10.0s/10m0s  03230/10000 shared iters
+
+running (00m11.0s), 100/100 VUs, 3450 complete and 0 interrupted iterations
+default   [  34% ] 100 VUs  00m11.0s/10m0s  03450/10000 shared iters
+
+running (00m12.0s), 100/100 VUs, 3564 complete and 0 interrupted iterations
+default   [  36% ] 100 VUs  00m12.0s/10m0s  03564/10000 shared iters
+
+running (00m13.0s), 100/100 VUs, 3733 complete and 0 interrupted iterations
+default   [  37% ] 100 VUs  00m13.0s/10m0s  03733/10000 shared iters
+
+running (00m14.0s), 100/100 VUs, 3870 complete and 0 interrupted iterations
+default   [  39% ] 100 VUs  00m14.0s/10m0s  03870/10000 shared iters
+
+running (00m15.0s), 100/100 VUs, 4016 complete and 0 interrupted iterations
+default   [  40% ] 100 VUs  00m15.0s/10m0s  04016/10000 shared iters
+
+running (00m16.0s), 100/100 VUs, 4162 complete and 0 interrupted iterations
+default   [  42% ] 100 VUs  00m16.0s/10m0s  04162/10000 shared iters
+
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✗ 'p(95)<500' p(95)=720.54ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.02%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 8514    518.818486/s
+    checks_succeeded...: 100.00% 8514 out of 8514
+    checks_failed......: 0.00%   0 out of 8514
+
+    ✓ status is 200
+    ✓ has idToken
+
+    HTTP
+    http_req_duration..............: avg=367.41ms min=1.44ms  med=359.15ms max=1.05s p(90)=684.35ms p(95)=720.54ms
+      { expected_response:true }...: avg=367.49ms min=3.55ms  med=359.19ms max=1.05s p(90)=684.35ms p(95)=720.54ms
+    http_req_failed................: 0.02%  1 out of 4258
+    http_reqs......................: 4258   259.47018/s
+
+    EXECUTION
+    iteration_duration.............: avg=379.26ms min=19.97ms med=370.63ms max=1.06s p(90)=696.66ms p(95)=731.93ms
+    iterations.....................: 4255   259.287369/s
+    vus............................: 100    min=100       max=100
+    vus_max........................: 100    min=100       max=100
+
+    NETWORK
+    data_received..................: 5.1 MB 312 kB/s
+    data_sent......................: 1.3 MB 78 kB/s
+
+
+
+
+running (00m16.6s), 000/100 VUs, 4255 complete and 101 interrupted iterations
+default ✗ [  43% ] 100 VUs  00m16.4s/10m0s  04257/10000 shared iters
+time="2026-08-18T19:31:58+08:00" level=error msg="test run was aborted because k6 received a 'interrupt' signal"

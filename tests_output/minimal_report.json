@@ -1,1 +1,1 @@
-{"modules":{"tests\\loginTest":{"modulePath":"C:\\projects\\appointmed\\tests\\loginTest.js","status":"fail"}}}
+{"modules":{"tests\\validationTest":{"modulePath":"C:\\projects\\appointmed\\tests\\validationTest.js","status":"pass"},"tests\\loginTest":{"modulePath":"C:\\projects\\appointmed\\tests\\loginTest.js","status":"pass"},"tests\\homepageTest":{"modulePath":"C:\\projects\\appointmed\\tests\\homepageTest.js","status":"pass"},"tests\\securityTest":{"modulePath":"C:\\projects\\appointmed\\tests\\securityTest.js","status":"pass"}}}

@@ -1,13 +1,10 @@
-# AppointMED API & Security Rules Testing Guide
+# API & Security Rules Testing Guide
 
-AppointMED runs on a **Serverless BaaS Architecture via Firebase Firestore**. In this model, Cloud Firestore Security Rules ([firestore.rules](file:///c:/projects/appointmed/firestore.rules)) serve as the declarative API gateway, validating every incoming read, create, update, and delete operation.
+AppointMED runs on a **Serverless BaaS Architecture via Firebase Firestore**. In this model, Cloud Firestore Security Rules **"firestore.rules"** serve as the declarative API gateway, validating every incoming **(CRUD)** read, create, update, and delete operations.
 
 This guide provides instructions for testing the **Firestore REST API** to validate authentication, authorization rules, and data payloads.
 
-> [!TIP]
 > **We highly recommend using Postman** as your primary API testing tool for this project. The setup instructions below are tailored for Postman using Environment Variables (`{{base_url}}` and `{{jwt_token}}`) for the fastest workflow. Alternative instructions for Swagger UI and cURL are provided beneath each scenario.
-
----
 
 ## 1. Acquiring a Firebase JWT Bearer Token
 
@@ -24,8 +21,6 @@ To authenticate REST API requests against protected collections, you must obtain
    ```
 4. Copy the logged JWT token string.
 
----
-
 ## 2. Postman Environment Setup (Recommended)
 
 To make testing significantly easier, we recommend setting up a **Postman Environment** with the following two variables so you don't have to repeatedly paste them:
@@ -37,8 +32,6 @@ To make testing significantly easier, we recommend setting up a **Postman Enviro
 2. **`jwt_token`**: Paste the token string you extracted from the browser console in Step 1.
 
 You can now use `{{base_url}}` for your request URLs and `{{jwt_token}}` in the **Authorization -> Bearer Token** tab in all subsequent Postman requests!
-
----
 
 ## 3. How to Find a Document ID (`<DOCUMENT_ID>`)
 
@@ -52,8 +45,6 @@ To find a Document ID:
    ```
 3. The alphanumeric string at the very end (`B58qSpCx14g4ZpEZxCIB`) is the Document ID.
 4. Replace `<DOCUMENT_ID>` in your URL with that string.
-
----
 
 ## 4. REST API Test Endpoints & Scenarios
 
@@ -78,8 +69,6 @@ To find a Document ID:
   curl -X GET "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments" \
     -H "Authorization: Bearer YOUR_FIREBASE_JWT"
   ```
-
----
 
 ### B. Create a New Clinic Appointment
 * **HTTP Method:** `POST`
@@ -115,8 +104,6 @@ To find a Document ID:
 }
 ```
 
----
-
 ### C. Update Appointment Status (Admin Action)
 * **HTTP Method:** `PATCH`
 * **URL:** `/appointments/<DOCUMENT_ID>?updateMask.fieldPaths=appointmentStatus`
@@ -150,8 +137,6 @@ To find a Document ID:
 }
 ```
 
----
-
 ### D. Delete Appointment (Admin / Owner Action)
 * **HTTP Method:** `DELETE`
 * **URL:** `/appointments/<DOCUMENT_ID>`
@@ -173,8 +158,6 @@ To find a Document ID:
   curl -X DELETE "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments/<DOCUMENT_ID>" \
     -H "Authorization: Bearer YOUR_FIREBASE_JWT"
   ```
-
----
 
 ## 5. Security Rules & Negative Testing (RBAC Verification)
 

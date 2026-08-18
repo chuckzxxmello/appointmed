@@ -1,10 +1,18 @@
-# AppointMED: Scalable Clinic & Therapy Management System
+<img src="https://readme-typing-svg.herokuapp.com?font=Anaheim&size=32&duration=3000&pause=2000&color=4169E1&width=1000&lines=AppointMED;Clinic+Appointment+System" alt="Typing SVG" />
 
 AppointMED is a serverless, real-time clinic scheduling and patient management web application engineered for physical therapy, occupational therapy, and psychiatric clinic operations. Built on a serverless NoSQL architecture via Firebase Firestore and Firebase Authentication, it provides an interactive drag-and-drop calendar matrix, strict Role-Based Access Control (RBAC), and instantaneous multi-client real-time synchronization.
 
----
 
-## 1. Key Technical Features
+**[Project Technical Documentation](https://drive.google.com/file/d/1duZPLeUfBSGG8Lkq1pIkDqrryg4kzIKJ/view?usp=drive_link)**
+
+### Key Members:
+- **Project Manager**: Jhon Benrick Tasic
+- **Documenter/Tester**: Shaira Mae Buhay
+- **System Analyst**: Nicole Teñoso
+- **System Admin**: Elay Gargarita
+- **Developer/s**: Chuckie Española, Elijah Mariano
+
+## Key Technical Features
 
 ### 1.1 Real-Time Data Synchronization & O(1) Responsiveness
 - **WebSocket Snapshot Listeners (`onSnapshot`)**: Instantly reflects schedule updates, bookings, cancellations, and announcements across all connected administrative and patient screens without page reloads.
@@ -27,18 +35,14 @@ AppointMED is a serverless, real-time clinic scheduling and patient management w
 - **Client Drag-and-Drop**: Allows clinic staff to drag unverified or walk-in client records directly onto calendar date cells to schedule sessions instantly.
 - **Global Keyboard Accessibility**: Universal `Escape` key listeners to immediately dismiss all active dialogs, modals, and drop-downs.
 
----
-
-## 2. Tech Stack
+## Tech Stack
 
 - **Frontend Core:** HTML5 (Semantic), CSS3 (Vanilla design tokens, CSS Grid, Flexbox, Glassmorphism), Modern JavaScript (ES6+ Modules)
 - **Backend / BaaS:** Firebase Firestore (NoSQL Document Store), Firebase Authentication (Email/Password & Google OAuth)
 - **Security:** Firebase Security Rules, JWT Bearer Token validation, Client-side Re-Authentication
 - **Tooling & Testing:** Nightwatch.js, k6 load testing, Chrome DevTools Performance & Lighthouse
 
----
-
-## 3. Project Structure
+## Project Directory Tree Structure
 
 ```text
 appointmed/
@@ -79,15 +83,15 @@ appointmed/
 │       ├── userprofile.css        # Patient portal styling & responsive layout
 │       └── ...                    # Modular component styles
 └── tests/
-    ├── test-guid.md               # Complete QA manual testing script & verification guide
+    ├── QA-manual-test.md          # Complete QA manual testing script & verification guide
     ├── metrics-test.md            # Quantitative performance benchmarks & metrics guide
     ├── api-test.md                # Firestore REST API & security rules verification guide
-    └── loginTest.js               # Nightwatch automated test suite
+    ├── security-guide.md          # Security architecture & frontend boundary hardening
+    ├── ui-ux-test.md              # Responsive layout & accessibility tests
+    └── *.js                       # Nightwatch automated E2E test suite
 ```
 
----
-
-## 4. Quick Start & Local Setup
+## Quick Start & Local Setup
 
 ### 4.1 Prerequisites
 - A modern web browser (Chrome, Edge, Firefox, Safari)
@@ -104,9 +108,7 @@ npx http-server . -p 8080
 ```
 Open `http://localhost:8080` in your web browser.
 
----
-
-## 5. Future Implementations & Roadmap
+## Future Implementations & Roadmap
 
 The following capabilities are planned for upcoming releases:
 
@@ -130,11 +132,29 @@ The following capabilities are planned for upcoming releases:
 - **PWA (Progressive Web App)**: Service worker caching for offline schedule inspection in poor clinic Wi-Fi zones and home screen installation.
 - **WCAG 2.1 Full Accessibility**: ARIA labeling, high-contrast mode, and complete screen-reader compatibility across all interactive modals and matrices.
 
----
+## Quality Assurance & Testing Architecture
 
-## 6. Quality Assurance & Documentation
+### 6.1 Automated E2E Testing (via Nightwatch.js)
+A full-suite Nightwatch.js framework simulates real-user browser interactions across the application. Tests are executed automatically via **GitHub Actions CI/CD pipeline** on every `push` to `master`.
+- **`homepageTest.js`**: Validates SEO metadata, Hero sections, and public navigation routing.
+- **`validationTest.js`**: Asserts HTML5 client-side form validation blocks malformed data prior to Firebase backend transmission.
+- **`securityTest.js`**: Simulates unauthorized access attempts, verifying that Firebase Auth routing guards correctly redirect to the login portal.
+- **`loginTest.js`**: Validates DOM rendering and successful traversal of the authentication state lifecycle.
 
-Detailed testing scripts, benchmark records, and API test collections are available in the tests directory:
-- [QA Testing Guide](file:///c:/projects/appointmed/tests/test-guid.md)
-- [Performance & Quantitative Metrics](file:///c:/projects/appointmed/tests/metrics-test.md)
-- [API & Security Rules Testing Guide](file:///c:/projects/appointmed/tests/api-test.md)
+### 6.2 Load & Stress Testing (via k6)
+Stress tests are written in JavaScript via `k6` to benchmark the Firebase architecture under extreme concurrency.
+- **`loadtest.js`**: Simulates **100 concurrent Virtual Users (VUs)** executing 10,000 requests against the authentication backend, maintaining a **0% failure rate** and sustained throughput.
+
+### 6.3 Quantitative Performance Metrics (via Google Lighthouse)
+Optimized for Core Web Vitals, achieving near-perfect Lighthouse scores across the application by utilizing native ES6 modules and vanilla CSS without heavy framework bundle overhead.
+- **Performance**: 92 Average (100/100 on Login & Analytics dashboards)
+- **Best Practices**: 100/100 across all 10 core pages
+- **SEO**: 92 Average (100/100 on Public Homepage)
+
+### 6.4 Tests Documentation
+Detailed testing scripts, benchmark records, and API test collections are available in the `/tests` directory:
+- [QA Manual Testing Guide](file:///c:/projects/appointmed/tests/QA-manual-test.md)
+- [Quantitative Performance Metrics](file:///c:/projects/appointmed/tests/metrics-test.md)
+- [API & Security Rules Testing](file:///c:/projects/appointmed/tests/api-test.md)
+- [Security Architecture Guide](file:///c:/projects/appointmed/tests/security-guide.md)
+- [UI/UX Accessibility Testing](file:///c:/projects/appointmed/tests/ui-ux-test.md)

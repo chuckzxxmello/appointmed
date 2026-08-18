@@ -1,0 +1,44 @@
+Running   default: tests\homepageTest.js  
+Running   default: tests\loginTest.js  
+Running   default: tests\securityTest.js  
+Running   default: tests\validationTest.js  
+┌ ────────────────── √  default: tests\validationTest.js  ─────────────────────┐│                                                                              ││   [Tests\validation Test] Test Suite                                         ││   ────────────────────────────────────────────────────────────────────       ││   Using: chrome (151.0.7922.138) on WINDOWS.                                 ││   – Client-Side Form Validation Test                                         ││   - Loading url: http://127.0.0.1:8080/src/pages/auth/login.html             ││   i Loaded url http://127.0.0.1:8080/src/pages/auth/login.html in 28754ms    ││   √ Element <body> was visible after 5750 milliseconds.                      ││   √ Testing if element <input[name="email"]:invalid> is present (583ms)      ││   √ Testing if element <input[name="email"]:invalid> is present (366ms)      ││   - Loading url: http://127.0.0.1:8080/src/pages/auth/forgotpassword.html    ││   i Loaded url http://127.0.0.1:8080/src/pages/auth/forgotpassword.html in   ││   848ms                                                                      ││   √ Element <body> was visible after 1727 milliseconds.                      ││   √ Testing if element <input[type="email"]:invalid> is present (253ms)      ││   √ default [Tests\validation Test] Client-Side Form Validation Test (1m     ││   9s / 69120ms)                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+┌ ────────────────── √  default: tests\homepageTest.js  ──────────────────┐
+│                                                                         │
+│   [Tests\homepage Test] Test Suite                                      │
+│   ────────────────────────────────────────────────────────────────      │
+│   Using: chrome (151.0.7922.138) on WINDOWS.                            │
+│   – Public Homepage & SEO Validation Test                               │
+│   - Loading url: http://127.0.0.1:8080/index.html                       │
+│   i Loaded url http://127.0.0.1:8080/index.html in 50166ms              │
+│   √ Element <body> was visible after 1148 milliseconds.                 │
+│   √ Testing if the page title contains 'ELAD School' (854ms)            │
+│   √ Testing if element <meta[name="description"]> is present (671ms)    │
+│   √ Testing if element <header> is present (402ms)                      │
+│   √ Testing if element <.hero-wrapper> is present (464ms)               │
+│   √ Testing if element <footer> is present (975ms)                      │
+│   √ Element <input[name="email"]> was visible after 426 milliseconds.   │
+│   √ Testing if the URL contains '/auth/login.html' (205ms)              │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+┌ ────────────────── √  default: tests\loginTest.js  ─────────────────────────┐
+│                                                                             │
+│   [Tests\login Test] Test Suite                                             │
+│   ──────────────────────────────────────────────────────────                │
+│   Using: chrome (151.0.7922.138) on WINDOWS.                                │
+│   – Test Login Page Rendering and Validation                                │
+│   - Loading url: http://127.0.0.1:8080/src/pages/auth/login.html            │
+│   i Loaded url http://127.0.0.1:8080/src/pages/auth/login.html in 31538ms   │
+│   √ Element <body> was visible after 6279 milliseconds.                     │
+│   √ Element <input[name="email"]> was visible after 4069 milliseconds.      │
+│   √ Element <input[name="password"]> was visible after 3121 milliseconds.   │
+│   √ Testing if the page title contains 'Login' (1285ms)                     │
+│   √ Element <#message> was visible after 267 milliseconds.                  │
+│   √ Testing if the text matches <#message> '/Invalid|failed/i' (909ms)      │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+┌ ────────────────── √  default: tests\securityTest.js  ───────────────────────┐│                                                                              ││   [Tests\security Test] Test Suite                                           ││   ────────────────────────────────────────────────────────────────           ││   Using: chrome (151.0.7922.138) on WINDOWS.                                 ││   – Protected Route Security Test                                            ││   - Loading url: http://127.0.0.1:8080/src/pages/manageuser/adminhome.html   ││   i Loaded url http://127.0.0.1:8080/src/pages/manageuser/adminhome.html     ││   in 37137ms                                                                 ││   √ Element <body> was visible after 3474 milliseconds.                      ││   √ Testing if the URL contains '/auth/login.html' (1266ms)                  ││   √ Testing if the page title contains 'Login' (1068ms)                      ││   √ default [Tests\security Test] Protected Route Security Test (1m 9s /     ││   69499ms)                                                                   ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+  ✨ PASSED. 22 total assertions (1m 26s)
+ Wrote HTML report file to: C:\projects\appointmed\tests_output\nightwatch-html-report\index.html
+

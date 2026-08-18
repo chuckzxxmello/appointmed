@@ -2,7 +2,7 @@
 
 This document outlines the security architecture of the AppointMED system, specifically designed to protect against malicious actors, payload bloat, and "unconventional usage" that could exhaust Firebase quotas.
 
-## 1. Frontend Boundary Hardening
+## Frontend Boundary Hardening
 
 All user-facing forms have strict boundary constraints enforced at the HTML level using the `maxlength` property. This prevents users from pasting massive payloads (e.g., millions of characters) into simple text fields, which would freeze the browser and attempt to upload bloated data.
 
@@ -12,9 +12,9 @@ All user-facing forms have strict boundary constraints enforced at the HTML leve
 - **Facebook Links:** 50 characters max
 - **Addresses:** 150 characters max
 
-*Note: While frontend boundaries improve UX and stop casual abuse, they can be bypassed by malicious actors using DevTools or API clients. Therefore, they are backed up by strict backend rules.*
+_**Note:** While frontend boundaries improve UX and stop casual abuse, they can be bypassed by malicious actors using DevTools or API clients. Therefore, they are backed up by strict backend rules._
 
-## 2. Backend Security (Firestore Rules)
+## Backend Security (Firestore Rules)
 
 The `firestore.rules` file is the definitive authority for all database operations. It acts as an API Gateway that rejects any request failing validation.
 
@@ -36,7 +36,7 @@ When a user creates an account, they cannot inject an `admin` role into the payl
 get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
 ```
 
-## 3. CI/CD Automated Security Testing
+## CI/CD Automated Security Testing
 
 AppointMED utilizes GitHub Actions (`.github/workflows/ci.yml`) to ensure that every push to the `master` branch is automatically tested using **Nightwatch.js** in a headless environment before deployment.
 
