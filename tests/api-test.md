@@ -2,7 +2,10 @@
 
 AppointMED runs on a **Serverless BaaS Architecture via Firebase Firestore**. In this model, Cloud Firestore Security Rules ([firestore.rules](file:///c:/projects/appointmed/firestore.rules)) serve as the declarative API gateway, validating every incoming read, create, update, and delete operation.
 
-This guide provides instructions for testing the **Firestore REST API** directly using **Postman** to validate authentication, authorization rules, and data payloads. We will be using Postman variables like `{{base_url}}` and `{{jwt_token}}` to streamline our tests.
+This guide provides instructions for testing the **Firestore REST API** to validate authentication, authorization rules, and data payloads.
+
+> [!TIP]
+> **We highly recommend using Postman** as your primary API testing tool for this project. The setup instructions below are tailored for Postman using Environment Variables (`{{base_url}}` and `{{jwt_token}}`) for the fastest workflow. Alternative instructions for cURL and Insomnia are provided at the end.
 
 ---
 
@@ -14,7 +17,7 @@ To authenticate REST API requests against protected collections, you must obtain
 2. Sign in as an **Admin** or a **Patient**.
 3. Open DevTools Console (`F12` -> `Console`) and run:
    ```javascript
-   import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+   const { getAuth } = await import("https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js");
    const auth = getAuth();
    const token = await auth.currentUser.getIdToken();
    console.log("Bearer Token:\n", token);
@@ -23,20 +26,17 @@ To authenticate REST API requests against protected collections, you must obtain
 
 ---
 
-## 2. REST API Base Configuration
+## 2. Postman Environment Setup (Recommended)
 
-- **Base URL:**
-  ```text
-  https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents
-  ```
-- **Authentication Header:**
-  ```http
-  Authorization: Bearer <YOUR_JWT_TOKEN>
-  ```
-- **Content-Type:**
-  ```http
-  Content-Type: application/json
-  ```
+To make testing significantly easier, we recommend setting up a **Postman Environment** with the following two variables so you don't have to repeatedly paste them:
+
+1. **`base_url`**: 
+   ```text
+   https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents
+   ```
+2. **`jwt_token`**: Paste the token string you extracted from the browser console in Step 1.
+
+You can now use `{{base_url}}` for your request URLs and `{{jwt_token}}` in the **Authorization -> Bearer Token** tab in all subsequent Postman requests!
 
 ---
 
@@ -141,23 +141,33 @@ Use these tests to verify that Firestore Security Rules strictly block unauthori
 
 ---
 
-## 5. Postman Environment Setup
-
-To make testing easier in Postman, configure an **Environment** with the following variables:
-
-1. **`base_url`**: `https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents`
-2. **`jwt_token`**: Paste the token you extracted from the browser console in Step 1.
-
-### Testing Public vs Protected Routes
+## 5. Quick Test: Public vs Protected Routes in Postman
 
 **Test Public Announcement Fetch (Unauthenticated):**
 * **Method:** `GET`
 * **URL:** `{{base_url}}/announcements`
 * **Auth Tab:** No Auth
-* **Result:** You should see the announcements list.
+* **Result:** You should see `200 OK` and the announcements list.
 
 **Test Protected Appointments List (Authenticated):**
 * **Method:** `GET`
 * **URL:** `{{base_url}}/appointments`
 * **Auth Tab:** Bearer Token -> `{{jwt_token}}`
-* **Result:** You should see the appointments list (if the token belongs to an admin or a user with records) or a `403/401` if unauthorized/expired.
+* **Result:** You should see `200 OK` (if admin) or a `403 Forbidden`/`401 Unauthorized` if blocked by security rules.
+
+---
+
+## 6. Alternative Tools (cURL / Insomnia)
+
+If you prefer testing via the terminal or other REST clients, you can adapt the endpoints above by manually passing the Bearer token.
+
+### Test Public Announcement Fetch (Unauthenticated):
+```bash
+curl -X GET "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/announcements/portal_announcement"
+```
+
+### Test Protected Appointments List (Authenticated):
+```bash
+curl -X GET "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments" \
+  -H "Authorization: Bearer YOUR_FIREBASE_JWT"
+```
