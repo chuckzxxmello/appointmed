@@ -2,7 +2,7 @@
 
 AppointMED runs on a **Serverless BaaS Architecture via Firebase Firestore**. In this model, Cloud Firestore Security Rules ([firestore.rules](file:///c:/projects/appointmed/firestore.rules)) serve as the declarative API gateway, validating every incoming read, create, update, and delete operation.
 
-This guide provides instructions for testing the **Firestore REST API** directly using **Postman**, **Insomnia**, or **cURL** to validate authentication, authorization rules, and data payloads.
+This guide provides instructions for testing the **Firestore REST API** directly using **Postman** to validate authentication, authorization rules, and data payloads. We will be using Postman variables like `{{base_url}}` and `{{jwt_token}}` to streamline our tests.
 
 ---
 
@@ -141,15 +141,23 @@ Use these tests to verify that Firestore Security Rules strictly block unauthori
 
 ---
 
-## 5. Quick cURL Examples for Terminal Testing
+## 5. Postman Environment Setup
 
-### Test Public Announcement Fetch (Unauthenticated):
-```bash
-curl -X GET "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/announcements/portal_announcement"
-```
+To make testing easier in Postman, configure an **Environment** with the following variables:
 
-### Test Protected Appointments List (Authenticated):
-```bash
-curl -X GET "https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents/appointments" \
-  -H "Authorization: Bearer YOUR_FIREBASE_JWT"
-```
+1. **`base_url`**: `https://firestore.googleapis.com/v1/projects/appointment-scheduling-s-57d01/databases/(default)/documents`
+2. **`jwt_token`**: Paste the token you extracted from the browser console in Step 1.
+
+### Testing Public vs Protected Routes
+
+**Test Public Announcement Fetch (Unauthenticated):**
+* **Method:** `GET`
+* **URL:** `{{base_url}}/announcements`
+* **Auth Tab:** No Auth
+* **Result:** You should see the announcements list.
+
+**Test Protected Appointments List (Authenticated):**
+* **Method:** `GET`
+* **URL:** `{{base_url}}/appointments`
+* **Auth Tab:** Bearer Token -> `{{jwt_token}}`
+* **Result:** You should see the appointments list (if the token belongs to an admin or a user with records) or a `403/401` if unauthorized/expired.
