@@ -1,6 +1,6 @@
 <img src="https://readme-typing-svg.herokuapp.com?font=Anaheim&size=32&duration=3000&pause=2000&color=4169E1&width=1000&lines=AppointMED;Clinic+Appointment+System" alt="Typing SVG" />
 
-AppointMED is a serverless, real-time clinic scheduling and patient management web application engineered for physical therapy, occupational therapy, and psychiatric clinic operations. Built on a serverless NoSQL architecture via Firebase Firestore and Firebase Authentication, it provides an interactive drag-and-drop calendar matrix, strict Role-Based Access Control (RBAC), and instantaneous multi-client real-time synchronization.
+AppointMED is a cloud-based, Streamlined Appointment Scheduling developed for ELAD School of Potentials Therapy Center clinic operations. Built on a Google Firebase serverless NoSQL architecture via Firebase Firestore and Firebase Authentication, it provides an interactive drag-and-drop calendar matrix, strict Role-Based Access Control (RBAC), and instantaneous multi-client real-time synchronization.
 
 
 **[Project Technical Documentation](https://drive.google.com/file/d/1duZPLeUfBSGG8Lkq1pIkDqrryg4kzIKJ/view?usp=drive_link)**
